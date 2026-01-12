@@ -558,7 +558,7 @@
                 
                 <div class="scenario-card">
                     <div class="scenario-header">
-                        <h4 class="scenario-name">情境 A：弱勢結算</h4>
+                        <h4 class="scenario-name">情境 A：弱勢結算（跌破防線）</h4>
                         <span class="scenario-probability probability-低">
                             機率：低
                         </span>
@@ -567,16 +567,16 @@
                     <div class="scenario-content">
                         <div class="scenario-item">
                             <strong>結算區間：</strong>
-                            <span class="scenario-range">28,500 ~ 28,450 點</span>
+                            <span class="scenario-range">28,400 ~ 28,600 點</span>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>觸發條件：</strong>
                             <ul class="scenario-conditions">
                                 
-                                <li>現貨無法站穩 28,500 點</li>
+                                <li>現貨跌破 Max Pain 29,800 點</li>
                                 
-                                <li>28,500 點附近的 Put 莊家投降</li>
+                                <li>往最大 Put OI (28,500 點) 靠攏</li>
                                 
                                 <li>賣壓持續，買盤不足</li>
                                 
@@ -585,24 +585,24 @@
                         
                         <div class="scenario-item">
                             <strong>情境描述：</strong>
-                            <p class="scenario-description">如果現貨始終無法翻回 28,500 點以上，28,500 點附近的 Put 莊家會徹底投降。</p>
+                            <p class="scenario-description">如果現貨持續走弱並跌破 Max Pain 29,800 點，可能會往主要 Put OI 集中處（28,500 點）移動。</p>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>結算影響：</strong>
-                            <p class="scenario-impact">結算區間可能落在 28,500 ~ 28,450 點。這會讓 28,500 點以上的 Put 全部變成價內（結算有價值），而 Call 則全數歸零。</p>
+                            <p class="scenario-impact">結算區間可能落在 28,400 ~ 28,600 點附近。這會讓 28,500 點以上的 Put 變成價內，Call 則價值縮水或歸零。</p>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>關鍵價位：</strong>
-                            <span class="scenario-levels">28,500, 28,450, 28,500 點</span>
+                            <span class="scenario-levels">28,400, 28,500, 28,600 點</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="scenario-card">
                     <div class="scenario-header">
-                        <h4 class="scenario-name">情境 B：莊家護盤（V 轉）</h4>
+                        <h4 class="scenario-name">情境 B：強勢結算（突破壓力）</h4>
                         <span class="scenario-probability probability-中等">
                             機率：中等
                         </span>
@@ -611,44 +611,44 @@
                     <div class="scenario-content">
                         <div class="scenario-item">
                             <strong>結算區間：</strong>
-                            <span class="scenario-range">29,750 ~ 29,900 點</span>
+                            <span class="scenario-range">29,900 ~ 30,100 點</span>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>觸發條件：</strong>
                             <ul class="scenario-conditions">
                                 
-                                <li>29,000 點附近出現強勁買盤</li>
+                                <li>現貨突破 Max Pain 29,800 點</li>
                                 
-                                <li>現貨拉回 29,800 點以上</li>
+                                <li>往最大 Call OI (30,000 點) 靠攏</li>
                                 
-                                <li>莊家積極護盤，試圖通殺</li>
+                                <li>買盤強勁，但遇到壓力</li>
                                 
                             </ul>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>情境描述：</strong>
-                            <p class="scenario-description">觀察 29,000 點附近的買盤。如果 29,000 守住且現貨拉回 29,800 點以上，則莊家會試圖將結算價拉在 29,800 點附近。</p>
+                            <p class="scenario-description">如果現貨持續走強並突破 Max Pain 29,800 點，可能會往主要 Call OI 集中處（30,000 點）移動，但會遇到壓力。</p>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>結算影響：</strong>
-                            <p class="scenario-impact">結算價可能落在 29,750 ~ 29,900 點，讓 28,500 點的 Put 價值歸零或大幅縮水，實現通殺或減少賠付。</p>
+                            <p class="scenario-impact">結算價可能落在 29,900 ~ 30,100 點附近。這會讓 30,000 點以下的 Call 變成價內，Put 則價值縮水或歸零。</p>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>關鍵價位：</strong>
-                            <span class="scenario-levels">29,000, 29,800, 29,800 點</span>
+                            <span class="scenario-levels">29,900, 30,000, 30,100 點</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="scenario-card">
                     <div class="scenario-header">
-                        <h4 class="scenario-name">情境 C：區間震盪結算</h4>
-                        <span class="scenario-probability probability-中等">
-                            機率：中等
+                        <h4 class="scenario-name">情境 C：區間震盪（Max Pain 附近）</h4>
+                        <span class="scenario-probability probability-高">
+                            機率：高
                         </span>
                     </div>
                     
@@ -662,23 +662,23 @@
                             <strong>觸發條件：</strong>
                             <ul class="scenario-conditions">
                                 
-                                <li>現貨在 29,700 ~ 29,900 點間整理</li>
+                                <li>現貨在 Max Pain 29,800 點附近整理</li>
                                 
                                 <li>多空力量均衡</li>
                                 
-                                <li>無明顯單邊趨勢</li>
+                                <li>莊家試圖將價格拉向 Max Pain</li>
                                 
                             </ul>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>情境描述：</strong>
-                            <p class="scenario-description">最常見的情境，結算價落在主要 OI 集中區間。</p>
+                            <p class="scenario-description">最常見的情境，結算價會被拉向 Max Pain (29,800 點)，這是選擇權賣方損失最小的價位。</p>
                         </div>
                         
                         <div class="scenario-item">
                             <strong>結算影響：</strong>
-                            <p class="scenario-impact">結算價在 29,700 ~ 29,900 點，部分 Put 和 Call 有價值，莊家和散戶互有損益。</p>
+                            <p class="scenario-impact">結算價在 29,700 ~ 29,900 點，Max Pain 兩側的選擇權都有部分價值，達到莊家利益最大化。</p>
                         </div>
                         
                         <div class="scenario-item">
@@ -1177,7 +1177,7 @@
         </div>
 
         <footer>
-            <p>報告產生時間: 2026-01-12 13:35:17 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 13:37:55 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 
