@@ -341,8 +341,31 @@
         }
 
         .scenarios-container {
-            display: grid;
+            display: flex;
             gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 手機版滾動條樣式 */
+        .scenarios-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .scenario-card {
@@ -351,6 +374,9 @@
             border-radius: 12px;
             padding: 20px;
             transition: all 0.3s ease;
+            min-width: 350px;
+            max-width: 400px;
+            flex-shrink: 0;
         }
 
         .scenario-card:hover {
