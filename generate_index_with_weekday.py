@@ -83,6 +83,81 @@ html_content = '''<!DOCTYPE html>
             color: #64748b;
             font-size: 1.1rem;
         }
+        
+        /* 報告類型區塊 */
+        .report-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .section-icon {
+            font-size: 1.8rem;
+            margin-right: 12px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0;
+        }
+        
+        .section-count {
+            margin-left: auto;
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .section-description {
+            color: #64748b;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        /* 空狀態提示 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .empty-state-text {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .empty-state-hint {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        
         .reports-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -152,7 +227,16 @@ html_content = '''<!DOCTYPE html>
             <h1>📊 台指選擇權分析報告</h1>
             <p class="subtitle">Taiwan Stock Index Options Analysis</p>
         </header>
-        <div class="reports-grid">
+        
+        <!-- 單日報告區塊 -->
+        <div class="report-section">
+            <div class="section-header">
+                <span class="section-icon">📅</span>
+                <h2 class="section-title">單日報告</h2>
+                <span class="section-count">''' + str(len(reports)) + ''' 份報告</span>
+            </div>
+            <p class="section-description">每日選擇權市場分析，包含 OI 分佈、價格走勢、結算情境預測等詳細資訊</p>
+            <div class="reports-grid">
 '''
 
 # 加入報告卡片
@@ -161,14 +245,31 @@ for date_str, is_latest in reports:
     badge_class = 'latest-badge' if is_latest else ''
     badge_text = '最新報告' if is_latest else '歷史報告'
     
-    html_content += f'''            <a href="report_{date_str}_202601.html" class="report-card">
-                <div class="report-date">{display_date}</div>
-                <div class="report-month">202601 月份契約</div>
-                <span class="report-badge {badge_class}">{badge_text}</span>
-            </a>
+    html_content += f'''                <a href="report_{date_str}_202601.html" class="report-card">
+                    <div class="report-date">{display_date}</div>
+                    <div class="report-month">202601 月份契約</div>
+                    <span class="report-badge {badge_class}">{badge_text}</span>
+                </a>
 '''
 
-html_content += '''        </div>
+html_content += '''            </div>
+        </div>
+        
+        <!-- 結算日報告區塊 -->
+        <div class="report-section">
+            <div class="section-header">
+                <span class="section-icon">🎯</span>
+                <h2 class="section-title">結算日報告</h2>
+                <span class="section-count">即將推出</span>
+            </div>
+            <p class="section-description">選擇權結算日專題分析，包含結算價預測、莊家佈局、歷史結算統計等深度內容</p>
+            <div class="empty-state">
+                <div class="empty-state-icon">📦</div>
+                <div class="empty-state-text">結算日報告功能開發中</div>
+                <div class="empty-state-hint">敬請期待更深入的結算日分析內容</div>
+            </div>
+        </div>
+        
         <footer>
             <p>🚀 自動生成於 2026年1月12日</p>
             <p><a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">查看專案原始碼</a></p>
