@@ -37,6 +37,13 @@
             padding: 20px;
         }
 
+        /* 手機版減少 padding */
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+        }
+
         header {
             background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
             color: white;
@@ -96,24 +103,53 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
             margin-bottom: 30px;
+        }
+
+        /* 電腦版：4 欄布局 */
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* 平板版：3 欄布局 */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 手機版：3 欄布局 */
+        @media (max-width: 767px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
         }
 
         .card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 24px;
+            padding: 16px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
+        }
+
+        /* 手機版減少 card padding */
+        @media (max-width: 767px) {
+            .card {
+                padding: 12px;
+            }
         }
 
         /* RWD Card 容器 */
         .card-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 12px;
             margin-bottom: 30px;
         }
 
@@ -124,18 +160,12 @@
             }
         }
 
-        /* 每個卡片的最大寬度 */
-        .card-container .card {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        /* 手機版：單欄置中 */
+        /* 手機版：gap 更小 */
         @media (max-width: 767px) {
             .card-container {
                 max-width: 600px;
                 margin: 0 auto 30px auto;
+                gap: 8px;
             }
         }
 
@@ -4417,7 +4447,7 @@
         </div>
 
         <footer>
-            <p>報告產生時間: 2026-01-12 17:17:34 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 17:26:15 | TAIEX Options Analyzer</p>
         </footer>
         </div>
         <!-- 結束標準分析 Tab -->
@@ -4851,7 +4881,7 @@
         <!-- 結束 AI 分析 Tab -->
 
         <footer style="margin-top: 30px;">
-            <p>報告產生時間: 2026-01-12 17:17:34 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 17:26:15 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 
