@@ -7,9 +7,11 @@
 ## 🎯 報告類型
 
 ### 1. 📅 單日報告
+
 **說明**：每日選擇權市場分析，包含 OI 分佈、價格走勢、結算情境預測等詳細資訊
 
 **內容包含**：
+
 - OI 分佈分析（蝴蝶圖）
 - OI 變化表格
 - 價格走勢（開高低收）
@@ -19,6 +21,7 @@
 - AI 情境分析
 
 **報告範例**：
+
 - 2026/01/09 (五) - 最新報告
 - 2026/01/08 (四) - 歷史報告
 - 2026/01/07 (三) - 歷史報告
@@ -27,11 +30,13 @@
 ---
 
 ### 2. 🎯 結算日報告
+
 **說明**：選擇權結算日專題分析，包含結算價預測、莊家佈局、歷史結算統計等深度內容
 
 **狀態**：即將推出 📦
 
 **規劃內容**：
+
 - 結算日倒數提醒
 - 結算價預測分析
 - 莊家佈局追蹤
@@ -40,6 +45,7 @@
 - 結算週期分析
 
 **預計功能**：
+
 1. 結算日前 3 天的市場動態追蹤
 2. 結算日當天的即時分析
 3. 結算後的覆盤報告
@@ -93,95 +99,99 @@
 
 ```html
 <div class="report-section">
-    <div class="section-header">
-        <span class="section-icon">📅</span>
-        <h2 class="section-title">單日報告</h2>
-        <span class="section-count">5 份報告</span>
-    </div>
-    <p class="section-description">描述文字...</p>
-    <div class="reports-grid">
-        <!-- 報告卡片 -->
-    </div>
+  <div class="section-header">
+    <span class="section-icon">📅</span>
+    <h2 class="section-title">單日報告</h2>
+    <span class="section-count">5 份報告</span>
+  </div>
+  <p class="section-description">描述文字...</p>
+  <div class="reports-grid">
+    <!-- 報告卡片 -->
+  </div>
 </div>
 ```
 
 ### CSS 樣式
 
 #### 1. 報告區塊
+
 ```css
 .report-section {
-    background: white;
-    border-radius: 16px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 ```
 
 #### 2. 區塊標題列
+
 ```css
 .section-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e2e8f0;
 }
 
 .section-icon {
-    font-size: 1.8rem;
-    margin-right: 12px;
+  font-size: 1.8rem;
+  margin-right: 12px;
 }
 
 .section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
 }
 
 .section-count {
-    margin-left: auto;
-    background: #f1f5f9;
-    color: #64748b;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    font-weight: 600;
+  margin-left: auto;
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 ```
 
 #### 3. 描述文字
+
 ```css
 .section-description {
-    color: #64748b;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
 }
 ```
 
 #### 4. 空狀態提示
+
 ```css
 .empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: #94a3b8;
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
 }
 
 .empty-state-icon {
-    font-size: 4rem;
-    margin-bottom: 16px;
-    opacity: 0.5;
+  font-size: 4rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
 }
 
 .empty-state-text {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
 }
 
 .empty-state-hint {
-    font-size: 0.9rem;
-    color: #cbd5e1;
+  font-size: 0.9rem;
+  color: #cbd5e1;
 }
 ```
 
@@ -194,6 +204,7 @@
 #### 主要變更
 
 1. **新增區塊結構**
+
 ```python
 html_content += '''
         <!-- 單日報告區塊 -->
@@ -209,6 +220,7 @@ html_content += '''
 ```
 
 2. **加入結算日報告區塊**
+
 ```python
 html_content += '''
         <!-- 結算日報告區塊 -->
@@ -229,6 +241,7 @@ html_content += '''
 ```
 
 3. **動態計算報告數量**
+
 ```python
 <span class="section-count">''' + str(len(reports)) + ''' 份報告</span>
 ```
@@ -245,6 +258,7 @@ html_content += '''
 ```
 
 **設計元素**：
+
 - 📅 圖示：快速識別報告類型
 - 標題：1.5rem 粗體字
 - 計數標籤：淺灰背景，右側對齊
@@ -258,6 +272,7 @@ html_content += '''
 ```
 
 **設計元素**：
+
 - 📦 大圖示：4rem，半透明
 - 提示文字：柔和灰色
 - 垂直置中，padding 60px
@@ -267,29 +282,33 @@ html_content += '''
 ## 🎯 使用者體驗優化
 
 ### 1. 清晰的分類
+
 - ✅ 使用圖示快速識別
 - ✅ 標題明確說明內容
 - ✅ 描述文字提供詳細資訊
 
 ### 2. 狀態提示
+
 - ✅ 最新報告：粉紅漸層標籤
 - ✅ 歷史報告：藍紫漸層標籤
 - ✅ 即將推出：淡灰色標籤
 
 ### 3. 視覺層次
+
 - ✅ 白色卡片與紫色背景對比
 - ✅ 分隔線區分不同區塊
 - ✅ 陰影效果增加立體感
 
 ### 4. 響應式設計
+
 ```css
 @media (max-width: 768px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-    .reports-grid {
-        grid-template-columns: 1fr;  /* 手機版單欄 */
-    }
+  h1 {
+    font-size: 1.8rem;
+  }
+  .reports-grid {
+    grid-template-columns: 1fr; /* 手機版單欄 */
+  }
 }
 ```
 
@@ -307,21 +326,25 @@ html_content += '''
 ### 結算日報告功能
 
 #### Phase 1: 基礎功能
+
 - [ ] 結算日期自動計算（每月第三個週三）
 - [ ] 結算日倒數顯示
 - [ ] 結算週報告頁面模板
 
 #### Phase 2: 數據分析
+
 - [ ] 結算日 OI 特殊分佈分析
 - [ ] 結算價預測模型
 - [ ] 莊家佈局追蹤
 
 #### Phase 3: 歷史統計
+
 - [ ] 歷史結算價數據庫
 - [ ] 結算價分佈統計
 - [ ] 結算週期模式分析
 
 #### Phase 4: 策略建議
+
 - [ ] 結算日交易策略
 - [ ] 風險控管建議
 - [ ] 實時監控提醒
@@ -331,6 +354,7 @@ html_content += '''
 ## 🎨 設計理念
 
 ### 1. 資訊架構
+
 ```
 首頁
 ├── Header (標題 + 副標題)
@@ -346,6 +370,7 @@ html_content += '''
 ```
 
 ### 2. 顏色系統
+
 - **主色調**：藍紫漸層 (#667eea → #764ba2)
 - **強調色**：粉紅漸層 (#f093fb → #f5576c)
 - **背景色**：純白 (#ffffff)
@@ -353,6 +378,7 @@ html_content += '''
 - **輔助色**：淺灰 (#64748b)
 
 ### 3. 間距系統
+
 - **大區塊間距**：30px
 - **卡片內距**：24px 或 30px
 - **小元素間距**：8px - 20px
@@ -378,11 +404,13 @@ html_content += '''
 ## 📝 使用方式
 
 ### 重新生成首頁
+
 ```bash
 python3 generate_index_with_weekday.py
 ```
 
 ### 輸出範例
+
 ```
 ✅ 首頁已更新: docs/index.html
 
@@ -395,6 +423,7 @@ python3 generate_index_with_weekday.py
 ```
 
 ### 新增報告
+
 在 `generate_index_with_weekday.py` 中修改 `reports` 列表：
 
 ```python
@@ -407,6 +436,7 @@ reports = [
 ```
 
 ### 未來新增結算日報告
+
 當結算日報告功能開發完成後，在生成腳本中加入：
 
 ```python

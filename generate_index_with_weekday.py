@@ -5,6 +5,7 @@
 
 from datetime import datetime
 from pathlib import Path
+import re
 
 def get_weekday_chinese(date_str: str) -> str:
     """將 YYYYMMDD 轉換為中文星期"""
@@ -24,6 +25,42 @@ def format_date_display(date_str: str) -> str:
     except:
         return date_str
 
+def scan_settlement_reports() -> list:
+    """掃描結算日報告檔案"""
+    docs_dir = Path('docs')
+    settlement_reports = []
+    
+    # 查找 settlement_*.html 檔案
+    for html_file in docs_dir.glob('settlement_*.html'):
+        # 解析檔名: settlement_20260108_wed.html
+        match = re.match(r'settlement_(\d{8})_(wed|fri)\.html', html_file.name)
+        if match:
+            date_str = match.group(1)
+            weekday_abbr = match.group(2)
+            weekday_full = 'wednesday' if weekday_abbr == 'wed' else 'friday'
+            weekday_text = '週三' if weekday_abbr == 'wed' else '週五'
+            
+            # 格式化日期
+            try:
+                date_obj = datetime.strptime(date_str, '%Y%m%d')
+                formatted_date = date_obj.strftime('%Y/%m/%d')
+            except:
+                formatted_date = date_str
+            
+            settlement_reports.append({
+                'filename': html_file.name,
+                'date': date_str,
+                'formatted_date': formatted_date,
+                'weekday': weekday_full,
+                'weekday_text': weekday_text,
+                'weekday_abbr': weekday_abbr,
+            })
+    
+    # 按日期排序（最新的在前）
+    settlement_reports.sort(key=lambda x: x['date'], reverse=True)
+    
+    return settlement_reports
+
 # 報告日期列表
 reports = [
     ('20260109', True),   # (日期, 是否最新)
@@ -32,6 +69,9 @@ reports = [
     ('20260106', False),
     ('20260105', False),
 ]
+
+# 掃描結算日報告
+settlement_reports = scan_settlement_reports()
 
 # 生成 HTML
 html_content = '''<!DOCTYPE html>
@@ -260,15 +300,37 @@ html_content += '''            </div>
             <div class="section-header">
                 <span class="section-icon">🎯</span>
                 <h2 class="section-title">結算日報告</h2>
-                <span class="section-count">即將推出</span>
+                <span class="section-count">''' + (str(len(settlement_reports)) + ' 份報告' if settlement_reports else '即將推出') + '''</span>
             </div>
-            <p class="section-description">選擇權結算日專題分析，包含結算價預測、莊家佈局、歷史結算統計等深度內容</p>
-            <div class="empty-state">
+            <p class="section-description">選擇權結算日專題分析，包含趨勢分析、結算劇本預測等深度內容</p>
+'''
+
+# 如果有結算日報告，顯示報告卡片
+if settlement_reports:
+    html_content += '''            <div class="reports-grid">
+'''
+    for i, report in enumerate(settlement_reports):
+        badge_class = 'latest-badge' if i == 0 else ''
+        badge_text = '最新報告' if i == 0 else '歷史報告'
+        
+        html_content += f'''                <a href="{report['filename']}" class="report-card">
+                    <div class="report-date">{report['formatted_date']} ({report['weekday_text']})</div>
+                    <div class="report-month">結算日預測分析</div>
+                    <span class="report-badge {badge_class}">{badge_text}</span>
+                </a>
+'''
+    html_content += '''            </div>
+'''
+else:
+    # 沒有報告，顯示空狀態
+    html_content += '''            <div class="empty-state">
                 <div class="empty-state-icon">📦</div>
                 <div class="empty-state-text">結算日報告功能開發中</div>
                 <div class="empty-state-hint">敬請期待更深入的結算日分析內容</div>
             </div>
-        </div>
+'''
+
+html_content += '''        </div>
         
         <footer>
             <p>🚀 自動生成於 2026年1月12日</p>
@@ -285,6 +347,13 @@ with open(output_path, 'w', encoding='utf-8') as f:
     f.write(html_content)
 
 print(f"✅ 首頁已更新: {output_path}")
-print("\n報告日期與星期：")
+print("\n📅 單日報告 ({}份):".format(len(reports)))
 for date_str, is_latest in reports:
     print(f"  {'⭐' if is_latest else '  '} {format_date_display(date_str)}")
+
+print("\n🎯 結算日報告 ({}份):".format(len(settlement_reports)))
+if settlement_reports:
+    for i, report in enumerate(settlement_reports):
+        print(f"  {'⭐' if i == 0 else '  '} {report['formatted_date']} ({report['weekday_text']})")
+else:
+    print("  (尚無報告)")
