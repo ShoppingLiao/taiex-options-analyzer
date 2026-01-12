@@ -808,20 +808,112 @@
         }
 
         @media (max-width: 768px) {
-            .key-levels {
-                grid-template-columns: 1fr;
+            /* 全域緊湊 */
+            body {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .container {
+                padding: 6px;
+            }
+
+            /* Header 縮減到 40% */
+            header {
+                padding: 10px 12px;
+                margin-bottom: 8px;
+                border-radius: 6px;
             }
 
             header h1 {
-                font-size: 1.5rem;
+                font-size: 1.1rem;
+                margin-bottom: 3px;
             }
 
+            header .subtitle {
+                font-size: 0.75rem;
+            }
+
+            .home-button {
+                position: static;
+                display: inline-flex;
+                margin-top: 6px;
+                padding: 5px 10px;
+                font-size: 0.75rem;
+                gap: 4px;
+            }
+
+            /* 卡片緊湊化 */
             .card-value {
-                font-size: 1.5rem;
+                font-size: 1.1rem !important;
             }
 
+            .card-label {
+                font-size: 0.7rem !important;
+            }
+
+            .card {
+                padding: 8px 10px !important;
+            }
+
+            /* Grid 優化 */
+            .grid {
+                gap: 6px;
+                margin-bottom: 12px;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            /* 關鍵價位 */
+            .key-levels {
+                grid-template-columns: 1fr !important;
+                gap: 6px !important;
+            }
+
+            /* 圖表高度 */
             .chart {
-                height: 500px;
+                height: 300px !important;
+            }
+
+            /* Section */
+            .section {
+                margin-bottom: 8px !important;
+                padding: 10px 8px !important;
+                border-radius: 6px !important;
+            }
+
+            .section h2 {
+                font-size: 1rem !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Tab 按鈕 - 橫向滾動 */
+            .tabs {
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                -webkit-overflow-scrolling: touch !important;
+                white-space: nowrap !important;
+                gap: 4px !important;
+                padding: 4px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .tabs::-webkit-scrollbar {
+                height: 3px !important;
+            }
+
+            .tab-button {
+                display: inline-block !important;
+                padding: 6px 10px !important;
+                font-size: 0.8rem !important;
+                border-radius: 6px 6px 0 0 !important;
+                min-width: auto !important;
+            }
+
+            /* Footer */
+            footer {
+                margin-top: 12px !important;
+                padding: 10px !important;
+                font-size: 0.7rem !important;
             }
         }
     </style>

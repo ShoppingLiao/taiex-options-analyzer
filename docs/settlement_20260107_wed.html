@@ -840,6 +840,489 @@
             line-height: 1.7;
             color: var(--text-color);
         }
+
+        /* ========================================
+           手機版優化 - 超緊湊設計
+           ======================================== */
+        @media (max-width: 768px) {
+            /* 全域設定 */
+            body {
+                padding: 5px 0;
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .container {
+                padding: 0 6px;
+            }
+
+            /* 標題區塊 - 縮減到原來的 40% */
+            header {
+                padding: 8px 10px;
+                margin-bottom: 8px;
+                border-radius: 6px;
+            }
+
+            h1 {
+                font-size: 1.1rem !important;
+                margin-bottom: 3px;
+            }
+
+            .subtitle {
+                font-size: 0.75rem;
+                margin-bottom: 5px;
+            }
+
+            /* 關鍵數據改為單行顯示 */
+            .settlement-info {
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 6px !important;
+                margin-top: 6px !important;
+                padding-top: 6px !important;
+                font-size: 0.75rem !important;
+            }
+
+            .info-item {
+                flex: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                white-space: nowrap !important;
+            }
+
+            .info-label {
+                display: inline !important;
+                font-size: 0.7rem !important;
+                margin-bottom: 0 !important;
+                margin-right: 3px !important;
+                opacity: 0.8 !important;
+            }
+
+            .info-value {
+                display: inline !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+            }
+
+            .info-label::after {
+                content: ":" !important;
+            }
+
+            /* Section 區塊 - 更緊湊 */
+            .section {
+                padding: 10px 8px;
+                margin-bottom: 8px;
+                border-radius: 8px;
+            }
+
+            .section-header {
+                margin-bottom: 8px;
+                padding-bottom: 6px;
+            }
+
+            .section-icon {
+                font-size: 1.1rem;
+                margin-right: 6px;
+            }
+
+            .section-title {
+                font-size: 1rem !important;
+            }
+
+            /* Tab 改為 1x4 + 橫向滾動 */
+            .tabs-container {
+                margin-bottom: 8px;
+            }
+
+            .tabs-header {
+                display: flex !important;
+                flex-direction: row !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: thin !important;
+                gap: 4px !important;
+                padding: 4px !important;
+            }
+
+            .tabs-header::-webkit-scrollbar {
+                height: 3px !important;
+            }
+
+            .tabs-header::-webkit-scrollbar-track {
+                background: #f1f1f1 !important;
+            }
+
+            .tabs-header::-webkit-scrollbar-thumb {
+                background: var(--primary-color) !important;
+                border-radius: 3px !important;
+            }
+
+            .tab-button {
+                flex: 0 0 auto !important;
+                min-width: 100px !important;
+                padding: 8px 12px !important;
+                font-size: 0.85rem !important;
+                border-radius: 6px 6px 0 0 !important;
+            }
+
+            .tab-icon {
+                margin-right: 4px !important;
+                font-size: 0.9rem !important;
+            }
+
+            /* 趨勢指標 - 緊湊版 */
+            .trend-indicator {
+                padding: 10px;
+                border-radius: 6px;
+            }
+
+            .trend-label {
+                font-size: 0.7rem;
+                margin-bottom: 3px;
+            }
+
+            .trend-value {
+                font-size: 1.2rem !important;
+                margin-bottom: 3px;
+            }
+
+            .trend-strength {
+                font-size: 0.7rem;
+            }
+
+            .strength-stars {
+                margin-top: 3px;
+                font-size: 1rem;
+            }
+
+            /* 預測區間 - 緊湊版 */
+            .predicted-range {
+                padding: 10px;
+                border-radius: 6px;
+            }
+
+            .predicted-range h3 {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+
+            .price-display {
+                font-size: 1.2rem !important;
+                margin: 5px 0;
+            }
+
+            .range-bars {
+                padding: 6px 10px;
+                border-radius: 4px;
+            }
+
+            .range-bar .label {
+                font-size: 0.7rem;
+                margin-bottom: 2px;
+            }
+
+            .range-bar .value {
+                font-size: 0.95rem;
+            }
+
+            /* 趨勢訊號 - 緊湊版 */
+            .signal-item {
+                padding: 8px;
+                margin-bottom: 6px;
+                border-radius: 6px;
+            }
+
+            .signal-strength {
+                padding: 2px 6px;
+                font-size: 0.65rem;
+            }
+
+            .signal-content {
+                font-size: 0.8rem;
+            }
+
+            /* 劇本卡片 - 緊湊版 */
+            .scenario-card {
+                padding: 8px;
+                border-radius: 6px;
+            }
+
+            .scenario-header {
+                margin-bottom: 5px;
+            }
+
+            .scenario-name {
+                font-size: 0.9rem;
+            }
+
+            .scenario-prob {
+                font-size: 1.1rem !important;
+                padding: 2px 0;
+            }
+
+            .scenario-prob-label {
+                font-size: 0.65rem;
+            }
+
+            .scenario-range {
+                padding: 5px;
+                margin: 5px 0;
+                border-radius: 4px;
+            }
+
+            .scenario-range div:first-child {
+                font-size: 0.7rem;
+                margin-bottom: 2px;
+            }
+
+            .scenario-range div:last-child {
+                font-size: 0.95rem;
+            }
+
+            .scenario-strategy {
+                padding: 5px;
+                border-radius: 4px;
+            }
+
+            .scenario-strategy div:first-child {
+                font-size: 0.7rem;
+                margin-bottom: 2px;
+            }
+
+            .scenario-strategy div:last-child {
+                font-size: 0.8rem;
+            }
+
+            /* 風險提示 - 緊湊版 */
+            .risk-item {
+                padding: 6px 8px;
+                margin-bottom: 5px;
+                font-size: 0.8rem;
+            }
+
+            .risk-icon {
+                font-size: 1.1rem;
+                margin-right: 5px;
+            }
+
+            /* AI 預測績效總覽 - 單行顯示優化 */
+            .stats-grid {
+                gap: 5px !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .stat-card {
+                padding: 6px 8px !important;
+                border-radius: 6px !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+
+            .stat-card .label {
+                font-size: 0.7rem !important;
+                margin-bottom: 0 !important;
+                margin-right: 5px !important;
+                white-space: nowrap !important;
+            }
+
+            .stat-card .value {
+                font-size: 1rem !important;
+                font-weight: 700 !important;
+            }
+
+            .stat-card .unit {
+                font-size: 0.7rem !important;
+                margin-left: 2px !important;
+            }
+
+            /* 最佳預測記錄 - 單行優化 */
+            .best-prediction-card {
+                padding: 8px !important;
+                border-radius: 6px !important;
+            }
+
+            .best-prediction-card h4 {
+                font-size: 0.85rem !important;
+                margin-bottom: 6px !important;
+            }
+
+            .best-prediction-grid {
+                gap: 5px !important;
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .best-pred-item {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+
+            .best-pred-item .label {
+                font-size: 0.7rem !important;
+                margin-bottom: 0 !important;
+                margin-right: 5px !important;
+                white-space: nowrap !important;
+            }
+
+            .best-pred-item .value {
+                font-size: 0.9rem !important;
+                font-weight: 600 !important;
+            }
+
+            /* 通用卡片優化 - 單行顯示 */
+            div[style*="padding: 25px"] {
+                padding: 8px 10px !important;
+            }
+
+            div[style*="padding: 20px"] {
+                padding: 6px 8px !important;
+            }
+
+            div[style*="padding: 30px"] {
+                padding: 8px 10px !important;
+            }
+
+            div[style*="padding: 15px"] {
+                padding: 5px 8px !important;
+            }
+
+            /* 字體大小限制 - 更小 */
+            h2[style*="font-size: 1.8rem"],
+            h2[style*="font-size: 2rem"] {
+                font-size: 1.1rem !important;
+            }
+
+            h3[style*="font-size: 1.5rem"],
+            h3[style*="font-size: 1.6rem"],
+            h3[style*="font-size: 1.8rem"] {
+                font-size: 1rem !important;
+            }
+
+            div[style*="font-size: 1.5rem"],
+            span[style*="font-size: 1.5rem"] {
+                font-size: 1rem !important;
+            }
+
+            div[style*="font-size: 1.8rem"],
+            span[style*="font-size: 1.8rem"] {
+                font-size: 1.1rem !important;
+            }
+
+            div[style*="font-size: 2rem"],
+            span[style*="font-size: 2rem"] {
+                font-size: 1.2rem !important;
+            }
+
+            div[style*="font-size: 2.5rem"],
+            span[style*="font-size: 2.5rem"] {
+                font-size: 1.3rem !important;
+            }
+
+            div[style*="font-size: 3rem"],
+            span[style*="font-size: 3rem"] {
+                font-size: 1.3rem !important;
+            }
+
+            /* 內容文字 */
+            p[style*="font-size: 1.1rem"] {
+                font-size: 0.85rem !important;
+            }
+
+            p[style*="font-size: 1.2rem"] {
+                font-size: 0.9rem !important;
+            }
+
+            p[style*="font-size: 1.3rem"] {
+                font-size: 0.95rem !important;
+            }
+
+            /* 留白優化 - 極致緊湊 */
+            div[style*="margin-bottom: 30px"],
+            div[style*="margin-bottom: 25px"] {
+                margin-bottom: 8px !important;
+            }
+
+            div[style*="margin-bottom: 20px"],
+            div[style*="margin-bottom: 15px"] {
+                margin-bottom: 6px !important;
+            }
+
+            div[style*="margin-bottom: 10px"] {
+                margin-bottom: 4px !important;
+            }
+
+            div[style*="margin: 20px 0"],
+            div[style*="margin: 15px 0"] {
+                margin: 6px 0 !important;
+            }
+
+            div[style*="gap: 30px"] {
+                gap: 8px !important;
+            }
+
+            div[style*="gap: 25px"] {
+                gap: 6px !important;
+            }
+
+            div[style*="gap: 20px"] {
+                gap: 5px !important;
+            }
+
+            div[style*="gap: 15px"] {
+                gap: 5px !important;
+            }
+
+            /* 結算策略建議優化 */
+            div[style*="border-left: 4px solid"] {
+                padding: 6px 8px !important;
+                margin-bottom: 5px !important;
+            }
+
+            div[style*="border-left: 4px solid"] > div[style*="font-size: 1.05rem"],
+            div[style*="border-left: 4px solid"] > div[style*="font-size: 0.95rem"] {
+                font-size: 0.85rem !important;
+                margin-bottom: 4px !important;
+            }
+
+            div[style*="border-left: 4px solid"] > div[style*="color: #78350f"],
+            div[style*="border-left: 4px solid"] > div[style*="color: #dc2626"] {
+                font-size: 0.75rem !important;
+                margin-bottom: 3px !important;
+                line-height: 1.3 !important;
+            }
+
+            /* 結算展望 */
+            div[style*="white-space: pre-line"] {
+                font-size: 0.8rem !important;
+                line-height: 1.5 !important;
+                padding: 8px !important;
+            }
+
+            /* 交易員視角 - 關鍵數據單行顯示 */
+            div[style*="background: white"][style*="text-align: center"] {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                text-align: left !important;
+                padding: 5px 8px !important;
+            }
+
+            div[style*="background: white"][style*="text-align: center"] > div {
+                display: inline !important;
+                margin-bottom: 0 !important;
+            }
+
+            div[style*="background: white"][style*="text-align: center"] > div:first-child::after {
+                content: ":" !important;
+                margin: 0 3px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -864,7 +1347,7 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">報告生成</div>
-                    <div class="info-value">2026/01/12 22:46</div>
+                    <div class="info-value">2026/01/12 23:09</div>
                 </div>
             </div>
         </header>
@@ -1697,23 +2180,76 @@
 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
                     <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">💡 我的結算展望</h3>
-                    <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #fbbf24; white-space: pre-line; color: #78350f; line-height: 1.8;"></div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #fbbf24; white-space: pre-line; color: #78350f; line-height: 1.8;">🔮 **週三結算日展望**
+
+經過這兩天的盤勢觀察，我看到市場呈現上漲的態勢，價格上漲 251 點。
+
+今天的收盤價是 30,120，PC Ratio 為 1.02。市場情緒相對平衡，結算應該不會有太大意外。
+
+基於這些觀察，我預測週三的結算價會在 **30,246** 附近，合理區間應該是 29,792 到 30,700。
+
+週三結算只影響當週契約，對整體市場衝擊較小。
+
+我會密切關注開盤後的走勢，適時調整部位。</div>
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 25px;">
                     <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">⚙️ 結算策略建議</h3>
                     <div style="display: grid; gap: 15px;">
-                        <div style="background: white; padding: 15px; border-radius: 8px;">
-                            <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">🕐 結算前準備:</div>
-                            <p style="color: #78350f; margin: 0;">{'timing': '結算日09:00前', 'action': '觀察開盤價格，決定是否提前調整', 'caution': '避免追高殺低'}</p>
+                        <!-- 結算前準備 -->
+                        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #fbbf24;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">🕐 結算前準備</div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">時機：</span>結算日09:00前
+                            </div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">動作：</span>觀察開盤價格，決定是否提前調整
+                            </div>
+                            <div style="color: #dc2626;">
+                                <span style="font-weight: 500;">⚠️ 注意：</span>避免追高殺低
+                            </div>
                         </div>
-                        <div style="background: white; padding: 15px; border-radius: 8px;">
-                            <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">⚡ 結算當下:</div>
-                            <p style="color: #78350f; margin: 0;">{'timing': '13:30-13:45 (結算區間)', 'action': '密切關注結算價形成過程', 'caution': '注意最後五分鐘的劇烈波動'}</p>
+                        
+                        <!-- 結算當下 -->
+                        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">⚡ 結算當下</div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">時機：</span>13:30-13:45 (結算區間)
+                            </div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">動作：</span>密切關注結算價形成過程
+                            </div>
+                            <div style="color: #dc2626;">
+                                <span style="font-weight: 500;">⚠️ 注意：</span>注意最後五分鐘的劇烈波動
+                            </div>
                         </div>
-                        <div style="background: white; padding: 15px; border-radius: 8px;">
-                            <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">📊 倉位管理:</div>
-                            <p style="color: #78350f; margin: 0;">{'if_bullish': '持有 Call 至結算，Put 考慮提前平倉', 'if_bearish': '持有 Put 至結算，Call 考慮提前平倉', 'if_neutral': '採取 Straddle 或 Strangle，兩邊對沖'}</p>
+                        
+                        <!-- 倉位管理 -->
+                        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #10b981;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">📊 倉位管理</div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">🔼 看多時：</span>持有 Call 至結算，Put 考慮提前平倉
+                            </div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">🔽 看空時：</span>持有 Put 至結算，Call 考慮提前平倉
+                            </div>
+                            <div style="color: #78350f;">
+                                <span style="font-weight: 500;">⚖️ 中性時：</span>採取 Straddle 或 Strangle，兩邊對沖
+                            </div>
+                        </div>
+                        
+                        <!-- 風險控制 -->
+                        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">🛡️ 風險控制</div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">⛔ 停損：</span>當走勢明顯偏離預測時，立即止損
+                            </div>
+                            <div style="color: #78350f; margin-bottom: 8px;">
+                                <span style="font-weight: 500;">📏 部位大小：</span>結算日部位不超過平時的50%
+                            </div>
+                            <div style="color: #dc2626;">
+                                <span style="font-weight: 500;">⏰ 時間價值：</span>週三結算影響較小
+                            </div>
                         </div>
                     </div>
                 </div>

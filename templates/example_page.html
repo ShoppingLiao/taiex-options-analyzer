@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設計系統示例頁面</title>
+    
+    <!-- 步驟 1: 引入設計系統 -->
+    {% include 'design_system.html' %}
+    
+    <!-- 步驟 2: 頁面特定樣式 (可選) -->
+    <style>
+        /* 僅在需要時添加頁面特定的樣式 */
+        /* 優先使用設計變數 */
+    </style>
+</head>
+<body>
+    <!-- 步驟 3: 使用預定義組件 -->
+    
+    <div class="container">
+        
+        <!-- Header 示例 -->
+        <header class="page-header">
+            <h1>台指選擇權分析報告</h1>
+            <p class="subtitle">2026/01/12 結算日分析</p>
+            
+            <div class="info-items">
+                <div class="info-item">
+                    <div class="info-label">當前價格</div>
+                    <div class="info-value">30,372</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">預測區間</div>
+                    <div class="info-value">29,900~30,800</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">整體趨勢</div>
+                    <div class="info-value">震盪整理</div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Tab 示例 -->
+        <div class="tabs-container">
+            <button class="tab-button active" onclick="switchTab('technical')">
+                <span class="tab-icon">📊</span>
+                技術分析
+            </button>
+            <button class="tab-button" onclick="switchTab('ai')">
+                <span class="tab-icon">🤖</span>
+                AI 分析
+            </button>
+            <button class="tab-button" onclick="switchTab('trader')">
+                <span class="tab-icon">👁️</span>
+                交易員視角
+            </button>
+        </div>
+        
+        <!-- Tab Content 1: 技術分析 -->
+        <div id="technical" class="tab-content active">
+            
+            <!-- Section 示例 1: 使用 Grid + Data Card -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">📊</span>
+                    <h2 class="section-title">關鍵數據</h2>
+                    <span class="section-count">4 項指標</span>
+                </div>
+                
+                <div class="grid grid-4">
+                    <div class="data-card">
+                        <div class="data-card-label">當前價格</div>
+                        <div class="data-card-value text-primary">30,372</div>
+                        <div class="data-card-subtitle">收盤價</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">P/C Ratio</div>
+                        <div class="data-card-value text-warning">1.00</div>
+                        <div class="data-card-subtitle">中性</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">Max Pain</div>
+                        <div class="data-card-value text-success">30,400</div>
+                        <div class="data-card-subtitle">磁吸點</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-card-label">IV</div>
+                        <div class="data-card-value text-danger">18.5%</div>
+                        <div class="data-card-subtitle">波動率</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 示例 2: 使用 Data Bar (移動端友好) -->
+            <div class="section gradient-primary">
+                <div class="section-header">
+                    <span class="section-icon">📈</span>
+                    <h2 class="section-title">績效總覽</h2>
+                </div>
+                
+                <div class="data-bar primary">
+                    <span class="data-bar-label">📊 總預測次數：</span>
+                    <span class="data-bar-value">15</span>
+                    <span class="data-bar-hint">累積經驗</span>
+                </div>
+                
+                <div class="data-bar success">
+                    <span class="data-bar-label">✅ 平均準確度：</span>
+                    <span class="data-bar-value">85%</span>
+                    <span class="data-bar-hint">整體表現</span>
+                </div>
+                
+                <div class="data-bar warning">
+                    <span class="data-bar-label">📏 平均誤差：</span>
+                    <span class="data-bar-value">25.5</span>
+                    <span class="data-bar-hint">點數</span>
+                </div>
+                
+                <div class="data-bar purple">
+                    <span class="data-bar-label">🎯 區間命中率：</span>
+                    <span class="data-bar-value">90%</span>
+                    <span class="data-bar-hint">預測精準度</span>
+                </div>
+            </div>
+            
+            <!-- Chart 示例 -->
+            <div class="chart-container">
+                <h3 class="chart-title">OI 分佈圖</h3>
+                <div id="oi-chart" style="width: 100%; height: 400px;">
+                    <!-- Plotly chart goes here -->
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Tab Content 2: AI 分析 -->
+        <div id="ai" class="tab-content">
+            
+            <div class="section gradient-purple">
+                <div class="section-header">
+                    <span class="section-icon">🤖</span>
+                    <h2 class="section-title">AI 結算策略</h2>
+                </div>
+                <p class="section-description">基於歷史數據與機器學習模型的結算日操盤建議</p>
+                
+                <!-- Info Card 示例 -->
+                <div class="info-card warning mb-lg">
+                    <div class="info-card-header">
+                        <span class="info-card-title">🕐 結算前準備</span>
+                    </div>
+                    <div class="info-card-content">
+                        <p class="mb-sm"><span class="font-semibold">時機：</span>結算前 1-2 小時</p>
+                        <p class="mb-sm"><span class="font-semibold">動作：</span>減少部位至 50%，觀察主力動向</p>
+                        <p class="text-danger"><span class="font-semibold">⚠️ 注意：</span>結算前波動加劇，避免重倉</p>
+                    </div>
+                </div>
+                
+                <div class="info-card primary mb-lg">
+                    <div class="info-card-header">
+                        <span class="info-card-title">⚡ 結算當下</span>
+                    </div>
+                    <div class="info-card-content">
+                        <p class="mb-sm"><span class="font-semibold">時機：</span>13:00-13:30</p>
+                        <p class="mb-sm"><span class="font-semibold">動作：</span>依據主力動向快速應對</p>
+                        <p class="text-danger"><span class="font-semibold">⚠️ 注意：</span>最後 30 分鐘劇烈波動</p>
+                    </div>
+                </div>
+                
+                <div class="info-card success">
+                    <div class="info-card-header">
+                        <span class="info-card-title">📊 倉位管理</span>
+                    </div>
+                    <div class="info-card-content">
+                        <p class="mb-sm"><span class="font-semibold">🔼 看多時：</span>Buy Call 價差</p>
+                        <p class="mb-sm"><span class="font-semibold">🔽 看空時：</span>Buy Put 價差</p>
+                        <p><span class="font-semibold">⚖️ 中性時：</span>Iron Condor</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Tab Content 3: 交易員視角 -->
+        <div id="trader" class="tab-content">
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">👁️</span>
+                    <h2 class="section-title">我對結算日的看法</h2>
+                </div>
+                
+                <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); 
+                            border-left: var(--border-width-thick) solid var(--primary-color); 
+                            line-height: 1.8; white-space: pre-wrap;">
+根據我的分析，這次結算日呈現以下特徵：
+
+1. P/C Ratio 達到 1.00，顯示多空力量相當
+2. Max Pain 在 30,400，與當前價格接近
+3. 大戶持倉偏向中性，暗示震盪機率高
+
+建議策略：
+- 採用 Iron Condor 收取時間價值
+- 設定 30,000-30,800 的區間
+- 嚴格執行停損，風險控制在 2%
+                </div>
+            </div>
+            
+            <!-- Badge 示例 -->
+            <div class="section">
+                <h3 class="text-md font-bold mb-md">風險等級</h3>
+                <div class="flex gap-md">
+                    <span class="badge badge-success">低風險</span>
+                    <span class="badge badge-warning">中風險</span>
+                    <span class="badge badge-danger">高風險</span>
+                    <span class="badge badge-latest">極高風險</span>
+                </div>
+            </div>
+            
+            <!-- Empty State 示例 -->
+            <div class="section">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <div class="empty-state-text">暫無歷史案例</div>
+                    <div class="empty-state-hint">當有相似的結算日情境時，系統會自動顯示參考案例</div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Footer -->
+        <footer>
+            <p>🚀 本報告由 AI 系統自動生成</p>
+            <p>
+                <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">
+                    查看專案原始碼
+                </a>
+            </p>
+        </footer>
+        
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.closest('.tab-button').classList.add('active');
+        }
+    </script>
+</body>
+</html>
