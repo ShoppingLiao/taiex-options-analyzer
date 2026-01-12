@@ -96,6 +96,12 @@ class SettlementReportGenerator:
         
         # 基本資訊
         weekday_text = '週三' if prediction.settlement_weekday == 'wednesday' else '週五'
+        weekday_short = '三' if prediction.settlement_weekday == 'wednesday' else '五'
+        
+        # 格式化結算日期為 2026/01/07(三) 格式
+        settlement_dt = datetime.strptime(prediction.settlement_date, '%Y/%m/%d')
+        settlement_date_formatted = f"{settlement_dt.strftime('%Y/%m/%d')}({weekday_short})"
+        
         analysis_dates_text = self._format_analysis_dates(prediction.analysis_dates)
         
         # 趨勢強度星星
@@ -127,6 +133,7 @@ class SettlementReportGenerator:
         data = {
             # Header
             'settlement_date': prediction.settlement_date,
+            'settlement_date_formatted': settlement_date_formatted,
             'settlement_weekday_text': weekday_text,
             'analysis_dates_text': analysis_dates_text,
             'generated_time': datetime.now().strftime('%Y/%m/%d %H:%M'),
