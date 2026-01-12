@@ -186,34 +186,34 @@ class SettlementAnalyzer:
         top_put_strike = top_put_strikes[0][0] if top_put_strikes else max_put_strike
 
         # 情境 A: 弱勢結算（跌破主要 Put 防線）
-        weak_settlement_range = (
-            max(top_put_strike - 200, min(options_data.strike_prices)),
-            top_put_strike - 50
-        )
-
+        weak_high = top_put_strike - 50
+        weak_low = max(weak_high - 150, min(options_data.strike_prices))
+        
         scenarios.append(SettlementScenario(
             name="情境 A：弱勢結算",
             probability=self._assess_weak_probability(options_data, base_result, market_bias),
-            settlement_range=weak_settlement_range,
+            settlement_range=(weak_low, weak_high),
             conditions=[
                 f"現貨無法站穩 {top_put_strike:,} 點",
                 f"{top_put_strike:,} 點附近的 Put 莊家投降",
                 "賣壓持續，買盤不足"
             ],
             description=f"如果現貨始終無法翻回 {top_put_strike:,} 點以上，{top_put_strike:,} 點附近的 Put 莊家會徹底投降。",
-            impact=f"結算區間可能落在 {weak_settlement_range[0]:,} ~ {weak_settlement_range[1]:,} 點。"
+            impact=f"結算區間可能落在 {weak_low:,} ~ {weak_high:,} 點。"
                    f"這會讓 {top_put_strike:,} 點以上的 Put 全部變成價內（結算有價值），而 Call 則全數歸零。",
-            key_levels=[weak_settlement_range[0], weak_settlement_range[1], top_put_strike]
+            key_levels=[weak_low, weak_high, top_put_strike]
         ))
 
         # 情境 B: 莊家護盤（V 轉或拉回）
         support_level = self._find_support_level(options_data, put_oi_dict, top_put_strike)
         rally_target = max(max_pain, top_put_strike + 100)
+        rally_low = max_pain - 50
+        rally_high = max_pain + 100
 
         scenarios.append(SettlementScenario(
             name="情境 B：莊家護盤（V 轉）",
             probability=self._assess_rally_probability(options_data, base_result, dealer_position),
-            settlement_range=(max_pain - 50, max_pain + 100),
+            settlement_range=(rally_low, rally_high),
             conditions=[
                 f"{support_level:,} 點附近出現強勁買盤",
                 f"現貨拉回 {rally_target:,} 點以上",
@@ -221,28 +221,29 @@ class SettlementAnalyzer:
             ],
             description=f"觀察 {support_level:,} 點附近的買盤。如果 {support_level:,} 守住且現貨拉回 {rally_target:,} 點以上，"
                        f"則莊家會試圖將結算價拉在 {max_pain:,} 點附近。",
-            impact=f"結算價可能落在 {max_pain - 50:,} ~ {max_pain + 100:,} 點，"
+            impact=f"結算價可能落在 {rally_low:,} ~ {rally_high:,} 點，"
                    f"讓 {top_put_strike:,} 點的 Put 價值歸零或大幅縮水，實現通殺或減少賠付。",
             key_levels=[support_level, max_pain, rally_target]
         ))
 
         # 情境 C: 區間震盪結算（最常見）
-        range_center = (max_put_strike + max_pain) // 100 * 100  # 四捨五入到百位
-        range_settlement = (range_center - 100, range_center + 100)
-
+        # 找出中間區域，通常在 Max Pain 附近
+        range_low = max_pain - 100
+        range_high = max_pain + 100
+        
         scenarios.append(SettlementScenario(
             name="情境 C：區間震盪結算",
             probability="中等",
-            settlement_range=range_settlement,
+            settlement_range=(range_low, range_high),
             conditions=[
-                f"現貨在 {range_settlement[0]:,} ~ {range_settlement[1]:,} 點間整理",
+                f"現貨在 {range_low:,} ~ {range_high:,} 點間整理",
                 "多空力量均衡",
                 "無明顯單邊趨勢"
             ],
             description=f"最常見的情境，結算價落在主要 OI 集中區間。",
-            impact=f"結算價在 {range_settlement[0]:,} ~ {range_settlement[1]:,} 點，"
+            impact=f"結算價在 {range_low:,} ~ {range_high:,} 點，"
                    f"部分 Put 和 Call 有價值，莊家和散戶互有損益。",
-            key_levels=[range_settlement[0], range_center, range_settlement[1]]
+            key_levels=[range_low, max_pain, range_high]
         ))
 
         return scenarios
