@@ -931,26 +931,43 @@
         </div>
         
 
-        <!-- OI 分布圖 (水平對稱式) -->
+        <!-- OI 分布圖 (蝴蝶圖樣式) -->
         <div class="chart-container">
-            <h3 class="chart-title">未平倉量 (OI) 分布</h3>
+            <h3 class="chart-title">選擇權 OI 分布 (近月契約 202601)</h3>
+            <div style="text-align: center; margin-bottom: 15px; font-size: 0.9rem; color: var(--text-muted);">
+                結算日：2026/01/21 | Max Pain: 29,800
+            </div>
             <div class="chart-legend">
                 <div class="legend-item">
                     <div class="legend-color legend-call"></div>
-                    <span>買權 Call (壓力)</span>
+                    <span>Call 買權 (紅色)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #333;"></div>
+                    <span>履約價</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color legend-put"></div>
-                    <span>賣權 Put (支撐)</span>
+                    <span>Put 賣權 (綠色)</span>
                 </div>
             </div>
             <div id="oi-chart" class="chart"></div>
         </div>
 
-        <!-- OI 變化圖 -->
+        <!-- OI 變化圖 (蝴蝶圖樣式) -->
         <div class="chart-container">
-            <h3 class="chart-title">未平倉量變化 (OI Change)</h3>
-            <div id="oi-change-chart" class="chart chart-small"></div>
+            <h3 class="chart-title">選擇權 OI 變化</h3>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color legend-call"></div>
+                    <span>Call OI 增減</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color legend-put"></div>
+                    <span>Put OI 增減</span>
+                </div>
+            </div>
+            <div id="oi-change-chart" class="chart"></div>
         </div>
 
         <!-- 詳細資料表 -->
@@ -1416,7 +1433,7 @@
         </div>
 
         <footer>
-            <p>報告產生時間: 2026-01-12 14:06:15 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 14:29:22 | TAIEX Options Analyzer</p>
         </footer>
         </div>
         <!-- 結束標準分析 Tab -->
@@ -1850,7 +1867,7 @@
         <!-- 結束 AI 分析 Tab -->
 
         <footer style="margin-top: 30px;">
-            <p>報告產生時間: 2026-01-12 14:06:15 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 14:29:22 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 
@@ -1878,155 +1895,182 @@
         const oiData = {"strikes": [28500, 29000, 29500, 29550, 29600, 29650, 29700, 29750, 29800, 29850, 29900, 29950, 30000, 30050, 30100, 30150, 30200, 30250, 30300, 30350, 30400, 30450, 30500, 30550, 30600, 30650, 30700, 30750, 30800, 30850, 30900, 30950, 31000, 31300], "call_oi": [423, 1134, 1098, 0, 862, 0, 544, 0, 1157, 0, 542, 4, 1789, 3, 269, 1, 323, 10, 445, 24, 506, 23, 675, 22, 621, 20, 402, 42, 497, 13, 373, 20, 1733, 677], "put_oi": [2868, 1630, 895, 57, 442, 10, 513, 36, 761, 106, 322, 19, 1493, 22, 305, 30, 234, 105, 212, 20, 187, 25, 306, 15, 150, 6, 131, 3, 46, 0, 82, 0, 53, 19], "call_oi_change": [-22, -87, -10, 0, 1, 0, -2, 0, -50, 0, 58, 3, -12, 2, -1, 1, -21, 6, 36, 18, 76, 3, 27, 1, 46, 12, 26, 8, 74, 2, 29, 5, 38, 188], "put_oi_change": [-192, 192, 63, 0, -68, 4, 84, 2, 48, 88, 22, 6, 0, -3, 9, 0, 12, 5, 3, 0, 29, 11, -29, 0, 19, -1, 36, 1, 2, 0, -1, 0, 0, -14]};
         const maxPain = 29800;
 
-        // Call 向左延伸 (負值)，Put 向右延伸 (正值)
+        // Call 向左延伸 (負值，紅色)，Put 向右延伸 (正值，綠色)
         const callTrace = {
             y: oiData.strikes,
             x: oiData.call_oi.map(v => -v),
-            name: '買權 Call',
+            name: 'Call',
             type: 'bar',
             orientation: 'h',
             marker: {
                 color: '#ef4444',
-                line: { color: '#dc2626', width: 1 }
+                line: { color: '#dc2626', width: 0.5 }
             },
-            hovertemplate: '履約價: %{y}<br>買權 OI: %{customdata:,}<extra></extra>',
+            text: oiData.call_oi.map(v => v.toLocaleString()),
+            textposition: 'inside',
+            insidetextanchor: 'end',
+            textfont: { color: 'white', size: 10 },
+            hovertemplate: '<b>Call OI</b><br>履約價: %{y}<br>未平倉: %{customdata:,} 口<extra></extra>',
             customdata: oiData.call_oi
         };
 
         const putTrace = {
             y: oiData.strikes,
             x: oiData.put_oi,
-            name: '賣權 Put',
+            name: 'Put',
             type: 'bar',
             orientation: 'h',
             marker: {
                 color: '#22c55e',
-                line: { color: '#16a34a', width: 1 }
+                line: { color: '#16a34a', width: 0.5 }
             },
-            hovertemplate: '履約價: %{y}<br>賣權 OI: %{x:,}<extra></extra>'
+            text: oiData.put_oi.map(v => v.toLocaleString()),
+            textposition: 'inside',
+            insidetextanchor: 'start',
+            textfont: { color: 'white', size: 10 },
+            hovertemplate: '<b>Put OI</b><br>履約價: %{y}<br>未平倉: %{x:,} 口<extra></extra>'
         };
 
         // 找出最大值以設定 x 軸範圍
         const maxOI = Math.max(...oiData.call_oi, ...oiData.put_oi);
-        const axisRange = maxOI * 1.1;
+        const axisRange = Math.ceil(maxOI * 1.15);
 
         const oiLayout = {
             barmode: 'relative',
-            bargap: 0.1,
+            bargap: 0.05,
             xaxis: {
-                title: '未平倉量 (口)',
+                title: {
+                    text: '← Call (紅)    未平倉量 (口)    Put (綠) →',
+                    font: { size: 13, color: '#64748b' }
+                },
                 range: [-axisRange, axisRange],
                 tickformat: ',d',
-                tickvals: [-axisRange, -axisRange/2, 0, axisRange/2, axisRange],
-                ticktext: [Math.round(axisRange).toLocaleString(), Math.round(axisRange/2).toLocaleString(), '0', Math.round(axisRange/2).toLocaleString(), Math.round(axisRange).toLocaleString()]
+                zeroline: true,
+                zerolinewidth: 2,
+                zerolinecolor: '#333',
+                gridcolor: '#e5e7eb',
+                tickvals: [-axisRange, -Math.floor(axisRange/2), 0, Math.floor(axisRange/2), axisRange],
+                ticktext: [
+                    Math.floor(axisRange).toLocaleString(), 
+                    Math.floor(axisRange/2).toLocaleString(), 
+                    '0', 
+                    Math.floor(axisRange/2).toLocaleString(), 
+                    Math.floor(axisRange).toLocaleString()
+                ]
             },
             yaxis: {
                 title: '履約價',
                 tickformat: ',d',
-                dtick: 500
+                dtick: 100,
+                gridcolor: '#e5e7eb',
+                tickfont: { size: 11 }
             },
             showlegend: false,
-            margin: { t: 20, r: 50, b: 50, l: 80 },
+            margin: { t: 30, r: 60, b: 60, l: 100 },
+            plot_bgcolor: '#fafafa',
+            paper_bgcolor: 'white',
             shapes: [{
                 type: 'line',
                 x0: -axisRange,
                 x1: axisRange,
                 y0: maxPain,
                 y1: maxPain,
-                line: { color: '#f59e0b', width: 3, dash: 'dash' }
+                line: { color: '#f59e0b', width: 2, dash: 'dot' }
             }],
             annotations: [{
-                x: axisRange * 0.8,
+                x: 0,
                 y: maxPain,
-                text: 'Max Pain: ' + maxPain.toLocaleString(),
-                showarrow: true,
-                arrowhead: 2,
-                ax: 0,
-                ay: -30,
-                font: { color: '#f59e0b', size: 12, weight: 'bold' }
-            },
-            {
-                x: -axisRange * 0.5,
-                y: oiData.strikes[oiData.strikes.length - 1] + 200,
-                text: '← Call (壓力)',
+                text: ` Max Pain: ${maxPain.toLocaleString()} `,
                 showarrow: false,
-                font: { color: '#ef4444', size: 14, weight: 'bold' }
-            },
-            {
-                x: axisRange * 0.5,
-                y: oiData.strikes[oiData.strikes.length - 1] + 200,
-                text: 'Put (支撐) →',
-                showarrow: false,
-                font: { color: '#22c55e', size: 14, weight: 'bold' }
+                xanchor: 'center',
+                yanchor: 'bottom',
+                bgcolor: '#f59e0b',
+                font: { color: 'white', size: 11, weight: 'bold' },
+                borderpad: 4
             }]
         };
 
-        Plotly.newPlot('oi-chart', [callTrace, putTrace], oiLayout, {responsive: true});
+        Plotly.newPlot('oi-chart', [callTrace, putTrace], oiLayout, {responsive: true, displayModeBar: false});
 
-        // OI 變化圖 - 同樣是水平對稱式
+        // OI 變化圖 - 同樣採用蝴蝶圖樣式
         const callChangeTrace = {
             y: oiData.strikes,
             x: oiData.call_oi_change.map(v => -v),
-            name: '買權 OI 變化',
+            name: 'Call OI 變化',
             type: 'bar',
             orientation: 'h',
             marker: {
-                color: oiData.call_oi_change.map(v => v >= 0 ? '#fca5a5' : '#ef4444')
+                color: oiData.call_oi_change.map(v => 
+                    v > 0 ? '#f87171' :  // 增加（淡紅）
+                    v < 0 ? '#ef4444' :  // 減少（深紅）
+                    '#e5e7eb'             // 無變化（灰）
+                ),
+                line: { color: '#dc2626', width: 0.5 }
             },
-            hovertemplate: '履約價: %{y}<br>買權變化: %{customdata:+,}<extra></extra>',
+            text: oiData.call_oi_change.map(v => v !== 0 ? (v > 0 ? '+' : '') + v.toLocaleString() : ''),
+            textposition: 'inside',
+            insidetextanchor: 'end',
+            textfont: { color: 'white', size: 9 },
+            hovertemplate: '<b>Call OI 變化</b><br>履約價: %{y}<br>變化: %{customdata:+,} 口<extra></extra>',
             customdata: oiData.call_oi_change
         };
 
         const putChangeTrace = {
             y: oiData.strikes,
             x: oiData.put_oi_change,
-            name: '賣權 OI 變化',
+            name: 'Put OI 變化',
             type: 'bar',
             orientation: 'h',
             marker: {
-                color: oiData.put_oi_change.map(v => v >= 0 ? '#86efac' : '#22c55e')
+                color: oiData.put_oi_change.map(v => 
+                    v > 0 ? '#86efac' :  // 增加（淡綠）
+                    v < 0 ? '#22c55e' :  // 減少（深綠）
+                    '#e5e7eb'             // 無變化（灰）
+                ),
+                line: { color: '#16a34a', width: 0.5 }
             },
-            hovertemplate: '履約價: %{y}<br>賣權變化: %{x:+,}<extra></extra>'
+            text: oiData.put_oi_change.map(v => v !== 0 ? (v > 0 ? '+' : '') + v.toLocaleString() : ''),
+            textposition: 'inside',
+            insidetextanchor: 'start',
+            textfont: { color: 'white', size: 9 },
+            hovertemplate: '<b>Put OI 變化</b><br>履約價: %{y}<br>變化: %{x:+,} 口<extra></extra>'
         };
 
         const maxChange = Math.max(
             ...oiData.call_oi_change.map(Math.abs),
             ...oiData.put_oi_change.map(Math.abs)
         );
-        const changeRange = maxChange * 1.2;
+        const changeRange = Math.ceil(maxChange * 1.2);
 
         const changeLayout = {
             barmode: 'relative',
-            bargap: 0.1,
+            bargap: 0.05,
             xaxis: {
-                title: 'OI 變化 (口)',
+                title: {
+                    text: '← Call 增減    OI 變化 (口)    Put 增減 →',
+                    font: { size: 13, color: '#64748b' }
+                },
                 range: [-changeRange, changeRange],
-                tickformat: '+,d'
+                tickformat: '+,d',
+                zeroline: true,
+                zerolinewidth: 2,
+                zerolinecolor: '#333',
+                gridcolor: '#e5e7eb'
             },
             yaxis: {
                 title: '履約價',
                 tickformat: ',d',
-                dtick: 500
+                dtick: 100,
+                gridcolor: '#e5e7eb',
+                tickfont: { size: 11 }
             },
             showlegend: false,
-            margin: { t: 20, r: 50, b: 50, l: 80 },
-            annotations: [{
-                x: -changeRange * 0.5,
-                y: oiData.strikes[oiData.strikes.length - 1] + 200,
-                text: '← Call 變化',
-                showarrow: false,
-                font: { color: '#ef4444', size: 12 }
-            },
-            {
-                x: changeRange * 0.5,
-                y: oiData.strikes[oiData.strikes.length - 1] + 200,
-                text: 'Put 變化 →',
-                showarrow: false,
-                font: { color: '#22c55e', size: 12 }
-            }]
+            margin: { t: 30, r: 60, b: 60, l: 100 },
+            plot_bgcolor: '#fafafa',
+            paper_bgcolor: 'white'
         };
 
-        Plotly.newPlot('oi-change-chart', [callChangeTrace, putChangeTrace], changeLayout, {responsive: true});
+        Plotly.newPlot('oi-change-chart', [callChangeTrace, putChangeTrace], changeLayout, {responsive: true, displayModeBar: false});
     </script>
 </body>
 </html>
