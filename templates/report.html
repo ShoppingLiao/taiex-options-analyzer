@@ -209,12 +209,92 @@
             border: 1px solid var(--border-color);
         }
 
+        /* 手機版減少 chart-container padding */
+        @media (max-width: 767px) {
+            .chart-container {
+                padding: 12px;
+            }
+        }
+
         .chart-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--border-color);
+        }
+
+        /* 日內價格走勢樣式 */
+        .price-info-wrapper {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .close-price-display {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .close-price-label {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .price-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .price-item {
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .price-item-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .price-item-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* 手機版調整價格走勢 */
+        @media (max-width: 767px) {
+            .price-info-wrapper {
+                padding: 20px 12px;
+            }
+
+            .close-price-display {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            .close-price-label {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            .price-grid {
+                max-width: 100%;
+            }
+
+            .price-item {
+                padding: 10px 8px;
+            }
+
+            .price-item-label {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .price-item-value {
+                font-size: 1.1rem;
+            }
         }
 
         /* 表格樣式 - 設定行高 */
@@ -796,29 +876,29 @@
             <div class="chart-container">
                 <h3 class="chart-title">日內價格走勢</h3>
                 <div class="card">
-                    <div style="text-align: center; padding: 40px;">
-                        <div style="font-size: 3rem; margin-bottom: 20px;">
+                    <div class="price-info-wrapper">
+                        <div class="close-price-display">
                             {{ "{:,.0f}".format(tx_data.close) }}
                         </div>
-                        <div style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;">
+                        <div class="close-price-label">
                             收盤價格
                         </div>
-                        <div class="grid" style="max-width: 800px; margin: 0 auto;">
-                            <div style="padding: 15px; background: #f1f5f9; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">開盤</div>
-                                <div style="font-size: 1.5rem; font-weight: 600;">{{ "{:,.0f}".format(tx_data.open) }}</div>
+                        <div class="grid price-grid">
+                            <div class="price-item" style="background: #f1f5f9;">
+                                <div class="price-item-label">開盤</div>
+                                <div class="price-item-value">{{ "{:,.0f}".format(tx_data.open) }}</div>
                             </div>
-                            <div style="padding: 15px; background: #fee2e2; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">最高</div>
-                                <div style="font-size: 1.5rem; font-weight: 600; color: #dc2626;">{{ "{:,.0f}".format(tx_data.high) }}</div>
+                            <div class="price-item" style="background: #fee2e2;">
+                                <div class="price-item-label">最高</div>
+                                <div class="price-item-value" style="color: #dc2626;">{{ "{:,.0f}".format(tx_data.high) }}</div>
                             </div>
-                            <div style="padding: 15px; background: #dcfce7; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">最低</div>
-                                <div style="font-size: 1.5rem; font-weight: 600; color: #16a34a;">{{ "{:,.0f}".format(tx_data.low) }}</div>
+                            <div class="price-item" style="background: #dcfce7;">
+                                <div class="price-item-label">最低</div>
+                                <div class="price-item-value" style="color: #16a34a;">{{ "{:,.0f}".format(tx_data.low) }}</div>
                             </div>
-                            <div style="padding: 15px; background: #f1f5f9; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">震盪幅度</div>
-                                <div style="font-size: 1.5rem; font-weight: 600;">{{ "{:,.0f}".format(tx_data.high - tx_data.low) }}</div>
+                            <div class="price-item" style="background: #f1f5f9;">
+                                <div class="price-item-label">震盪幅度</div>
+                                <div class="price-item-value">{{ "{:,.0f}".format(tx_data.high - tx_data.low) }}</div>
                             </div>
                         </div>
                     </div>

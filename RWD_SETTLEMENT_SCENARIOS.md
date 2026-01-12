@@ -7,6 +7,7 @@
 ## 💻 電腦版 (Desktop)
 
 ### 視覺效果
+
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │  🎯 202601 結算情境分析                                                │
@@ -31,8 +32,9 @@
 ```
 
 ### 技術規格
+
 - **佈局方式**: `display: flex`
-- **卡片寬度**: 
+- **卡片寬度**:
   - `min-width: 350px` (最小寬度)
   - `max-width: 400px` (最大寬度)
 - **間距**: `gap: 20px`
@@ -40,6 +42,7 @@
 - **一行顯示**: 三個情境並排，寬度約 1200px
 
 ### 優點
+
 ✅ 一眼看清所有情境  
 ✅ 方便橫向比較  
 ✅ 充分利用寬螢幕空間  
@@ -48,6 +51,7 @@
 ## 📱 手機版 (Mobile)
 
 ### 視覺效果
+
 ```
 ┌──────────────────────┐
 │  🎯 202601 結算情境  │
@@ -74,6 +78,7 @@
 ```
 
 ### 技術規格
+
 - **滾動方式**: `overflow-x: auto`
 - **滾動行為**: `scroll-behavior: smooth` (平滑滾動)
 - **觸控優化**: `-webkit-overflow-scrolling: touch`
@@ -81,27 +86,29 @@
 - **滾動條高度**: `8px` (不會太粗)
 
 ### 滾動條樣式
+
 ```css
 .scenarios-container::-webkit-scrollbar {
-    height: 8px;  /* 細長的滾動條 */
+  height: 8px; /* 細長的滾動條 */
 }
 
 .scenarios-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
+  background: #f1f1f1;
+  border-radius: 4px;
 }
 
 .scenarios-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
+  background: #888;
+  border-radius: 4px;
 }
 
 .scenarios-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 ```
 
 ### 優點
+
 ✅ 保持完整卡片內容  
 ✅ 流暢的左右滑動體驗  
 ✅ 視覺化滾動進度  
@@ -111,29 +118,30 @@
 
 ```css
 .scenarios-container {
-    display: flex;              /* 彈性盒子佈局 */
-    gap: 20px;                  /* 卡片間距 */
-    overflow-x: auto;           /* 水平溢出時可滾動 */
-    padding-bottom: 10px;       /* 底部留空間給滾動條 */
-    scroll-behavior: smooth;     /* 平滑滾動效果 */
-    -webkit-overflow-scrolling: touch;  /* iOS 滾動優化 */
+  display: flex; /* 彈性盒子佈局 */
+  gap: 20px; /* 卡片間距 */
+  overflow-x: auto; /* 水平溢出時可滾動 */
+  padding-bottom: 10px; /* 底部留空間給滾動條 */
+  scroll-behavior: smooth; /* 平滑滾動效果 */
+  -webkit-overflow-scrolling: touch; /* iOS 滾動優化 */
 }
 
 .scenario-card {
-    background: linear-gradient(135deg, #fafafa, #ffffff);
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 20px;
-    transition: all 0.3s ease;
-    min-width: 350px;           /* 卡片最小寬度 */
-    max-width: 400px;           /* 卡片最大寬度 */
-    flex-shrink: 0;             /* 不允許壓縮 */
+  background: linear-gradient(135deg, #fafafa, #ffffff);
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  min-width: 350px; /* 卡片最小寬度 */
+  max-width: 400px; /* 卡片最大寬度 */
+  flex-shrink: 0; /* 不允許壓縮 */
 }
 ```
 
 ## 📐 寬度計算
 
 ### 電腦版 (螢幕 ≥ 1200px)
+
 ```
 總寬度 = (卡片寬度 × 3) + (間距 × 2)
       = (400px × 3) + (20px × 2)
@@ -144,6 +152,7 @@
 ```
 
 ### 平板版 (螢幕 768px - 1199px)
+
 ```
 總寬度 > 可視區域
 → 自動顯示滾動條
@@ -151,6 +160,7 @@
 ```
 
 ### 手機版 (螢幕 < 768px)
+
 ```
 卡片寬度 (350px) > 螢幕寬度 (375px 以下)
 → 一次顯示一個卡片
@@ -160,41 +170,50 @@
 ## 🎯 實際應用場景
 
 ### 情境 1: 27 吋螢幕 (2560px)
+
 ```
 [情境 A] [情境 B] [情境 C] [          空白區域          ]
 ```
+
 - 三個情境完美並排
 - 充分利用螢幕空間
 - 無需滾動即可看到全部內容
 
 ### 情境 2: MacBook 13 吋 (1440px)
+
 ```
 [情境 A] [情境 B] [情境 C]
 ```
+
 - 剛好可以完整顯示三個情境
 - 無滾動條
 
 ### 情境 3: iPad (1024px)
+
 ```
 [情境 A] [情境 B] [情境 C...] →
                      ▼ 滾動條
 [━━━━━━━●━━━]
 ```
+
 - 顯示 2.5 個情境
 - 提示使用者可以滑動
 
 ### 情境 4: iPhone (375px)
+
 ```
 [情境 A      ] →
      ▼ 滾動條
 [━●━━━━━━━━━]
 ```
+
 - 顯示一個完整情境
 - 滑動查看其他情境
 
 ## 🔧 測試方式
 
 ### Chrome DevTools
+
 1. 開啟報告頁面
 2. 按 F12 開啟開發者工具
 3. 點擊「Toggle device toolbar」(Ctrl+Shift+M)
@@ -204,6 +223,7 @@
    - Desktop (1920px) - 測試桌面完整顯示
 
 ### 測試檢查項目
+
 - [ ] 電腦版: 三個情境是否並排?
 - [ ] 手機版: 是否可以流暢左右滑動?
 - [ ] 滾動條: 是否顯示且樣式正確?
@@ -214,32 +234,36 @@
 ## 🚀 優化效果
 
 ### Before (舊版)
+
 ```css
 .scenarios-container {
-    display: grid;  /* 垂直堆疊 */
-    gap: 20px;
+  display: grid; /* 垂直堆疊 */
+  gap: 20px;
 }
 
 .scenario-card {
-    /* 沒有寬度限制 */
+  /* 沒有寬度限制 */
 }
 ```
+
 - ❌ 電腦版: 三個情境垂直堆疊，需要滾動很長
 - ❌ 手機版: 卡片太寬，文字被壓縮
 
 ### After (新版)
+
 ```css
 .scenarios-container {
-    display: flex;      /* 水平排列 */
-    overflow-x: auto;   /* 可滾動 */
+  display: flex; /* 水平排列 */
+  overflow-x: auto; /* 可滾動 */
 }
 
 .scenario-card {
-    min-width: 350px;
-    max-width: 400px;
-    flex-shrink: 0;
+  min-width: 350px;
+  max-width: 400px;
+  flex-shrink: 0;
 }
 ```
+
 - ✅ 電腦版: 三個情境並排，一眼看清所有資訊
 - ✅ 手機版: 左右滑動，卡片大小適中
 
@@ -257,18 +281,19 @@
 ```css
 /* 寬一點 (更多內容) */
 .scenario-card {
-    min-width: 400px;
-    max-width: 450px;
+  min-width: 400px;
+  max-width: 450px;
 }
 
 /* 窄一點 (在較小螢幕顯示更多卡片) */
 .scenario-card {
-    min-width: 300px;
-    max-width: 350px;
+  min-width: 300px;
+  max-width: 350px;
 }
 ```
 
 **建議維持 350-400px 範圍**，這個寬度可以:
+
 - 顯示完整的情境描述
 - 在 1200px 螢幕上並排三個
 - 在手機上保持良好的閱讀性
