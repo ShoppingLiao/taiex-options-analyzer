@@ -931,27 +931,1556 @@
         </div>
         
 
-        <!-- OI 分布圖 (蝴蝶圖樣式) -->
+        <!-- OI 分布表格 (近月選擇權 OI 變化) -->
         <div class="chart-container">
-            <h3 class="chart-title">選擇權 OI 分布 (近月契約 202601)</h3>
-            <div style="text-align: center; margin-bottom: 15px; font-size: 0.9rem; color: var(--text-muted);">
-                結算日：2026/01/21 | Max Pain: 29,800
+            <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 8px 8px 0 0; margin: -24px -24px 20px -24px;">
+                近月選擇權 OI 變化
+            </h3>
+            <div style="text-align: center; margin-bottom: 15px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;">
+                結算日：2026/01/21
             </div>
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <div class="legend-color legend-call"></div>
-                    <span>Call 買權 (紅色)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #333;"></div>
-                    <span>履約價</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color legend-put"></div>
-                    <span>Put 賣權 (綠色)</span>
+            
+            <!-- OI 分布表格 -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                    <thead>
+                        <tr style="background: linear-gradient(to right, #ef4444, #3b82f6, #22c55e);">
+                            <th colspan="2" style="background: #ef4444; color: white; padding: 12px; text-align: center; font-size: 1.1rem; border: 1px solid #dc2626;">Call</th>
+                            <th style="background: #3b82f6; color: white; padding: 12px; text-align: center; font-size: 1.1rem; border: 1px solid #2563eb;">202601</th>
+                            <th colspan="2" style="background: #22c55e; color: white; padding: 12px; text-align: center; font-size: 1.1rem; border: 1px solid #16a34a;">Put</th>
+                        </tr>
+                        <tr style="background: #f3f4f6;">
+                            <th style="background: #fecaca; color: #dc2626; padding: 10px; text-align: center; border: 1px solid #fca5a5; font-weight: 600;">OI增減</th>
+                            <th style="background: #fecaca; color: #dc2626; padding: 10px; text-align: center; border: 1px solid #fca5a5; font-weight: 600;">OI</th>
+                            <th style="background: #1f2937; color: white; padding: 10px; text-align: center; border: 1px solid #374151; font-weight: 600;">履約價</th>
+                            <th style="background: #bbf7d0; color: #16a34a; padding: 10px; text-align: center; border: 1px solid #86efac; font-weight: 600;">OI</th>
+                            <th style="background: #bbf7d0; color: #16a34a; padding: 10px; text-align: center; border: 1px solid #86efac; font-weight: 600;">OI增減</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: #dcfce7;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -22
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">423</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.1655114589155953); width: 23.64449413079933%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                28,500
+                                
+                                <span style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); color: #22c55e; font-size: 1.2rem;">►</span>
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">2,868</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.7); width: 100.0%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #16a34a; font-weight: 600;">
+                                -192
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -87
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1,134</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.44371157070989375); width: 63.38736724427054%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,000
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1,630</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.3978382147838215); width: 56.83403068340307%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                192
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -10
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1,098</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.4296254891000559); width: 61.37506987143656%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,500
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">895</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.21844490934449093); width: 31.206415620641565%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                63
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,550
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">57</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.013912133891213388); width: 1.9874476987447698%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                1
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">862</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.3372833985466741); width: 48.183342649524874%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,600
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">442</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.10788005578800558); width: 15.411436541143656%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #16a34a; font-weight: 600;">
+                                -68
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,650
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">10</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.0024407252440725243); width: 0.3486750348675035%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                4
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -2
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">544</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.21285634432643935); width: 30.408049189491337%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,700
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">513</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.1252092050209205); width: 17.88702928870293%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                84
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,750
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">36</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.008786610878661087); width: 1.2552301255230125%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                2
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: #fed7aa;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -50
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1,157</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.4527110117384013); width: 64.67300167691448%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,800
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">761</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.1857391910739191); width: 26.534170153417016%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                48
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,850
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">106</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.025871687587168755); width: 3.695955369595537%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                88
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                58
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">542</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.21207378423700388); width: 30.296254891000558%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,900
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">322</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.07859135285913528); width: 11.227336122733613%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                22
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                3
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">4</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.0015651201788708775); width: 0.22358859698155395%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                29,950
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">19</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.004637377963737796); width: 0.6624825662482566%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                6
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: #fee2e2;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -12
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1,789</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.7); width: 100.0%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,000
+                                
+                                
+                                <span style="position: absolute; left: 5px; top: 50%; transform: translateY(-50%); color: #ef4444; font-size: 1.2rem;">◄</span>
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1,493</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.3644002789400279); width: 52.057182705718276%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                2
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">3</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.0011738401341531582); width: 0.16769144773616546%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,050
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">22</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.005369595536959554); width: 0.7670850767085077%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #16a34a; font-weight: 600;">
+                                -3
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -1
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">269</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.10525433202906652); width: 15.036333147009504%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,100
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">305</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.07444211994421199); width: 10.634588563458856%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                9
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                1
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.00039128004471771936); width: 0.05589714924538849%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,150
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">30</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.007322175732217572); width: 1.0460251046025104%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #dc2626; font-weight: 600;">
+                                -21
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">323</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.12638345444382335); width: 18.05477920626048%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,200
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">234</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.05711297071129707); width: 8.158995815899582%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                12
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                6
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">10</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.003912800447177194); width: 0.5589714924538848%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,250
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">105</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.025627615062761504); width: 3.6610878661087867%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                5
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                36
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">445</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.17411961989938513); width: 24.874231414197876%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,300
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">212</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.05174337517433751); width: 7.391910739191074%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                3
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                18
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">24</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.009390721073225266); width: 1.3415315818893236%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,350
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">20</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.0048814504881450485); width: 0.697350069735007%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                76
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">506</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.197987702627166); width: 28.283957518166574%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,400
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">187</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.045641562064156205); width: 6.520223152022315%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                29
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                3
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">23</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.008999441028507546); width: 1.285634432643935%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,450
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">25</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.0061018131101813105); width: 0.8716875871687587%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                11
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                27
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">675</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.26411403018446056); width: 37.73057574063723%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,500
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">306</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.07468619246861924); width: 10.669456066945607%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #16a34a; font-weight: 600;">
+                                -29
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                1
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">22</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.008608160983789826); width: 1.2297372833985467%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,550
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">15</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.003661087866108786); width: 0.5230125523012552%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                46
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">621</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.24298490776970375); width: 34.71212968138625%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,600
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">150</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.036610878661087864); width: 5.230125523012552%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                19
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                12
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">20</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.007825600894354388); width: 1.1179429849077696%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,650
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">6</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.0014644351464435145); width: 0.20920502092050208%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #16a34a; font-weight: 600;">
+                                -1
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                26
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">402</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.1572945779765232); width: 22.47065399664617%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,700
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">131</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.03197350069735007); width: 4.5676429567642955%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                36
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                8
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">42</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.01643376187814421); width: 2.3476802683063163%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,750
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">3</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.0007322175732217572); width: 0.10460251046025104%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                1
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                74
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">497</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.19446618222470652); width: 27.780883174958078%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,800
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">46</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.011227336122733612); width: 1.6039051603905161%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #22c55e;">
+                                2
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                2
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">13</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.005086640581330352); width: 0.7266629401900504%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,850
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                29
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">373</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.14594745667970932); width: 20.849636668529907%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,900
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">82</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.020013947001394698); width: 2.8591352859135286%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #16a34a; font-weight: 600;">
+                                -1
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                5
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">20</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.007825600894354388); width: 1.1179429849077696%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                30,950
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                38
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">1,733</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.6780883174958077); width: 96.86975964225824%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                31,000
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">53</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.012935843793584378); width: 1.8479776847977685%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; ">
+                                
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <tr style="background: white;">
+                            <!-- Call OI 增減 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; color: #ef4444;">
+                                188
+                            </td>
+                            
+                            <!-- Call OI -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">677</div>
+                                
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.264896590273896); width: 37.84237003912801%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700; position: relative;">
+                                31,300
+                                
+                                
+                            </td>
+                            
+                            <!-- Put OI -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                <div style="position: relative; z-index: 1;">19</div>
+                                
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.004637377963737796); width: 0.6624825662482566%; z-index: 0;"></div>
+                                
+                            </td>
+                            
+                            <!-- Put OI 增減 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; color: #16a34a; font-weight: 600;">
+                                -14
+                            </td>
+                        </tr>
+                        
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: #1f2937; color: white; font-weight: 700; font-size: 1rem;">
+                            <td style="padding: 12px; text-align: center; border: 1px solid #374151;" colspan="2">
+                                Call OI: 14,252
+                            </td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #374151; background: #111827;">
+                                合計
+                            </td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #374151;" colspan="2">
+                                Put OI: 11,103
+                            </td>
+                        </tr>
+                        <tr style="background: #f3f4f6; font-size: 1.05rem; font-weight: 600;">
+                            <td colspan="5" style="padding: 15px; text-align: center; border: 1px solid #e5e7eb;">
+                                P/C Ratio: 0.7790
+                                <span style="color: #dc2626; margin-left: 10px;">
+                                    (-0.2210)
+                                </span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <!-- 圖例說明 -->
+            <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; font-size: 0.85rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #fef3c7; border: 1px solid #fde047; margin-right: 5px;"></span>收盤價: 30,456</div>
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #fed7aa; border: 1px solid #fdba74; margin-right: 5px;"></span>Max Pain: 29,800</div>
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #fee2e2; border: 1px solid #fca5a5; margin-right: 5px;"></span>最大 Call OI: 30,000</div>
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #dcfce7; border: 1px solid #86efac; margin-right: 5px;"></span>最大 Put OI: 28,500</div>
                 </div>
             </div>
-            <div id="oi-chart" class="chart"></div>
         </div>
 
         <!-- OI 變化圖 (蝴蝶圖樣式) -->
@@ -1433,7 +2962,7 @@
         </div>
 
         <footer>
-            <p>報告產生時間: 2026-01-12 14:59:35 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 15:06:49 | TAIEX Options Analyzer</p>
         </footer>
         </div>
         <!-- 結束標準分析 Tab -->
@@ -1867,7 +3396,7 @@
         <!-- 結束 AI 分析 Tab -->
 
         <footer style="margin-top: 30px;">
-            <p>報告產生時間: 2026-01-12 14:59:35 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 15:06:49 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 
@@ -1891,6 +3420,8 @@
             event.currentTarget.classList.add('active');
         }
 
+        // OI 分布改為表格呈現，不使用 Plotly 圖表
+        /*
         // OI 分布圖 - 水平對稱式 (履約價在中間)
         const oiData = {"strikes": [28500, 29000, 29500, 29550, 29600, 29650, 29700, 29750, 29800, 29850, 29900, 29950, 30000, 30050, 30100, 30150, 30200, 30250, 30300, 30350, 30400, 30450, 30500, 30550, 30600, 30650, 30700, 30750, 30800, 30850, 30900, 30950, 31000, 31300], "call_oi": [423, 1134, 1098, 0, 862, 0, 544, 0, 1157, 0, 542, 4, 1789, 3, 269, 1, 323, 10, 445, 24, 506, 23, 675, 22, 621, 20, 402, 42, 497, 13, 373, 20, 1733, 677], "put_oi": [2868, 1630, 895, 57, 442, 10, 513, 36, 761, 106, 322, 19, 1493, 22, 305, 30, 234, 105, 212, 20, 187, 25, 306, 15, 150, 6, 131, 3, 46, 0, 82, 0, 53, 19], "call_oi_change": [-22, -87, -10, 0, 1, 0, -2, 0, -50, 0, 58, 3, -12, 2, -1, 1, -21, 6, 36, 18, 76, 3, 27, 1, 46, 12, 26, 8, 74, 2, 29, 5, 38, 188], "put_oi_change": [-192, 192, 63, 0, -68, 4, 84, 2, 48, 88, 22, 6, 0, -3, 9, 0, 12, 5, 3, 0, 29, 11, -29, 0, 19, -1, 36, 1, 2, 0, -1, 0, 0, -14]};
         const maxPain = 29800;
@@ -2058,8 +3589,12 @@
             annotations: annotations
         };
 
-        Plotly.newPlot('oi-chart', [callTrace, putTrace], oiLayout, {responsive: true, displayModeBar: false});
+        // Plotly.newPlot('oi-chart', [callTrace, putTrace], oiLayout, {responsive: true, displayModeBar: false});
+        */
 
+        // OI 變化圖使用 Plotly
+        const oiData = {"strikes": [28500, 29000, 29500, 29550, 29600, 29650, 29700, 29750, 29800, 29850, 29900, 29950, 30000, 30050, 30100, 30150, 30200, 30250, 30300, 30350, 30400, 30450, 30500, 30550, 30600, 30650, 30700, 30750, 30800, 30850, 30900, 30950, 31000, 31300], "call_oi": [423, 1134, 1098, 0, 862, 0, 544, 0, 1157, 0, 542, 4, 1789, 3, 269, 1, 323, 10, 445, 24, 506, 23, 675, 22, 621, 20, 402, 42, 497, 13, 373, 20, 1733, 677], "put_oi": [2868, 1630, 895, 57, 442, 10, 513, 36, 761, 106, 322, 19, 1493, 22, 305, 30, 234, 105, 212, 20, 187, 25, 306, 15, 150, 6, 131, 3, 46, 0, 82, 0, 53, 19], "call_oi_change": [-22, -87, -10, 0, 1, 0, -2, 0, -50, 0, 58, 3, -12, 2, -1, 1, -21, 6, 36, 18, 76, 3, 27, 1, 46, 12, 26, 8, 74, 2, 29, 5, 38, 188], "put_oi_change": [-192, 192, 63, 0, -68, 4, 84, 2, 48, 88, 22, 6, 0, -3, 9, 0, 12, 5, 3, 0, 29, 11, -29, 0, 19, -1, 36, 1, 2, 0, -1, 0, 0, -14]};
+        
         // OI 變化圖 - 同樣採用蝴蝶圖樣式，只顯示有變化的履約價
         const filteredChangeIndices = oiData.strikes.map((strike, idx) => {
             const totalChange = Math.abs(oiData.call_oi_change[idx]) + Math.abs(oiData.put_oi_change[idx]);
