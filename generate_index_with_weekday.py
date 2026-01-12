@@ -1,4 +1,40 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+生成帶星期的首頁 index.html
+"""
+
+from datetime import datetime
+from pathlib import Path
+
+def get_weekday_chinese(date_str: str) -> str:
+    """將 YYYYMMDD 轉換為中文星期"""
+    try:
+        date_obj = datetime.strptime(date_str, '%Y%m%d')
+        weekdays = ['一', '二', '三', '四', '五', '六', '日']
+        return weekdays[date_obj.weekday()]
+    except:
+        return ""
+
+def format_date_display(date_str: str) -> str:
+    """格式化日期顯示 YYYY/MM/DD (週X)"""
+    try:
+        date_obj = datetime.strptime(date_str, '%Y%m%d')
+        weekday = get_weekday_chinese(date_str)
+        return f"{date_obj.strftime('%Y/%m/%d')} ({weekday})"
+    except:
+        return date_str
+
+# 報告日期列表
+reports = [
+    ('20260109', True),   # (日期, 是否最新)
+    ('20260108', False),
+    ('20260107', False),
+    ('20260106', False),
+    ('20260105', False),
+]
+
+# 生成 HTML
+html_content = '''<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
@@ -117,32 +153,22 @@
             <p class="subtitle">Taiwan Stock Index Options Analysis</p>
         </header>
         <div class="reports-grid">
-            <a href="report_20260109_202601.html" class="report-card">
-                <div class="report-date">2026/01/09 (五)</div>
+'''
+
+# 加入報告卡片
+for date_str, is_latest in reports:
+    display_date = format_date_display(date_str)
+    badge_class = 'latest-badge' if is_latest else ''
+    badge_text = '最新報告' if is_latest else '歷史報告'
+    
+    html_content += f'''            <a href="report_{date_str}_202601.html" class="report-card">
+                <div class="report-date">{display_date}</div>
                 <div class="report-month">202601 月份契約</div>
-                <span class="report-badge latest-badge">最新報告</span>
+                <span class="report-badge {badge_class}">{badge_text}</span>
             </a>
-            <a href="report_20260108_202601.html" class="report-card">
-                <div class="report-date">2026/01/08 (四)</div>
-                <div class="report-month">202601 月份契約</div>
-                <span class="report-badge ">歷史報告</span>
-            </a>
-            <a href="report_20260107_202601.html" class="report-card">
-                <div class="report-date">2026/01/07 (三)</div>
-                <div class="report-month">202601 月份契約</div>
-                <span class="report-badge ">歷史報告</span>
-            </a>
-            <a href="report_20260106_202601.html" class="report-card">
-                <div class="report-date">2026/01/06 (二)</div>
-                <div class="report-month">202601 月份契約</div>
-                <span class="report-badge ">歷史報告</span>
-            </a>
-            <a href="report_20260105_202601.html" class="report-card">
-                <div class="report-date">2026/01/05 (一)</div>
-                <div class="report-month">202601 月份契約</div>
-                <span class="report-badge ">歷史報告</span>
-            </a>
-        </div>
+'''
+
+html_content += '''        </div>
         <footer>
             <p>🚀 自動生成於 2026年1月12日</p>
             <p><a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">查看專案原始碼</a></p>
@@ -150,3 +176,14 @@
     </div>
 </body>
 </html>
+'''
+
+# 寫入檔案
+output_path = Path('docs/index.html')
+with open(output_path, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print(f"✅ 首頁已更新: {output_path}")
+print("\n報告日期與星期：")
+for date_str, is_latest in reports:
+    print(f"  {'⭐' if is_latest else '  '} {format_date_display(date_str)}")

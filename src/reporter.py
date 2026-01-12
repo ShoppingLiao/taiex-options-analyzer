@@ -16,6 +16,42 @@ from .settlement_analyzer import SettlementAnalyzer, SettlementAnalysis
 from .ai_settlement_analysis import AISettlementAnalyzer
 
 
+def get_weekday_chinese(date_str: str) -> str:
+    """
+    將日期字串轉換為中文星期
+    
+    Args:
+        date_str: 日期字串，格式 YYYYMMDD
+        
+    Returns:
+        中文星期，例如 "一"
+    """
+    try:
+        date_obj = datetime.strptime(date_str, '%Y%m%d')
+        weekdays = ['一', '二', '三', '四', '五', '六', '日']
+        return weekdays[date_obj.weekday()]
+    except:
+        return ""
+
+
+def format_date_with_weekday(date_str: str) -> str:
+    """
+    格式化日期並加上星期
+    
+    Args:
+        date_str: 日期字串，格式 YYYYMMDD
+        
+    Returns:
+        格式化的日期，例如 "2026/01/09 (一)"
+    """
+    try:
+        date_obj = datetime.strptime(date_str, '%Y%m%d')
+        weekday = get_weekday_chinese(date_str)
+        return f"{date_obj.strftime('%Y/%m/%d')} ({weekday})"
+    except:
+        return date_str
+
+
 class ReportGenerator:
     """HTML 報告產生器"""
 
@@ -164,6 +200,7 @@ class ReportGenerator:
         return {
             # 基本資訊
             'date': result.date,
+            'date_with_weekday': format_date_with_weekday(result.date),
             'contract_month': result.contract_month,
             'generated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
 
