@@ -1,0 +1,375 @@
+"""
+報告產生模組
+產生 HTML 格式的選擇權分析報告
+"""
+
+import json
+from datetime import datetime
+from pathlib import Path
+from jinja2 import Environment, FileSystemLoader
+from dataclasses import dataclass
+from typing import Optional, List, Tuple
+
+from .analyzer import AnalysisResult
+from .parser import OptionsData
+
+
+class ReportGenerator:
+    """HTML 報告產生器"""
+
+    def __init__(self, template_dir: str = None, output_dir: str = None):
+        """
+        初始化報告產生器
+
+        Args:
+            template_dir: 模板目錄
+            output_dir: 報告輸出目錄
+        """
+        project_root = Path(__file__).parent.parent
+
+        if template_dir is None:
+            template_dir = project_root / "templates"
+        if output_dir is None:
+            output_dir = project_root / "reports"
+
+        self.template_dir = Path(template_dir)
+        self.output_dir = Path(output_dir)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+
+        # 設定 Jinja2 環境
+        self.env = Environment(
+            loader=FileSystemLoader(str(self.template_dir)),
+            autoescape=True
+        )
+
+    def generate(
+        self,
+        analysis_result: AnalysisResult,
+        options_data: OptionsData,
+        filename: str = None
+    ) -> str:
+        """
+        產生 HTML 報告
+
+        Args:
+            analysis_result: 分析結果
+            options_data: 原始選擇權資料
+            filename: 輸出檔名 (不含副檔名)
+
+        Returns:
+            產生的報告檔案路徑
+        """
+        if filename is None:
+            filename = f"report_{analysis_result.date}_{analysis_result.contract_month}"
+
+        # 準備模板資料
+        template_data = self._prepare_template_data(analysis_result, options_data)
+
+        # 載入並渲染模板
+        template = self.env.get_template("report.html")
+        html_content = template.render(**template_data)
+
+        # 寫入檔案
+        output_path = self.output_dir / f"{filename}.html"
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+
+        print(f"報告已產生: {output_path}")
+        return str(output_path)
+
+    def _prepare_template_data(
+        self,
+        result: AnalysisResult,
+        options_data: OptionsData
+    ) -> dict:
+        """
+        準備模板所需的資料
+        """
+        # 市場情緒解讀
+        sentiment_map = {
+            'extremely_bullish': '極度樂觀',
+            'bullish': '偏多',
+            'neutral': '中性',
+            'bearish': '偏空',
+            'extremely_bearish': '極度悲觀',
+        }
+
+        pc_ratio = result.pc_ratio_oi
+        if pc_ratio < 0.7:
+            sentiment = 'extremely_bullish'
+        elif pc_ratio < 0.9:
+            sentiment = 'bullish'
+        elif pc_ratio < 1.1:
+            sentiment = 'neutral'
+        elif pc_ratio < 1.3:
+            sentiment = 'bearish'
+        else:
+            sentiment = 'extremely_bearish'
+
+        # 準備圖表資料
+        oi_chart_data = {
+            'strikes': options_data.strike_prices,
+            'call_oi': options_data.call_oi,
+            'put_oi': options_data.put_oi,
+            'call_oi_change': options_data.call_oi_change,
+            'put_oi_change': options_data.put_oi_change,
+        }
+
+        # 準備表格資料
+        data_rows = []
+        for i, strike in enumerate(options_data.strike_prices):
+            data_rows.append({
+                'strike': strike,
+                'call_volume': options_data.call_volume[i],
+                'call_oi': options_data.call_oi[i],
+                'call_oi_change': options_data.call_oi_change[i],
+                'put_volume': options_data.put_volume[i],
+                'put_oi': options_data.put_oi[i],
+                'put_oi_change': options_data.put_oi_change[i],
+            })
+
+        # 產生市場解讀分析項目
+        analysis_items = self._generate_analysis_items(result, sentiment)
+
+        return {
+            # 基本資訊
+            'date': result.date,
+            'contract_month': result.contract_month,
+            'generated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+
+            # 關鍵指標
+            'max_pain': result.max_pain,
+            'pc_ratio_oi': result.pc_ratio_oi,
+            'pc_ratio_volume': result.pc_ratio_volume,
+            'market_sentiment': sentiment_map.get(sentiment, '未知'),
+
+            # OI 統計
+            'total_call_oi': result.total_call_oi,
+            'total_put_oi': result.total_put_oi,
+            'call_oi_change': result.call_oi_change,
+            'put_oi_change': result.put_oi_change,
+
+            # 關鍵價位
+            'max_call_oi_strike': result.max_call_oi_strike,
+            'max_put_oi_strike': result.max_put_oi_strike,
+            'max_call_oi': result.max_call_oi,
+            'max_put_oi': result.max_put_oi,
+            'call_resistance': result.call_resistance,
+            'put_support': result.put_support,
+
+            # 圖表資料
+            'oi_chart_data': json.dumps(oi_chart_data),
+
+            # 表格資料
+            'data_rows': data_rows,
+
+            # 市場解讀
+            'analysis_items': analysis_items,
+        }
+
+    def _generate_analysis_items(self, result: AnalysisResult, sentiment: str) -> list:
+        """
+        產生市場解讀分析項目
+        """
+        items = []
+
+        # P/C Ratio 分析
+        if result.pc_ratio_oi < 0.7:
+            items.append({
+                'icon': '▲',
+                'icon_class': 'icon-bullish',
+                'text': f'P/C Ratio {result.pc_ratio_oi:.4f} 極低，市場極度樂觀，需注意過熱風險'
+            })
+        elif result.pc_ratio_oi < 0.9:
+            items.append({
+                'icon': '▲',
+                'icon_class': 'icon-bullish',
+                'text': f'P/C Ratio {result.pc_ratio_oi:.4f} < 1，市場偏多，買權佈局積極'
+            })
+        elif result.pc_ratio_oi < 1.1:
+            items.append({
+                'icon': '●',
+                'icon_class': 'icon-neutral',
+                'text': f'P/C Ratio {result.pc_ratio_oi:.4f} 接近 1，市場觀望，多空勢均力敵'
+            })
+        elif result.pc_ratio_oi < 1.3:
+            items.append({
+                'icon': '▼',
+                'icon_class': 'icon-bearish',
+                'text': f'P/C Ratio {result.pc_ratio_oi:.4f} > 1，市場偏空，賣權避險增加'
+            })
+        else:
+            items.append({
+                'icon': '▼',
+                'icon_class': 'icon-bearish',
+                'text': f'P/C Ratio {result.pc_ratio_oi:.4f} 極高，市場極度悲觀，可能出現反彈契機'
+            })
+
+        # 支撐壓力分析
+        if result.max_put_oi_strike < result.max_call_oi_strike:
+            items.append({
+                'icon': '◆',
+                'icon_class': 'icon-neutral',
+                'text': f'下檔支撐 {result.max_put_oi_strike:,}，上檔壓力 {result.max_call_oi_strike:,}，區間震盪格局'
+            })
+
+        # Max Pain 分析
+        items.append({
+            'icon': '★',
+            'icon_class': 'icon-neutral',
+            'text': f'Max Pain {result.max_pain:,}，結算日價格可能向此收斂'
+        })
+
+        # OI 變化分析
+        if result.call_oi_change > 0 and result.put_oi_change > 0:
+            items.append({
+                'icon': '●',
+                'icon_class': 'icon-neutral',
+                'text': f'買賣權 OI 同步增加 (Call +{result.call_oi_change:,}, Put +{result.put_oi_change:,})，籌碼持續堆積'
+            })
+        elif result.call_oi_change > 0 and result.put_oi_change < 0:
+            items.append({
+                'icon': '▲',
+                'icon_class': 'icon-bullish',
+                'text': f'買權增倉 +{result.call_oi_change:,}，賣權減倉 {result.put_oi_change:,}，多方積極佈局'
+            })
+        elif result.call_oi_change < 0 and result.put_oi_change > 0:
+            items.append({
+                'icon': '▼',
+                'icon_class': 'icon-bearish',
+                'text': f'買權減倉 {result.call_oi_change:,}，賣權增倉 +{result.put_oi_change:,}，空方避險增加'
+            })
+
+        # 壓力支撐區域
+        resistance_str = ', '.join([f'{s:,}' for s in result.call_resistance[:3]])
+        support_str = ', '.join([f'{s:,}' for s in result.put_support[:3]])
+        items.append({
+            'icon': '◎',
+            'icon_class': 'icon-neutral',
+            'text': f'壓力區: {resistance_str} | 支撐區: {support_str}'
+        })
+
+        return items
+
+    def generate_summary_report(
+        self,
+        results: List[Tuple[AnalysisResult, OptionsData]],
+        filename: str = None
+    ) -> str:
+        """
+        產生多月份的摘要報告
+
+        Args:
+            results: (分析結果, 原始資料) 的清單
+            filename: 輸出檔名
+
+        Returns:
+            報告檔案路徑
+        """
+        if not results:
+            raise ValueError("沒有可產生報告的資料")
+
+        # 使用第一筆的日期作為報告日期
+        date = results[0][0].date
+
+        if filename is None:
+            filename = f"summary_{date}"
+
+        # 產生簡易的 HTML 報告
+        html_parts = [
+            '<!DOCTYPE html>',
+            '<html lang="zh-TW">',
+            '<head>',
+            '<meta charset="UTF-8">',
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+            f'<title>台指選擇權摘要報告 - {date}</title>',
+            '<style>',
+            'body { font-family: sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }',
+            'table { width: 100%; border-collapse: collapse; margin: 20px 0; }',
+            'th, td { padding: 10px; text-align: right; border: 1px solid #ddd; }',
+            'th { background-color: #f5f5f5; }',
+            '.positive { color: green; }',
+            '.negative { color: red; }',
+            '</style>',
+            '</head>',
+            '<body>',
+            f'<h1>台指選擇權摘要報告</h1>',
+            f'<p>交易日期: {date}</p>',
+            '<table>',
+            '<thead><tr>',
+            '<th>契約月份</th>',
+            '<th>Max Pain</th>',
+            '<th>P/C Ratio</th>',
+            '<th>買權 OI</th>',
+            '<th>賣權 OI</th>',
+            '<th>壓力價</th>',
+            '<th>支撐價</th>',
+            '</tr></thead>',
+            '<tbody>',
+        ]
+
+        for result, _ in results:
+            html_parts.append('<tr>')
+            html_parts.append(f'<td>{result.contract_month}</td>')
+            html_parts.append(f'<td>{result.max_pain:,}</td>')
+            html_parts.append(f'<td>{result.pc_ratio_oi:.4f}</td>')
+            html_parts.append(f'<td>{result.total_call_oi:,}</td>')
+            html_parts.append(f'<td>{result.total_put_oi:,}</td>')
+            html_parts.append(f'<td>{result.max_call_oi_strike:,}</td>')
+            html_parts.append(f'<td>{result.max_put_oi_strike:,}</td>')
+            html_parts.append('</tr>')
+
+        html_parts.extend([
+            '</tbody>',
+            '</table>',
+            f'<p>報告產生時間: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>',
+            '</body>',
+            '</html>',
+        ])
+
+        output_path = self.output_dir / f"{filename}.html"
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(html_parts))
+
+        print(f"摘要報告已產生: {output_path}")
+        return str(output_path)
+
+
+if __name__ == "__main__":
+    # 測試報告產生
+    from .parser import PDFParser
+    from .analyzer import OptionsAnalyzer
+    from pathlib import Path
+    import sys
+
+    if len(sys.argv) > 1:
+        pdf_path = sys.argv[1]
+    else:
+        project_root = Path(__file__).parent.parent
+        pdf_dir = project_root / "data" / "pdf"
+        pdf_files = list(pdf_dir.glob("*.pdf"))
+
+        if pdf_files:
+            pdf_path = str(pdf_files[0])
+        else:
+            print("請提供 PDF 檔案路徑或將 PDF 放入 data/pdf 目錄")
+            sys.exit(1)
+
+    print(f"處理檔案: {pdf_path}")
+
+    parser = PDFParser()
+    analyzer = OptionsAnalyzer()
+    reporter = ReportGenerator()
+
+    try:
+        options_list = parser.parse(pdf_path)
+
+        for options_data in options_list:
+            result = analyzer.analyze(options_data)
+            report_path = reporter.generate(result, options_data)
+            print(f"報告: {report_path}")
+
+    except Exception as e:
+        print(f"產生報告失敗: {e}")
+        import traceback
+        traceback.print_exc()

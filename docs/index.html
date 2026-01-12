@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台指選擇權分析報告</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 16px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .reports-section {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .reports-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .report-list {
+            list-style: none;
+        }
+
+        .report-list li {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .report-list li:last-child {
+            border-bottom: none;
+        }
+
+        .report-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .report-list a:hover {
+            text-decoration: underline;
+        }
+
+        .report-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>台指選擇權分析報告</h1>
+            <p>每日自動分析台指選擇權資料，提供 OI 分布、P/C Ratio、Max Pain 等關鍵指標</p>
+        </header>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>未平倉量分析</h3>
+                <p>視覺化呈現各履約價的 Call/Put OI 分布，快速掌握市場籌碼結構</p>
+            </div>
+            <div class="feature-card">
+                <h3>Put/Call Ratio</h3>
+                <p>計算成交量與未平倉的 P/C 比率，判斷市場情緒偏多或偏空</p>
+            </div>
+            <div class="feature-card">
+                <h3>Max Pain 分析</h3>
+                <p>找出讓選擇權買方損失最大的價位，預測結算日價格收斂點</p>
+            </div>
+            <div class="feature-card">
+                <h3>關鍵價位標註</h3>
+                <p>自動識別壓力區與支撐區，輔助交易決策</p>
+            </div>
+        </div>
+
+        <div class="reports-section">
+            <h2>分析報告</h2>
+            <ul class="report-list">
+                <li>
+                    <a href="report_20260109_202601.html">2026/01/09 - 202601 月份契約</a>
+                    <span class="report-date">2026-01-09</span>
+                </li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>TAIEX Options Analyzer | <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+</body>
+</html>

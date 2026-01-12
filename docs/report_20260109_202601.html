@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台指選擇權分析報告 - 20260109</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --call-color: #ef4444;
+            --put-color: #22c55e;
+            --warning-color: #f59e0b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
+            color: white;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .card-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .positive {
+            color: var(--put-color);
+        }
+
+        .negative {
+            color: var(--call-color);
+        }
+
+        .neutral {
+            color: var(--warning-color);
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .chart {
+            width: 100%;
+            height: 600px;
+        }
+
+        .chart-small {
+            height: 400px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .key-levels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .level-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .level-card.resistance {
+            background-color: #fef2f2;
+            border: 2px solid var(--call-color);
+        }
+
+        .level-card.support {
+            background-color: #f0fdf4;
+            border: 2px solid var(--put-color);
+        }
+
+        .level-card.max-pain {
+            background-color: #fefce8;
+            border: 2px solid var(--warning-color);
+        }
+
+        .level-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .level-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .level-detail {
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        /* 市場解讀區塊 */
+        .analysis-section {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .analysis-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .analysis-list {
+            list-style: none;
+        }
+
+        .analysis-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .analysis-list li:last-child {
+            border-bottom: none;
+        }
+
+        .analysis-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 12px;
+        }
+
+        .icon-bullish {
+            background-color: #dcfce7;
+            color: var(--put-color);
+        }
+
+        .icon-bearish {
+            background-color: #fee2e2;
+            color: var(--call-color);
+        }
+
+        .icon-neutral {
+            background-color: #fef3c7;
+            color: var(--warning-color);
+        }
+
+        /* 圖例 */
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-call {
+            background-color: var(--call-color);
+        }
+
+        .legend-put {
+            background-color: var(--put-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--bg-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        td:first-child, th:first-child {
+            text-align: left;
+        }
+
+        tr:hover {
+            background-color: var(--bg-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .key-levels {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .card-value {
+                font-size: 1.5rem;
+            }
+
+            .chart {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>台指選擇權分析報告</h1>
+            <div class="subtitle">
+                交易日期: 20260109 | 契約月份: 202601 | 結算日: 2026/01/21
+            </div>
+        </header>
+
+        <!-- 關鍵指標卡片 -->
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Max Pain 最大痛點</div>
+                <div class="card-value">29,800</div>
+                <div class="card-subtitle">選擇權結算收斂點</div>
+            </div>
+            <div class="card">
+                <div class="card-title">P/C Ratio (未平倉)</div>
+                <div class="card-value positive">
+                    0.7790
+                </div>
+                <div class="card-subtitle">偏多</div>
+            </div>
+            <div class="card">
+                <div class="card-title">買權總未平倉</div>
+                <div class="card-value" style="color: var(--call-color);">14,252</div>
+                <div class="card-subtitle">
+                    變化: <span class="positive">+455</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">賣權總未平倉</div>
+                <div class="card-value" style="color: var(--put-color);">11,103</div>
+                <div class="card-subtitle">
+                    變化: <span class="positive">+328</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 關鍵價位 -->
+        <div class="key-levels">
+            <div class="level-card resistance">
+                <div class="level-label">壓力區 (買權 OI 最大)</div>
+                <div class="level-value negative">30,000</div>
+                <div class="level-detail">1,789 口</div>
+            </div>
+            <div class="level-card max-pain">
+                <div class="level-label">Max Pain</div>
+                <div class="level-value">29,800</div>
+                <div class="level-detail">結算收斂點</div>
+            </div>
+            <div class="level-card support">
+                <div class="level-label">支撐區 (賣權 OI 最大)</div>
+                <div class="level-value positive">28,500</div>
+                <div class="level-detail">2,868 口</div>
+            </div>
+        </div>
+
+        <!-- 市場解讀 -->
+        <div class="analysis-section">
+            <h3 class="analysis-title">📊 市場解讀</h3>
+            <ul class="analysis-list">
+                
+                <li>
+                    <span class="analysis-icon icon-bullish">▲</span>
+                    P/C Ratio 0.7790 &lt; 1，市場偏多，買權佈局積極
+                </li>
+                
+                <li>
+                    <span class="analysis-icon icon-neutral">◆</span>
+                    下檔支撐 28,500，上檔壓力 30,000，區間震盪格局
+                </li>
+                
+                <li>
+                    <span class="analysis-icon icon-neutral">★</span>
+                    Max Pain 29,800，結算日價格可能向此收斂
+                </li>
+                
+                <li>
+                    <span class="analysis-icon icon-neutral">●</span>
+                    買賣權 OI 同步增加 (Call +455, Put +328)，籌碼持續堆積
+                </li>
+                
+                <li>
+                    <span class="analysis-icon icon-neutral">◎</span>
+                    壓力區: 30,000, 31,000, 29,800 | 支撐區: 28,500, 29,000, 30,000
+                </li>
+                
+            </ul>
+        </div>
+
+        <!-- OI 分布圖 (水平對稱式) -->
+        <div class="chart-container">
+            <h3 class="chart-title">未平倉量 (OI) 分布</h3>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color legend-call"></div>
+                    <span>買權 Call (壓力)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color legend-put"></div>
+                    <span>賣權 Put (支撐)</span>
+                </div>
+            </div>
+            <div id="oi-chart" class="chart"></div>
+        </div>
+
+        <!-- OI 變化圖 -->
+        <div class="chart-container">
+            <h3 class="chart-title">未平倉量變化 (OI Change)</h3>
+            <div id="oi-change-chart" class="chart chart-small"></div>
+        </div>
+
+        <!-- 詳細資料表 -->
+        <h2 class="section-title">詳細資料</h2>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>履約價</th>
+                        <th style="color: var(--call-color);">買權未平倉</th>
+                        <th style="color: var(--call-color);">買權OI變化</th>
+                        <th style="color: var(--put-color);">賣權未平倉</th>
+                        <th style="color: var(--put-color);">賣權OI變化</th>
+                        <th>總OI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td><strong>28,500</strong></td>
+                        <td style="color: var(--call-color);">423</td>
+                        <td class="negative">
+                            -22
+                        </td>
+                        <td style="color: var(--put-color);">2,868</td>
+                        <td class="negative">
+                            -192
+                        </td>
+                        <td>3,291</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,000</strong></td>
+                        <td style="color: var(--call-color);">1,134</td>
+                        <td class="negative">
+                            -87
+                        </td>
+                        <td style="color: var(--put-color);">1,630</td>
+                        <td class="positive">
+                            +192
+                        </td>
+                        <td>2,764</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,500</strong></td>
+                        <td style="color: var(--call-color);">1,098</td>
+                        <td class="negative">
+                            -10
+                        </td>
+                        <td style="color: var(--put-color);">895</td>
+                        <td class="positive">
+                            +63
+                        </td>
+                        <td>1,993</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,550</strong></td>
+                        <td style="color: var(--call-color);">0</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td style="color: var(--put-color);">57</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>57</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,600</strong></td>
+                        <td style="color: var(--call-color);">862</td>
+                        <td class="positive">
+                            +1
+                        </td>
+                        <td style="color: var(--put-color);">442</td>
+                        <td class="negative">
+                            -68
+                        </td>
+                        <td>1,304</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,650</strong></td>
+                        <td style="color: var(--call-color);">0</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td style="color: var(--put-color);">10</td>
+                        <td class="positive">
+                            +4
+                        </td>
+                        <td>10</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,700</strong></td>
+                        <td style="color: var(--call-color);">544</td>
+                        <td class="negative">
+                            -2
+                        </td>
+                        <td style="color: var(--put-color);">513</td>
+                        <td class="positive">
+                            +84
+                        </td>
+                        <td>1,057</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,750</strong></td>
+                        <td style="color: var(--call-color);">0</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td style="color: var(--put-color);">36</td>
+                        <td class="positive">
+                            +2
+                        </td>
+                        <td>36</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,800</strong></td>
+                        <td style="color: var(--call-color);">1,157</td>
+                        <td class="negative">
+                            -50
+                        </td>
+                        <td style="color: var(--put-color);">761</td>
+                        <td class="positive">
+                            +48
+                        </td>
+                        <td>1,918</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,850</strong></td>
+                        <td style="color: var(--call-color);">0</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td style="color: var(--put-color);">106</td>
+                        <td class="positive">
+                            +88
+                        </td>
+                        <td>106</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,900</strong></td>
+                        <td style="color: var(--call-color);">542</td>
+                        <td class="positive">
+                            +58
+                        </td>
+                        <td style="color: var(--put-color);">322</td>
+                        <td class="positive">
+                            +22
+                        </td>
+                        <td>864</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>29,950</strong></td>
+                        <td style="color: var(--call-color);">4</td>
+                        <td class="positive">
+                            +3
+                        </td>
+                        <td style="color: var(--put-color);">19</td>
+                        <td class="positive">
+                            +6
+                        </td>
+                        <td>23</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,000</strong></td>
+                        <td style="color: var(--call-color);">1,789</td>
+                        <td class="negative">
+                            -12
+                        </td>
+                        <td style="color: var(--put-color);">1,493</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>3,282</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,050</strong></td>
+                        <td style="color: var(--call-color);">3</td>
+                        <td class="positive">
+                            +2
+                        </td>
+                        <td style="color: var(--put-color);">22</td>
+                        <td class="negative">
+                            -3
+                        </td>
+                        <td>25</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,100</strong></td>
+                        <td style="color: var(--call-color);">269</td>
+                        <td class="negative">
+                            -1
+                        </td>
+                        <td style="color: var(--put-color);">305</td>
+                        <td class="positive">
+                            +9
+                        </td>
+                        <td>574</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,150</strong></td>
+                        <td style="color: var(--call-color);">1</td>
+                        <td class="positive">
+                            +1
+                        </td>
+                        <td style="color: var(--put-color);">30</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>31</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,200</strong></td>
+                        <td style="color: var(--call-color);">323</td>
+                        <td class="negative">
+                            -21
+                        </td>
+                        <td style="color: var(--put-color);">234</td>
+                        <td class="positive">
+                            +12
+                        </td>
+                        <td>557</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,250</strong></td>
+                        <td style="color: var(--call-color);">10</td>
+                        <td class="positive">
+                            +6
+                        </td>
+                        <td style="color: var(--put-color);">105</td>
+                        <td class="positive">
+                            +5
+                        </td>
+                        <td>115</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,300</strong></td>
+                        <td style="color: var(--call-color);">445</td>
+                        <td class="positive">
+                            +36
+                        </td>
+                        <td style="color: var(--put-color);">212</td>
+                        <td class="positive">
+                            +3
+                        </td>
+                        <td>657</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,350</strong></td>
+                        <td style="color: var(--call-color);">24</td>
+                        <td class="positive">
+                            +18
+                        </td>
+                        <td style="color: var(--put-color);">20</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>44</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,400</strong></td>
+                        <td style="color: var(--call-color);">506</td>
+                        <td class="positive">
+                            +76
+                        </td>
+                        <td style="color: var(--put-color);">187</td>
+                        <td class="positive">
+                            +29
+                        </td>
+                        <td>693</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,450</strong></td>
+                        <td style="color: var(--call-color);">23</td>
+                        <td class="positive">
+                            +3
+                        </td>
+                        <td style="color: var(--put-color);">25</td>
+                        <td class="positive">
+                            +11
+                        </td>
+                        <td>48</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,500</strong></td>
+                        <td style="color: var(--call-color);">675</td>
+                        <td class="positive">
+                            +27
+                        </td>
+                        <td style="color: var(--put-color);">306</td>
+                        <td class="negative">
+                            -29
+                        </td>
+                        <td>981</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,550</strong></td>
+                        <td style="color: var(--call-color);">22</td>
+                        <td class="positive">
+                            +1
+                        </td>
+                        <td style="color: var(--put-color);">15</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>37</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,600</strong></td>
+                        <td style="color: var(--call-color);">621</td>
+                        <td class="positive">
+                            +46
+                        </td>
+                        <td style="color: var(--put-color);">150</td>
+                        <td class="positive">
+                            +19
+                        </td>
+                        <td>771</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,650</strong></td>
+                        <td style="color: var(--call-color);">20</td>
+                        <td class="positive">
+                            +12
+                        </td>
+                        <td style="color: var(--put-color);">6</td>
+                        <td class="negative">
+                            -1
+                        </td>
+                        <td>26</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,700</strong></td>
+                        <td style="color: var(--call-color);">402</td>
+                        <td class="positive">
+                            +26
+                        </td>
+                        <td style="color: var(--put-color);">131</td>
+                        <td class="positive">
+                            +36
+                        </td>
+                        <td>533</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,750</strong></td>
+                        <td style="color: var(--call-color);">42</td>
+                        <td class="positive">
+                            +8
+                        </td>
+                        <td style="color: var(--put-color);">3</td>
+                        <td class="positive">
+                            +1
+                        </td>
+                        <td>45</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,800</strong></td>
+                        <td style="color: var(--call-color);">497</td>
+                        <td class="positive">
+                            +74
+                        </td>
+                        <td style="color: var(--put-color);">46</td>
+                        <td class="positive">
+                            +2
+                        </td>
+                        <td>543</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,850</strong></td>
+                        <td style="color: var(--call-color);">13</td>
+                        <td class="positive">
+                            +2
+                        </td>
+                        <td style="color: var(--put-color);">0</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>13</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,900</strong></td>
+                        <td style="color: var(--call-color);">373</td>
+                        <td class="positive">
+                            +29
+                        </td>
+                        <td style="color: var(--put-color);">82</td>
+                        <td class="negative">
+                            -1
+                        </td>
+                        <td>455</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>30,950</strong></td>
+                        <td style="color: var(--call-color);">20</td>
+                        <td class="positive">
+                            +5
+                        </td>
+                        <td style="color: var(--put-color);">0</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>20</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>31,000</strong></td>
+                        <td style="color: var(--call-color);">1,733</td>
+                        <td class="positive">
+                            +38
+                        </td>
+                        <td style="color: var(--put-color);">53</td>
+                        <td class="">
+                            +0
+                        </td>
+                        <td>1,786</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>31,300</strong></td>
+                        <td style="color: var(--call-color);">677</td>
+                        <td class="positive">
+                            +188
+                        </td>
+                        <td style="color: var(--put-color);">19</td>
+                        <td class="negative">
+                            -14
+                        </td>
+                        <td>696</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>報告產生時間: 2026-01-12 09:21:29 | TAIEX Options Analyzer</p>
+        </footer>
+    </div>
+
+    <script>
+        // OI 分布圖 - 水平對稱式 (履約價在中間)
+        const oiData = {"strikes": [28500, 29000, 29500, 29550, 29600, 29650, 29700, 29750, 29800, 29850, 29900, 29950, 30000, 30050, 30100, 30150, 30200, 30250, 30300, 30350, 30400, 30450, 30500, 30550, 30600, 30650, 30700, 30750, 30800, 30850, 30900, 30950, 31000, 31300], "call_oi": [423, 1134, 1098, 0, 862, 0, 544, 0, 1157, 0, 542, 4, 1789, 3, 269, 1, 323, 10, 445, 24, 506, 23, 675, 22, 621, 20, 402, 42, 497, 13, 373, 20, 1733, 677], "put_oi": [2868, 1630, 895, 57, 442, 10, 513, 36, 761, 106, 322, 19, 1493, 22, 305, 30, 234, 105, 212, 20, 187, 25, 306, 15, 150, 6, 131, 3, 46, 0, 82, 0, 53, 19], "call_oi_change": [-22, -87, -10, 0, 1, 0, -2, 0, -50, 0, 58, 3, -12, 2, -1, 1, -21, 6, 36, 18, 76, 3, 27, 1, 46, 12, 26, 8, 74, 2, 29, 5, 38, 188], "put_oi_change": [-192, 192, 63, 0, -68, 4, 84, 2, 48, 88, 22, 6, 0, -3, 9, 0, 12, 5, 3, 0, 29, 11, -29, 0, 19, -1, 36, 1, 2, 0, -1, 0, 0, -14]};
+        const maxPain = 29800;
+
+        // Call 向左延伸 (負值)，Put 向右延伸 (正值)
+        const callTrace = {
+            y: oiData.strikes,
+            x: oiData.call_oi.map(v => -v),
+            name: '買權 Call',
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: '#ef4444',
+                line: { color: '#dc2626', width: 1 }
+            },
+            hovertemplate: '履約價: %{y}<br>買權 OI: %{customdata:,}<extra></extra>',
+            customdata: oiData.call_oi
+        };
+
+        const putTrace = {
+            y: oiData.strikes,
+            x: oiData.put_oi,
+            name: '賣權 Put',
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: '#22c55e',
+                line: { color: '#16a34a', width: 1 }
+            },
+            hovertemplate: '履約價: %{y}<br>賣權 OI: %{x:,}<extra></extra>'
+        };
+
+        // 找出最大值以設定 x 軸範圍
+        const maxOI = Math.max(...oiData.call_oi, ...oiData.put_oi);
+        const axisRange = maxOI * 1.1;
+
+        const oiLayout = {
+            barmode: 'relative',
+            bargap: 0.1,
+            xaxis: {
+                title: '未平倉量 (口)',
+                range: [-axisRange, axisRange],
+                tickformat: ',d',
+                tickvals: [-axisRange, -axisRange/2, 0, axisRange/2, axisRange],
+                ticktext: [Math.round(axisRange).toLocaleString(), Math.round(axisRange/2).toLocaleString(), '0', Math.round(axisRange/2).toLocaleString(), Math.round(axisRange).toLocaleString()]
+            },
+            yaxis: {
+                title: '履約價',
+                tickformat: ',d',
+                dtick: 500
+            },
+            showlegend: false,
+            margin: { t: 20, r: 50, b: 50, l: 80 },
+            shapes: [{
+                type: 'line',
+                x0: -axisRange,
+                x1: axisRange,
+                y0: maxPain,
+                y1: maxPain,
+                line: { color: '#f59e0b', width: 3, dash: 'dash' }
+            }],
+            annotations: [{
+                x: axisRange * 0.8,
+                y: maxPain,
+                text: 'Max Pain: ' + maxPain.toLocaleString(),
+                showarrow: true,
+                arrowhead: 2,
+                ax: 0,
+                ay: -30,
+                font: { color: '#f59e0b', size: 12, weight: 'bold' }
+            },
+            {
+                x: -axisRange * 0.5,
+                y: oiData.strikes[oiData.strikes.length - 1] + 200,
+                text: '← Call (壓力)',
+                showarrow: false,
+                font: { color: '#ef4444', size: 14, weight: 'bold' }
+            },
+            {
+                x: axisRange * 0.5,
+                y: oiData.strikes[oiData.strikes.length - 1] + 200,
+                text: 'Put (支撐) →',
+                showarrow: false,
+                font: { color: '#22c55e', size: 14, weight: 'bold' }
+            }]
+        };
+
+        Plotly.newPlot('oi-chart', [callTrace, putTrace], oiLayout, {responsive: true});
+
+        // OI 變化圖 - 同樣是水平對稱式
+        const callChangeTrace = {
+            y: oiData.strikes,
+            x: oiData.call_oi_change.map(v => -v),
+            name: '買權 OI 變化',
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: oiData.call_oi_change.map(v => v >= 0 ? '#fca5a5' : '#ef4444')
+            },
+            hovertemplate: '履約價: %{y}<br>買權變化: %{customdata:+,}<extra></extra>',
+            customdata: oiData.call_oi_change
+        };
+
+        const putChangeTrace = {
+            y: oiData.strikes,
+            x: oiData.put_oi_change,
+            name: '賣權 OI 變化',
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: oiData.put_oi_change.map(v => v >= 0 ? '#86efac' : '#22c55e')
+            },
+            hovertemplate: '履約價: %{y}<br>賣權變化: %{x:+,}<extra></extra>'
+        };
+
+        const maxChange = Math.max(
+            ...oiData.call_oi_change.map(Math.abs),
+            ...oiData.put_oi_change.map(Math.abs)
+        );
+        const changeRange = maxChange * 1.2;
+
+        const changeLayout = {
+            barmode: 'relative',
+            bargap: 0.1,
+            xaxis: {
+                title: 'OI 變化 (口)',
+                range: [-changeRange, changeRange],
+                tickformat: '+,d'
+            },
+            yaxis: {
+                title: '履約價',
+                tickformat: ',d',
+                dtick: 500
+            },
+            showlegend: false,
+            margin: { t: 20, r: 50, b: 50, l: 80 },
+            annotations: [{
+                x: -changeRange * 0.5,
+                y: oiData.strikes[oiData.strikes.length - 1] + 200,
+                text: '← Call 變化',
+                showarrow: false,
+                font: { color: '#ef4444', size: 12 }
+            },
+            {
+                x: changeRange * 0.5,
+                y: oiData.strikes[oiData.strikes.length - 1] + 200,
+                text: 'Put 變化 →',
+                showarrow: false,
+                font: { color: '#22c55e', size: 12 }
+            }]
+        };
+
+        Plotly.newPlot('oi-change-chart', [callChangeTrace, putChangeTrace], changeLayout, {responsive: true});
+    </script>
+</body>
+</html>
