@@ -621,17 +621,17 @@
                 </div>
                 <div class="card">
                     <div class="card-title">最高價</div>
-                    <div class="card-value positive">{{ "{:,.0f}".format(tx_data.high) }}</div>
+                    <div class="card-value" style="color: #ef4444;">{{ "{:,.0f}".format(tx_data.high) }}</div>
                     <div class="card-subtitle">Highest Price</div>
                 </div>
                 <div class="card">
                     <div class="card-title">最低價</div>
-                    <div class="card-value negative">{{ "{:,.0f}".format(tx_data.low) }}</div>
+                    <div class="card-value" style="color: #22c55e;">{{ "{:,.0f}".format(tx_data.low) }}</div>
                     <div class="card-subtitle">Lowest Price</div>
                 </div>
                 <div class="card">
                     <div class="card-title">收盤價</div>
-                    <div class="card-value">{{ "{:,.0f}".format(tx_data.close) }}</div>
+                    <div class="card-value {% if tx_data.close > tx_data.open %}negative{% elif tx_data.close < tx_data.open %}positive{% endif %}">{{ "{:,.0f}".format(tx_data.close) }}</div>
                     <div class="card-subtitle">Closing Price</div>
                 </div>
                 <div class="card">
@@ -661,13 +661,13 @@
                                 <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">開盤</div>
                                 <div style="font-size: 1.5rem; font-weight: 600;">{{ "{:,.0f}".format(tx_data.open) }}</div>
                             </div>
-                            <div style="padding: 15px; background: #dcfce7; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">最高</div>
-                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--put-color);">{{ "{:,.0f}".format(tx_data.high) }}</div>
-                            </div>
                             <div style="padding: 15px; background: #fee2e2; border-radius: 8px;">
+                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">最高</div>
+                                <div style="font-size: 1.5rem; font-weight: 600; color: #dc2626;">{{ "{:,.0f}".format(tx_data.high) }}</div>
+                            </div>
+                            <div style="padding: 15px; background: #dcfce7; border-radius: 8px;">
                                 <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">最低</div>
-                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--call-color);">{{ "{:,.0f}".format(tx_data.low) }}</div>
+                                <div style="font-size: 1.5rem; font-weight: 600; color: #16a34a;">{{ "{:,.0f}".format(tx_data.low) }}</div>
                             </div>
                             <div style="padding: 15px; background: #f1f5f9; border-radius: 8px;">
                                 <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">震盪幅度</div>
