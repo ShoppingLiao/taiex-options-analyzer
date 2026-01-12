@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結算情境 RWD 演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .device-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .device-btn {
+            padding: 12px 24px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .device-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .device-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .viewport {
+            margin: 0 auto;
+            border: 8px solid #1e293b;
+            border-radius: 16px;
+            background: #f8fafc;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .viewport.desktop {
+            max-width: 1400px;
+        }
+
+        .viewport.tablet {
+            max-width: 1024px;
+        }
+
+        .viewport.mobile {
+            max-width: 375px;
+        }
+
+        .viewport-label {
+            text-align: center;
+            margin-top: 15px;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        /* 模擬的結算情境分析 */
+        .settlement-section {
+            margin: 20px;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .analysis-title {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .settlement-meta {
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .settlement-meta p {
+            margin: 8px 0;
+        }
+
+        .scenarios-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scenarios-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .scenario-card {
+            background: linear-gradient(135deg, #fafafa, #ffffff);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            min-width: 350px;
+            max-width: 400px;
+            flex-shrink: 0;
+        }
+
+        .scenario-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .scenario-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .scenario-probability {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .probability-高 {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .probability-中等 {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .probability-低 {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .scenario-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .scenario-item strong {
+            color: #2563eb;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .scenario-range {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1e40af;
+            display: inline-block;
+        }
+
+        .scenario-conditions {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .scenario-conditions li {
+            padding: 6px 12px;
+            margin: 4px 0;
+            background: #f8fafc;
+            border-left: 3px solid #2563eb;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .scenario-description {
+            background: #f9fafb;
+            padding: 12px 16px;
+            border-radius: 6px;
+            line-height: 1.6;
+            font-size: 0.875rem;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🎯 結算情境分析 RWD 演示</h1>
+        <p class="subtitle">調整視窗大小或點擊按鈕切換不同裝置預覽</p>
+
+        <div class="device-selector">
+            <button class="device-btn active" onclick="setDevice('desktop')">
+                💻 電腦版 (1400px)
+            </button>
+            <button class="device-btn" onclick="setDevice('tablet')">
+                📱 平板 (1024px)
+            </button>
+            <button class="device-btn" onclick="setDevice('mobile')">
+                📱 手機 (375px)
+            </button>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 設計特點</h3>
+            <ul style="padding-left: 20px; line-height: 1.8;">
+                <li><strong>電腦版</strong>: 三個情境並排顯示 (每個卡片 max 400px)，方便橫向比較</li>
+                <li><strong>平板/手機版</strong>: 左右滾動瀏覽，保持卡片完整性不壓縮</li>
+                <li><strong>滾動條</strong>: 自訂樣式，提供視覺化的滾動進度提示</li>
+                <li><strong>觸控優化</strong>: 流暢的滑動體驗，支援手勢操作</li>
+            </ul>
+        </div>
+
+        <div class="viewport desktop" id="viewport">
+            <div class="settlement-section">
+                <h3 class="analysis-title">🎯 202601 結算情境分析</h3>
+                
+                <div class="settlement-meta">
+                    <p><strong>莊家位置判斷：</strong> 29,800 點附近建立買方倉位</p>
+                    <p><strong>市場偏向：</strong> 偏多格局，賣權未平倉量較大</p>
+                </div>
+
+                <div class="scenarios-container">
+                    <!-- 情境 A -->
+                    <div class="scenario-card">
+                        <div class="scenario-header">
+                            <h4 class="scenario-name">情境 A：強勢突破</h4>
+                            <span class="scenario-probability probability-高">機率：高</span>
+                        </div>
+                        
+                        <div class="scenario-content">
+                            <div class="scenario-item">
+                                <strong>結算區間：</strong>
+                                <span class="scenario-range">29,500 - 30,100 點</span>
+                            </div>
+                            
+                            <div class="scenario-item">
+                                <strong>觸發條件：</strong>
+                                <ul class="scenario-conditions">
+                                    <li>國際股市持續走強</li>
+                                    <li>台幣匯率穩定</li>
+                                    <li>成交量放大至 1,800 億以上</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="scenario-item">
+                                <strong>情境描述：</strong>
+                                <p class="scenario-description">
+                                    莊家在 29,800 建立的買方倉位獲利，市場呈現偏多格局。
+                                    買權 30,000 存在較大壓力，若突破將帶動指數向上。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 情境 B -->
+                    <div class="scenario-card">
+                        <div class="scenario-header">
+                            <h4 class="scenario-name">情境 B：區間震盪</h4>
+                            <span class="scenario-probability probability-中等">機率：中等</span>
+                        </div>
+                        
+                        <div class="scenario-content">
+                            <div class="scenario-item">
+                                <strong>結算區間：</strong>
+                                <span class="scenario-range">29,800 - 30,500 點</span>
+                            </div>
+                            
+                            <div class="scenario-item">
+                                <strong>觸發條件：</strong>
+                                <ul class="scenario-conditions">
+                                    <li>等待重要經濟數據</li>
+                                    <li>成交量維持在 1,500 億左右</li>
+                                    <li>外資持續小幅買超</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="scenario-item">
+                                <strong>情境描述：</strong>
+                                <p class="scenario-description">
+                                    在 Max Pain 29,800 附近震盪整理，莊家維持中性偏多態度。
+                                    等待明確方向突破訊號。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 情境 C -->
+                    <div class="scenario-card">
+                        <div class="scenario-header">
+                            <h4 class="scenario-name">情境 C：回檔修正</h4>
+                            <span class="scenario-probability probability-低">機率：低</span>
+                        </div>
+                        
+                        <div class="scenario-content">
+                            <div class="scenario-item">
+                                <strong>結算區間：</strong>
+                                <span class="scenario-range">28,000 - 29,300 點</span>
+                            </div>
+                            
+                            <div class="scenario-item">
+                                <strong>觸發條件：</strong>
+                                <ul class="scenario-conditions">
+                                    <li>國際市場出現黑天鵝事件</li>
+                                    <li>外資大幅調節台股</li>
+                                    <li>成交量急速萎縮</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="scenario-item">
+                                <strong>情境描述：</strong>
+                                <p class="scenario-description">
+                                    若遇突發利空，指數可能回測 28,500 賣權支撐。
+                                    此情境機率較低，但需留意風險控管。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="viewport-label" id="viewportLabel">
+            📐 當前視窗: <strong>電腦版 (1400px)</strong> - 三個情境完整並排顯示
+        </p>
+    </div>
+
+    <script>
+        function setDevice(device) {
+            const viewport = document.getElementById('viewport');
+            const label = document.getElementById('viewportLabel');
+            const buttons = document.querySelectorAll('.device-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            viewport.className = 'viewport ' + device;
+            
+            const labels = {
+                desktop: '📐 當前視窗: <strong>電腦版 (1400px)</strong> - 三個情境完整並排顯示',
+                tablet: '📐 當前視窗: <strong>平板 (1024px)</strong> - 顯示約 2.5 個情境，可左右滑動',
+                mobile: '📐 當前視窗: <strong>手機 (375px)</strong> - 顯示 1 個情境，左右滑動切換'
+            };
+            
+            label.innerHTML = labels[device];
+        }
+    </script>
+</body>
+</html>
