@@ -25,6 +25,14 @@ class OptionsData:
     put_oi_change: List[int]  # 賣權未平倉量變化
     settlement_price: Optional[float] = None  # 結算價
     spot_price: Optional[float] = None  # 現貨價格
+    
+    # 台指期貨基本資料
+    tx_open: Optional[float] = None  # 開盤價
+    tx_high: Optional[float] = None  # 最高價
+    tx_low: Optional[float] = None  # 最低價
+    tx_close: Optional[float] = None  # 收盤價
+    tx_volume: Optional[int] = None  # 成交量
+    tx_settlement: Optional[float] = None  # 結算價
 
     def to_dataframe(self) -> pd.DataFrame:
         """轉換為 DataFrame"""
