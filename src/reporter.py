@@ -12,6 +12,7 @@ from typing import Optional, List, Tuple
 
 from .analyzer import AnalysisResult
 from .parser import OptionsData
+from .settlement_analyzer import SettlementAnalyzer, SettlementAnalysis
 
 
 class ReportGenerator:
@@ -41,6 +42,9 @@ class ReportGenerator:
             loader=FileSystemLoader(str(self.template_dir)),
             autoescape=True
         )
+        
+        # 初始化結算情境分析器
+        self.settlement_analyzer = SettlementAnalyzer()
 
     def generate(
         self,
@@ -62,8 +66,11 @@ class ReportGenerator:
         if filename is None:
             filename = f"report_{analysis_result.date}_{analysis_result.contract_month}"
 
+        # 進行結算情境分析
+        settlement_analysis = self.settlement_analyzer.analyze_settlement_scenarios(options_data)
+
         # 準備模板資料
-        template_data = self._prepare_template_data(analysis_result, options_data)
+        template_data = self._prepare_template_data(analysis_result, options_data, settlement_analysis)
 
         # 載入並渲染模板
         template = self.env.get_template("report.html")
@@ -80,7 +87,8 @@ class ReportGenerator:
     def _prepare_template_data(
         self,
         result: AnalysisResult,
-        options_data: OptionsData
+        options_data: OptionsData,
+        settlement_analysis: SettlementAnalysis = None
     ) -> dict:
         """
         準備模板所需的資料
@@ -130,6 +138,20 @@ class ReportGenerator:
 
         # 產生市場解讀分析項目
         analysis_items = self._generate_analysis_items(result, sentiment)
+        
+        # 準備結算情境資料
+        settlement_scenarios = []
+        if settlement_analysis:
+            for scenario in settlement_analysis.scenarios:
+                settlement_scenarios.append({
+                    'name': scenario.name,
+                    'probability': scenario.probability,
+                    'settlement_range': f"{scenario.settlement_range[0]:,} ~ {scenario.settlement_range[1]:,}",
+                    'conditions': scenario.conditions,
+                    'description': scenario.description,
+                    'impact': scenario.impact,
+                    'key_levels': [f"{k:,}" for k in scenario.key_levels]
+                })
 
         return {
             # 基本資訊
@@ -165,6 +187,11 @@ class ReportGenerator:
 
             # 市場解讀
             'analysis_items': analysis_items,
+            
+            # 結算情境分析
+            'settlement_scenarios': settlement_scenarios,
+            'dealer_position': settlement_analysis.dealer_position if settlement_analysis else '',
+            'market_bias': settlement_analysis.market_bias if settlement_analysis else '',
         }
 
     def _generate_analysis_items(self, result: AnalysisResult, sentiment: str) -> list:

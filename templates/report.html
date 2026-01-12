@@ -236,6 +236,138 @@
             color: var(--warning-color);
         }
 
+        /* 結算情境分析區塊 */
+        .settlement-section {
+            margin: 30px 0;
+            padding: 24px;
+        }
+
+        .settlement-meta {
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .settlement-meta p {
+            margin: 8px 0;
+        }
+
+        .scenarios-container {
+            display: grid;
+            gap: 20px;
+        }
+
+        .scenario-card {
+            background: linear-gradient(135deg, #fafafa, #ffffff);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .scenario-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .scenario-probability {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .probability-高 {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .probability-中等 {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .probability-低 {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .scenario-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .scenario-item {
+            padding: 12px 0;
+        }
+
+        .scenario-item strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .scenario-range {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1e40af;
+            display: inline-block;
+        }
+
+        .scenario-conditions {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .scenario-conditions li {
+            padding: 6px 12px;
+            margin: 4px 0;
+            background: #f8fafc;
+            border-left: 3px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .scenario-description, .scenario-impact {
+            background: #f9fafb;
+            padding: 12px 16px;
+            border-radius: 6px;
+            line-height: 1.7;
+        }
+
+        .scenario-impact {
+            background: #fef9f3;
+            border-left: 3px solid var(--warning-color);
+        }
+
+        .scenario-levels {
+            background: #ecfdf5;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #059669;
+            display: inline-block;
+        }
+
         /* 圖例 */
         .chart-legend {
             display: flex;
@@ -391,6 +523,62 @@
                 {% endfor %}
             </ul>
         </div>
+
+        <!-- 結算情境分析 -->
+        {% if settlement_scenarios %}
+        <div class="settlement-section card">
+            <h3 class="analysis-title">🎯 {{ contract_month }} 結算情境分析</h3>
+            
+            <div class="settlement-meta">
+                <p><strong>莊家位置判斷：</strong> {{ dealer_position }}</p>
+                <p><strong>市場偏向：</strong> {{ market_bias }}</p>
+            </div>
+
+            <div class="scenarios-container">
+                {% for scenario in settlement_scenarios %}
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <h4 class="scenario-name">{{ scenario.name }}</h4>
+                        <span class="scenario-probability probability-{{ scenario.probability|lower }}">
+                            機率：{{ scenario.probability }}
+                        </span>
+                    </div>
+                    
+                    <div class="scenario-content">
+                        <div class="scenario-item">
+                            <strong>結算區間：</strong>
+                            <span class="scenario-range">{{ scenario.settlement_range }} 點</span>
+                        </div>
+                        
+                        <div class="scenario-item">
+                            <strong>觸發條件：</strong>
+                            <ul class="scenario-conditions">
+                                {% for condition in scenario.conditions %}
+                                <li>{{ condition }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                        <div class="scenario-item">
+                            <strong>情境描述：</strong>
+                            <p class="scenario-description">{{ scenario.description }}</p>
+                        </div>
+                        
+                        <div class="scenario-item">
+                            <strong>結算影響：</strong>
+                            <p class="scenario-impact">{{ scenario.impact }}</p>
+                        </div>
+                        
+                        <div class="scenario-item">
+                            <strong>關鍵價位：</strong>
+                            <span class="scenario-levels">{{ scenario.key_levels|join(', ') }} 點</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
         <!-- OI 分布圖 (水平對稱式) -->
         <div class="chart-container">
