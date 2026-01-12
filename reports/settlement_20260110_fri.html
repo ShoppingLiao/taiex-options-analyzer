@@ -860,11 +860,11 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">分析數據</div>
-                    <div class="info-value">01/07、01/08</div>
+                    <div class="info-value">01/08、01/09</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">報告生成</div>
-                    <div class="info-value">2026/01/12 21:00</div>
+                    <div class="info-value">2026/01/12 22:03</div>
                 </div>
             </div>
         </header>
@@ -881,6 +881,9 @@
                 <button class="tab-button" onclick="switchTab('trader-view')">
                     <span class="tab-icon">🧑‍💼</span>交易員視角
                 </button>
+                <button class="tab-button" onclick="switchTab('settlement-review')">
+                    <span class="tab-icon">📝</span>盤後檢討
+                </button>
             </div>
         </div>
 
@@ -895,9 +898,9 @@
             </div>
             
             <div class="trend-overview">
-                <div class="trend-indicator neutral">
+                <div class="trend-indicator bearish">
                     <div class="trend-label">整體趨勢</div>
-                    <div class="trend-value">震盪整理 (中性)</div>
+                    <div class="trend-value">空頭趨勢 (中性)</div>
                     <div class="trend-strength">強度評級</div>
                     <div class="strength-stars">⭐⭐⭐</div>
                 </div>
@@ -905,13 +908,13 @@
                 <div class="predicted-range">
                     <div class="range-title">預測結算區間</div>
                     <div class="range-display">
-                        <span>29,400</span>
+                        <span>29,500</span>
                         <span class="range-separator">～</span>
-                        <span>30,300</span>
+                        <span>30,500</span>
                     </div>
                     <div class="current-price-badge">
                         <div class="current-price-label">當前價格</div>
-                        <div class="current-price-value">30,372</div>
+                        <div class="current-price-value">30,456</div>
                     </div>
                 </div>
             </div>
@@ -926,13 +929,13 @@
             
             <div class="signals-grid">
                 
-                <div class="signal-card neutral">
+                <div class="signal-card bullish">
                     <div class="signal-header">
                         <div class="signal-direction">
-                            <span>➖</span>
-                            <span>中性訊號</span>
+                            <span>📈</span>
+                            <span>多頭訊號</span>
                         </div>
-                        <div class="signal-strength">2/5</div>
+                        <div class="signal-strength">3/5</div>
                     </div>
                     <div class="signal-indicators">
                         
@@ -941,7 +944,7 @@
                         <span class="indicator-tag">市場情緒</span>
                         
                     </div>
-                    <div class="signal-description">P/C Ratio 維持中性 (0.72)</div>
+                    <div class="signal-description">P/C Ratio 下降趨勢 (1.00 → 0.78)，空方減碼</div>
                 </div>
                 
                 <div class="signal-card neutral">
@@ -959,7 +962,7 @@
                         <span class="indicator-tag">趨勢方向</span>
                         
                     </div>
-                    <div class="signal-description">價格窄幅震盪 (+157 點)，方向不明</div>
+                    <div class="signal-description">價格窄幅震盪 (+84 點)，方向不明</div>
                 </div>
                 
                 <div class="signal-card bearish">
@@ -977,7 +980,7 @@
                         <span class="indicator-tag">磁吸效應</span>
                         
                     </div>
-                    <div class="signal-description">價格高於 Max Pain +472 點 (1.6%)，結算前可能回歸</div>
+                    <div class="signal-description">價格高於 Max Pain +656 點 (2.2%)，結算前可能回歸</div>
                 </div>
                 
             </div>
@@ -995,69 +998,25 @@
                 <div class="scenario-card primary">
                     <div class="scenario-header">
                         <div class="scenario-name">
-                            <span class="scenario-icon">⚖️</span>
-                            <span>震盪整理</span>
-                        </div>
-                        <div class="scenario-probability">50.0%</div>
-                    </div>
-                    
-                    <div class="scenario-range">
-                        <div class="range-label">預測區間</div>
-                        <div class="range-values">29,400 ～ 30,300</div>
-                    </div>
-                    
-                    <div class="range-label">關鍵價位</div>
-                    <div class="key-levels">
-                        
-                        <span class="level-badge">29,900</span>
-                        
-                        <span class="level-badge">29,850</span>
-                        
-                        <span class="level-badge">29,850</span>
-                        
-                    </div>
-                    
-                    <div class="conditions-list">
-                        <div class="range-label">成立條件</div>
-                        
-                        <div class="condition-item">✓ 多空力道均衡</div>
-                        
-                        <div class="condition-item">✓ OI 分佈集中在特定區間</div>
-                        
-                        <div class="condition-item">✓ 價格在 Max Pain 附近磁吸</div>
-                        
-                        <div class="condition-item">✓ 波動度收斂</div>
-                        
-                    </div>
-                    
-                    <div class="strategy-box">
-                        <div class="strategy-label">💡 操作建議</div>
-                        <div class="strategy-text">區間操作為主，高出低進，避免追高殺低</div>
-                    </div>
-                </div>
-                
-                <div class="scenario-card ">
-                    <div class="scenario-header">
-                        <div class="scenario-name">
                             <span class="scenario-icon">📉</span>
                             <span>回檔修正</span>
                         </div>
-                        <div class="scenario-probability">50.0%</div>
+                        <div class="scenario-probability">44.4%</div>
                     </div>
                     
                     <div class="scenario-range">
                         <div class="range-label">預測區間</div>
-                        <div class="range-values">29,150 ～ 29,450</div>
+                        <div class="range-values">29,250 ～ 29,550</div>
                     </div>
                     
                     <div class="range-label">關鍵價位</div>
                     <div class="key-levels">
-                        
-                        <span class="level-badge">29,200</span>
                         
                         <span class="level-badge">29,300</span>
                         
                         <span class="level-badge">29,400</span>
+                        
+                        <span class="level-badge">29,500</span>
                         
                     </div>
                     
@@ -1091,24 +1050,24 @@
                     
                     <div class="scenario-range">
                         <div class="range-label">預測區間</div>
-                        <div class="range-values">29,800 ～ 30,000</div>
+                        <div class="range-values">29,700 ～ 29,900</div>
                     </div>
                     
                     <div class="range-label">關鍵價位</div>
                     <div class="key-levels">
                         
+                        <span class="level-badge">29,700</span>
+                        
                         <span class="level-badge">29,800</span>
                         
                         <span class="level-badge">29,900</span>
-                        
-                        <span class="level-badge">30,000</span>
                         
                     </div>
                     
                     <div class="conditions-list">
                         <div class="range-label">成立條件</div>
                         
-                        <div class="condition-item">✓ 價格距離 Max Pain 472 點</div>
+                        <div class="condition-item">✓ 價格距離 Max Pain 656 點</div>
                         
                         <div class="condition-item">✓ 結算日臨近，磁吸效應增強</div>
                         
@@ -1120,7 +1079,51 @@
                     
                     <div class="strategy-box">
                         <div class="strategy-label">💡 操作建議</div>
-                        <div class="strategy-text">預期價格向 29,900 靠攏，可布局雙賣策略</div>
+                        <div class="strategy-text">預期價格向 29,800 靠攏，可布局雙賣策略</div>
+                    </div>
+                </div>
+                
+                <div class="scenario-card ">
+                    <div class="scenario-header">
+                        <div class="scenario-name">
+                            <span class="scenario-icon">🚀</span>
+                            <span>強勢上攻</span>
+                        </div>
+                        <div class="scenario-probability">33.3%</div>
+                    </div>
+                    
+                    <div class="scenario-range">
+                        <div class="range-label">預測區間</div>
+                        <div class="range-values">30,450 ～ 30,750</div>
+                    </div>
+                    
+                    <div class="range-label">關鍵價位</div>
+                    <div class="key-levels">
+                        
+                        <span class="level-badge">30,500</span>
+                        
+                        <span class="level-badge">30,600</span>
+                        
+                        <span class="level-badge">30,700</span>
+                        
+                    </div>
+                    
+                    <div class="conditions-list">
+                        <div class="range-label">成立條件</div>
+                        
+                        <div class="condition-item">✓ 多方持續加碼買權部位</div>
+                        
+                        <div class="condition-item">✓ P/C Ratio 持續下降</div>
+                        
+                        <div class="condition-item">✓ 價格突破近期高點</div>
+                        
+                        <div class="condition-item">✓ 成交量放大配合</div>
+                        
+                    </div>
+                    
+                    <div class="strategy-box">
+                        <div class="strategy-label">💡 操作建議</div>
+                        <div class="strategy-text">順勢做多，停利設在區間上緣 +100，停損在 Max Pain</div>
                     </div>
                 </div>
                 
@@ -1138,19 +1141,21 @@
                 
                 <div class="metric-card">
                     <div class="metric-label">Max Pain</div>
-                    <div class="metric-value">29,900</div>
+                    <div class="metric-value">29,800</div>
                     
                 </div>
                 
                 <div class="metric-card">
                     <div class="metric-label">P/C Ratio</div>
-                    <div class="metric-value">0.72</div>
+                    <div class="metric-value">0.78</div>
+                    
+                    <div class="metric-change negative">-0.11</div>
                     
                 </div>
                 
                 <div class="metric-card">
                     <div class="metric-label">當前價格</div>
-                    <div class="metric-value">30,372</div>
+                    <div class="metric-value">30,456</div>
                     
                 </div>
                 
@@ -1158,6 +1163,21 @@
         </div>
 
         <!-- Risks -->
+        
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚠️</span>
+                <h2 class="section-title">風險提示</h2>
+            </div>
+            
+            <div class="risks-list">
+                
+                <div class="risk-item">⚠️ 價格遠離 Max Pain (656 點)，磁吸風險高</div>
+                
+                <div class="risk-item">⚠️ 趨勢訊號分歧，市場方向不明確</div>
+                
+            </div>
+        </div>
         
 
         </div>
@@ -1198,23 +1218,23 @@
                     <div class="price-levels">
                         <div class="price-level resistance">
                             <div class="level-label" style="color: var(--danger-color);">🔴 上檔天花板</div>
-                            <div class="level-range">30,200 ~ 30,600</div>
+                            <div class="level-range">30,400 ~ 30,800</div>
                             <div class="level-desc">
-                                夜盤高點 29,975 接近壓力區便拉回，這印證了 Call OI 大增的壓制力。<strong>除非早盤有極大利多，否則要結算在此之上的機率較低</strong>，因為莊家會全力守住這道防線以賺取 Call 的權利金。
+                                夜盤高點 30,125 接近壓力區便拉回，這印證了 Call OI 大增的壓制力。<strong>除非早盤有極大利多，否則要結算在此之上的機率較低</strong>，因為莊家會全力守住這道防線以賺取 Call 的權利金。
                             </div>
                         </div>
 
                         <div class="price-level support">
                             <div class="level-label" style="color: var(--success-color);">🟢 下檔地板</div>
-                            <div class="level-range">29,300 ~ 29,600</div>
+                            <div class="level-range">29,400 ~ 29,700</div>
                             <div class="level-desc">
-                                夜盤低點 29,717 守在此關卡之上，距離 Put OI 重兵區尚有空間。<strong>此位附近有支撐</strong>，若今日回測此位，通常會有買盤或莊家護盤。
+                                夜盤低點 29,867 守在此關卡之上，距離 Put OI 重兵區尚有空間。<strong>此位附近有支撐</strong>，若今日回測此位，通常會有買盤或莊家護盤。
                             </div>
                         </div>
                     </div>
 
                     <div class="conclusion-box">
-                        <strong>我的判斷：</strong>結算價高機率落在 <strong>29,600 ~ 30,200</strong> 這個區間，讓兩邊的權利金最大程度被消耗。這是莊家的最佳利益點。
+                        <strong>我的判斷：</strong>結算價高機率落在 <strong>29,700 ~ 30,400</strong> 這個區間，讓兩邊的權利金最大程度被消耗。這是莊家的最佳利益點。
                     </div>
                 </div>
             </div>
@@ -1255,7 +1275,7 @@
                                 <div class="prediction-title">🔔 開盤位階</div>
                             </div>
                             <div class="prediction-detail">
-                                若開在 <strong>29,850</strong> 附近，代表多空平衡。<br><br>
+                                若開在 <strong>30,000</strong> 附近，代表多空平衡。<br><br>
                                 <strong>偏高開：</strong>注意是否為誘多，觀察 30 分鐘內能否守住。<br>
                                 <strong>偏低開：</strong>留意是否測試支撐後反彈。
                             </div>
@@ -1269,7 +1289,7 @@
                             <div class="prediction-detail">
                                 <strong>13:00 - 13:30</strong><br><br>
                                 台指結算價是採<strong>現貨最後半小時的平均價</strong>。<br><br>
-                                如果價格接近 29,800，莊家可能會試圖將價格壓在此之下或拉上此位，以決定哪些履約價的選擇權會歸零。
+                                如果價格接近 30,000，莊家可能會試圖將價格壓在此之下或拉上此位，以決定哪些履約價的選擇權會歸零。
                             </div>
                         </div>
 
@@ -1279,7 +1299,7 @@
                                 <div class="prediction-prob">高機率</div>
                             </div>
                             <div class="prediction-detail">
-                                落在 <strong>29,600 ~ 30,200</strong><br><br>
+                                落在 <strong>29,700 ~ 30,400</strong><br><br>
                                 這個區間讓莊家兩邊的權利金收益最大化，同時避免單邊出現過大履約壓力。
                             </div>
                         </div>
@@ -1301,7 +1321,7 @@
 
                     <div class="tip-item">
                         <strong>如果您手上有 1月 近月部位：</strong><br>
-                        建議早盤若有衝高至 <strong>30,250</strong> 以上，可考慮先行平倉，不一定要賭到最後結算。因為莊家守 30,200 的決心很強，繼續持有風險報酬比不划算。
+                        建議早盤若有衝高至 <strong>30,450</strong> 以上，可考慮先行平倉，不一定要賭到最後結算。因為莊家守 30,400 的決心很強，繼續持有風險報酬比不划算。
                     </div>
 
                     <div class="tip-item">
@@ -1330,7 +1350,7 @@
                             </p>
 
                             <div class="highlight-box">
-                                <p><strong>1️⃣ 持倉部位：</strong>看到接近上檔壓力 30,200 就減碼，落袋為安</p>
+                                <p><strong>1️⃣ 持倉部位：</strong>看到接近上檔壓力 30,400 就減碼，落袋為安</p>
                                 <p><strong>2️⃣ 新進場：</strong>等結算後再說，不急於一時</p>
                                 <p><strong>3️⃣ 觀察重點：</strong>最後 30 分鐘的價格行為，這會告訴我下個月的方向</p>
                             </div>
@@ -1363,7 +1383,8 @@
                     </div>
                     <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; backdrop-filter: blur(10px);">
                         <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">學習進度</div>
-                        <div style="font-size: 1.1rem; font-weight: 600; white-space: pre-line;">分析記錄不足，持續累積中...</div>
+                        <div style="font-size: 1.1rem; font-weight: 600; white-space: pre-line;">📚 已累積 7 筆分析記錄
+📊 已建立 0 種 PC Ratio 模式分析</div>
                     </div>
                 </div>
             </div>
@@ -1382,11 +1403,11 @@
                     </div>
                     <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">當前價格</div>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;">30,372</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;">30,456</div>
                     </div>
                     <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">預測區間</div>
-                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--purple-color);">29,400 - 30,300</div>
+                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--purple-color);">29,500 - 30,500</div>
                     </div>
                     <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">趨勢強度</div>
@@ -1403,9 +1424,9 @@
                 </div>
                 <div style="background: white; padding: 30px; border-radius: 12px; border-left: 4px solid var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.08); line-height: 1.9; white-space: pre-wrap; font-size: 1.05rem;">這次是 2026/01/10 (週五) 的結算日，我已經仔細研究了過去幾天的盤勢。
 
-說實話，這次的盤勢讓我有點拿不定主意。多空力道拉鋸，結算價可能在 29,400 到 30,300 這個範圍內震盪。
+空方力道不容小覷，趨勢強度 3 顆星告訴我市場偏空。我預估結算價大概率會在 29,500 到 30,500 之間。
 
-我特別注意到最大痛苦點在 29,900，這是莊家最想要的結算價格。根據我的經驗，實際結算價常常會往這個方向靠攏。
+我特別注意到最大痛苦點在 29,800，這是莊家最想要的結算價格。根據我的經驗，實際結算價常常會往這個方向靠攏。
 
 從選擇權的未平倉分布來看，大戶的布局已經很明顯了。我會緊盯這些關鍵價位，看看莊家會不會有什麼動作。</div>
             </div>
@@ -1416,12 +1437,12 @@
                     <span class="section-icon">🎯</span>
                     <h2 class="section-title">我的結算日策略</h2>
                 </div>
-                <div style="background: white; padding: 30px; border-radius: 12px; border-left: 4px solid #10b981; box-shadow: 0 4px 12px rgba(0,0,0,0.08); line-height: 1.9; white-space: pre-wrap; font-size: 1.05rem;">⚪ 這次我選擇觀望為主
+                <div style="background: white; padding: 30px; border-radius: 12px; border-left: 4px solid #10b981; box-shadow: 0 4px 12px rgba(0,0,0,0.08); line-height: 1.9; white-space: pre-wrap; font-size: 1.05rem;">🔴 我的策略偏向做空
 
-觀望策略：
-• 方向不明確時，我不會強行進場
-• 如果真要做，考慮賣出價差策略，收取權利金
-• 保留大部分現金，等待更好的機會
+空方策略：
+• 反彈到 30,561 附近時，考慮進場做空
+• 目標設定在預測區間下緣 29,500
+• 停損點設在 30,652，控制風險
 
 
 結算日特別注意事項：
@@ -1451,7 +1472,7 @@
 • 選擇權到期會造成 Gamma 風險暴增，價格波動加劇
 • 如果我判斷錯誤，結算價偏離預測區間，部位可能大虧
 
-❗ 我最擔心的是：目前價格 30,372 離最大痛苦點 29,900 還有 472 點的距離。如果莊家真的要拉回 Max Pain，我的部位會很痛苦。
+❗ 我最擔心的是：目前價格 30,456 離最大痛苦點 29,800 還有 656 點的距離。如果莊家真的要拉回 Max Pain，我的部位會很痛苦。
 
 結算日的流動性風險也不能忽視。如果市場突然沒量，我可能會被困在部位裡出不來，這是我最不想看到的情況。</div>
             </div>
@@ -1476,7 +1497,7 @@
 
 🕚 10:00 - 12:30 (中場)
 • 這是我可能加碼的時段
-• 如果價格突破關鍵價位（30,300 或 29,400），跟進
+• 如果價格突破關鍵價位（30,500 或 29,500），跟進
 • 持續監控部位，該停損就停損
 
 🕐 13:00 - 13:30 (尾盤前)
@@ -1509,20 +1530,6 @@
 
             <!-- 過往結算日經驗 -->
             
-            <div class="section">
-                <div class="section-header">
-                    <span class="section-icon">📚</span>
-                    <h2 class="section-title">從過往結算日學到的</h2>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                    
-                    <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-                        <p style="margin: 0; font-style: italic; font-size: 1.05rem; line-height: 1.7;">💡 趨勢不明的結算日最難操作，觀望往往是最好的選擇</p>
-                    </div>
-                    
-                </div>
-            </div>
-            
 
             <!-- 相似案例參考 -->
             
@@ -1539,6 +1546,123 @@
             
         </div>
         <!-- End Trader View Tab -->
+
+        <!-- Settlement Review Tab -->
+        <div id="settlement-review-tab" class="tab-content">
+            <!-- AI Settlement Prediction -->
+            
+            <div class="section" style="background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%); color: #78350f;">
+                <div class="section-header" style="border-bottom-color: rgba(120, 53, 15, 0.2);">
+                    <span class="section-icon">🔮</span>
+                    <h2 class="section-title" style="color: #78350f;">結算日AI預測 🌱</h2>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">📊 趨勢分析 (結算)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                            <div style="font-size: 0.85rem; color: #78350f; margin-bottom: 5px;">趨勢方向</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: #92400e;">盤整</div>
+                        </div>
+                        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                            <div style="font-size: 0.85rem; color: #78350f; margin-bottom: 5px;">價格變化</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: #92400e;">84</div>
+                        </div>
+                        <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                            <div style="font-size: 0.85rem; color: #78350f; margin-bottom: 5px;">動能評分</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: #92400e;">weak/10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">🎯 結算價預測</h3>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #92400e; margin-bottom: 10px;">
+                            30,456 點
+                        </div>
+                        <div style="font-size: 1.1rem; color: #78350f;">
+                            預測區間: 29,999 - 
+                            30,913
+                        </div>
+                        <div style="font-size: 0.95rem; color: #a16207; margin-top: 10px;">
+                            預期變化: 0
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">📋 情境分析</h3>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 600; color: #92400e; font-size: 1.1rem;">✅ 符合預期情境</span>
+                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 12px; font-weight: 600; color: #78350f;">
+                                60%
+                            </span>
+                        </div>
+                        <p style="color: #78350f; margin: 0;">結算價落在預測區間 29,999 - 30,913</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 600; color: #92400e; font-size: 1.1rem;">📈 超預期上漲</span>
+                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 12px; font-weight: 600; color: #78350f;">
+                                20%
+                            </span>
+                        </div>
+                        <p style="color: #78350f; margin: 0;">結算價突破 30,913</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 600; color: #92400e; font-size: 1.1rem;">📉 超預期下跌</span>
+                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 12px; font-weight: 600; color: #78350f;">
+                                20%
+                            </span>
+                        </div>
+                        <p style="color: #78350f; margin: 0;">結算價跌破 29,999</p>
+                    </div>
+                    
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">💡 我的結算展望</h3>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #fbbf24; white-space: pre-line; color: #78350f; line-height: 1.8;"></div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 25px;">
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">⚙️ 結算策略建議</h3>
+                    <div style="display: grid; gap: 15px;">
+                        <div style="background: white; padding: 15px; border-radius: 8px;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">🕐 結算前準備:</div>
+                            <p style="color: #78350f; margin: 0;">{'timing': '結算日09:00前', 'action': '觀察開盤價格，決定是否提前調整', 'caution': '避免追高殺低'}</p>
+                        </div>
+                        <div style="background: white; padding: 15px; border-radius: 8px;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">⚡ 結算當下:</div>
+                            <p style="color: #78350f; margin: 0;">{'timing': '13:30-13:45 (結算區間)', 'action': '密切關注結算價形成過程', 'caution': '注意最後五分鐘的劇烈波動'}</p>
+                        </div>
+                        <div style="background: white; padding: 15px; border-radius: 8px;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">📊 倉位管理:</div>
+                            <p style="color: #78350f; margin: 0;">{'if_bullish': '持有 Call 至結算，Put 考慮提前平倉', 'if_bearish': '持有 Put 至結算，Call 考慮提前平倉', 'if_neutral': '採取 Straddle 或 Strangle，兩邊對沖'}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- AI Settlement Review -->
+            
+            <!-- No Review Yet -->
+            <div class="section">
+                <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                    <p style="font-size: 1.5rem; color: var(--text-muted); margin-bottom: 10px;">⏳</p>
+                    <p style="font-size: 1.2rem; color: var(--text-muted);">結算日尚未結束，檢討報告將在結算後生成</p>
+                </div>
+            </div>
+            
+        </div>
+        <!-- End Settlement Review Tab -->
 
         <!-- Footer -->
         <footer>
@@ -1568,6 +1692,12 @@
             } else if (tabName === 'ai-analysis') {
                 document.getElementById('ai-analysis-tab').classList.add('active');
                 document.querySelectorAll('.tab-button')[1].classList.add('active');
+            } else if (tabName === 'trader-view') {
+                document.getElementById('trader-view-tab').classList.add('active');
+                document.querySelectorAll('.tab-button')[2].classList.add('active');
+            } else if (tabName === 'settlement-review') {
+                document.getElementById('settlement-review-tab').classList.add('active');
+                document.querySelectorAll('.tab-button')[3].classList.add('active');
             }
         }
     </script>

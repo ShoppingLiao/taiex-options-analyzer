@@ -6,9 +6,12 @@
 from pathlib import Path
 from datetime import datetime
 from jinja2 import Template
-from typing import List
+from typing import List, Optional
 from .settlement_predictor import SettlementPrediction, TrendSignal, Scenario
 from .ai_settlement_trader import AISettlementTrader
+from .ai_settlement_prediction import AISettlementPrediction
+from .ai_settlement_review import AISettlementReview
+from .ai_learning_system import AILearningSystem
 
 
 class SettlementReportGenerator:
@@ -25,6 +28,13 @@ class SettlementReportGenerator:
         
         # 初始化 AI 結算日交易員分析器
         self.settlement_trader = AISettlementTrader()
+        
+        # 初始化 AI 學習系統
+        self.learning_system = AILearningSystem()
+        
+        # 初始化 AI 結算預測和檢討系統
+        self.settlement_prediction = AISettlementPrediction(self.learning_system)
+        self.settlement_review = AISettlementReview(self.learning_system, self.settlement_prediction)
     
     def generate_report(
         self,
@@ -48,7 +58,13 @@ class SettlementReportGenerator:
             raise FileNotFoundError(f"找不到模板: {template_path}")
         
         with open(template_path, 'r', encoding='utf-8') as f:
-            template = Template(f.read())
+            template_content = f.read()
+        
+        # 創建 Jinja2 環境並添加自定義 filter
+        from jinja2 import Environment
+        env = Environment()
+        env.filters['format_number'] = lambda x: f'{int(x):,}' if x else '0'
+        template = env.from_string(template_content)
         
         # 準備模板數據
         template_data = self._prepare_template_data(prediction)
@@ -100,6 +116,14 @@ class SettlementReportGenerator:
         # AI 結算日交易員分析
         settlement_trader_analysis = self.settlement_trader.analyze_settlement(prediction)
         
+        # 載入 AI 結算預測和檢討（如果有）
+        settlement_date_str = prediction.settlement_date.replace('/', '')
+        ai_settlement_prediction = self.settlement_prediction.load_prediction(settlement_date_str)
+        ai_settlement_review = self.settlement_review.load_review(settlement_date_str)
+        
+        # 取得學習系統等級圖示
+        level_text, level_icon = self.learning_system.get_experience_level()
+        
         data = {
             # Header
             'settlement_date': prediction.settlement_date,
@@ -132,6 +156,11 @@ class SettlementReportGenerator:
             
             # AI 結算日交易員分析
             'settlement_trader_analysis': settlement_trader_analysis,
+            
+            # AI 結算預測和檢討
+            'ai_settlement_prediction': ai_settlement_prediction,
+            'ai_settlement_review': ai_settlement_review,
+            'ai_level_icon': level_icon,
         }
         
         # 合併 AI 分析數據
