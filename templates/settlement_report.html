@@ -495,10 +495,30 @@
             color: var(--primary-color);
             text-decoration: none;
             margin: 0 10px;
+            transition: all 0.3s;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
+        }
+        
+        .home-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+            text-decoration: none;
         }
     </style>
 </head>
@@ -667,10 +687,10 @@
 
         <!-- Footer -->
         <footer>
+            <a href="index.html" class="home-button">🏠 返回首頁</a>
             <p>本報告基於歷史數據與技術分析，僅供參考，不構成投資建議</p>
             <div class="footer-links">
-                <a href="../index.html">← 返回首頁</a>
-                <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub</a>
+                <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案</a>
             </div>
         </footer>
     </div>

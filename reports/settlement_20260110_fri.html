@@ -495,10 +495,30 @@
             color: var(--primary-color);
             text-decoration: none;
             margin: 0 10px;
+            transition: all 0.3s;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
+        }
+        
+        .home-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+            text-decoration: none;
         }
     </style>
 </head>
@@ -520,7 +540,7 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">報告生成</div>
-                    <div class="info-value">2026/01/12 17:59</div>
+                    <div class="info-value">2026/01/12 20:11</div>
                 </div>
             </div>
         </header>
@@ -535,21 +555,21 @@
             <div class="trend-overview">
                 <div class="trend-indicator neutral">
                     <div class="trend-label">整體趨勢</div>
-                    <div class="trend-value">震盪整理 (偏強)</div>
+                    <div class="trend-value">震盪整理 (中性)</div>
                     <div class="trend-strength">強度評級</div>
-                    <div class="strength-stars">⭐⭐⭐⭐</div>
+                    <div class="strength-stars">⭐⭐⭐</div>
                 </div>
                 
                 <div class="predicted-range">
                     <div class="range-title">預測結算區間</div>
                     <div class="range-display">
-                        <span>29,300</span>
+                        <span>29,400</span>
                         <span class="range-separator">～</span>
-                        <span>30,400</span>
+                        <span>30,300</span>
                     </div>
                     <div class="current-price-badge">
                         <div class="current-price-label">當前價格</div>
-                        <div class="current-price-value">0</div>
+                        <div class="current-price-value">30,372</div>
                     </div>
                 </div>
             </div>
@@ -582,6 +602,42 @@
                     <div class="signal-description">P/C Ratio 維持中性 (0.72)</div>
                 </div>
                 
+                <div class="signal-card neutral">
+                    <div class="signal-header">
+                        <div class="signal-direction">
+                            <span>➖</span>
+                            <span>中性訊號</span>
+                        </div>
+                        <div class="signal-strength">2/5</div>
+                    </div>
+                    <div class="signal-indicators">
+                        
+                        <span class="indicator-tag">價格動能</span>
+                        
+                        <span class="indicator-tag">趨勢方向</span>
+                        
+                    </div>
+                    <div class="signal-description">價格窄幅震盪 (+157 點)，方向不明</div>
+                </div>
+                
+                <div class="signal-card bearish">
+                    <div class="signal-header">
+                        <div class="signal-direction">
+                            <span>📉</span>
+                            <span>空頭訊號</span>
+                        </div>
+                        <div class="signal-strength">4/5</div>
+                    </div>
+                    <div class="signal-indicators">
+                        
+                        <span class="indicator-tag">Max Pain</span>
+                        
+                        <span class="indicator-tag">磁吸效應</span>
+                        
+                    </div>
+                    <div class="signal-description">價格高於 Max Pain +472 點 (1.6%)，結算前可能回歸</div>
+                </div>
+                
             </div>
         </div>
 
@@ -600,12 +656,12 @@
                             <span class="scenario-icon">⚖️</span>
                             <span>震盪整理</span>
                         </div>
-                        <div class="scenario-probability">60.0%</div>
+                        <div class="scenario-probability">50.0%</div>
                     </div>
                     
                     <div class="scenario-range">
                         <div class="range-label">預測區間</div>
-                        <div class="range-values">29,300 ～ 30,400</div>
+                        <div class="range-values">29,400 ～ 30,300</div>
                     </div>
                     
                     <div class="range-label">關鍵價位</div>
@@ -641,6 +697,50 @@
                 <div class="scenario-card ">
                     <div class="scenario-header">
                         <div class="scenario-name">
+                            <span class="scenario-icon">📉</span>
+                            <span>回檔修正</span>
+                        </div>
+                        <div class="scenario-probability">50.0%</div>
+                    </div>
+                    
+                    <div class="scenario-range">
+                        <div class="range-label">預測區間</div>
+                        <div class="range-values">29,150 ～ 29,450</div>
+                    </div>
+                    
+                    <div class="range-label">關鍵價位</div>
+                    <div class="key-levels">
+                        
+                        <span class="level-badge">29,200</span>
+                        
+                        <span class="level-badge">29,300</span>
+                        
+                        <span class="level-badge">29,400</span>
+                        
+                    </div>
+                    
+                    <div class="conditions-list">
+                        <div class="range-label">成立條件</div>
+                        
+                        <div class="condition-item">✓ 空方持續加碼賣權部位</div>
+                        
+                        <div class="condition-item">✓ P/C Ratio 持續上升</div>
+                        
+                        <div class="condition-item">✓ 價格跌破近期低點</div>
+                        
+                        <div class="condition-item">✓ 恐慌性賣壓出現</div>
+                        
+                    </div>
+                    
+                    <div class="strategy-box">
+                        <div class="strategy-label">💡 操作建議</div>
+                        <div class="strategy-text">順勢做空，停利設在區間下緣 -100，停損在 Max Pain</div>
+                    </div>
+                </div>
+                
+                <div class="scenario-card ">
+                    <div class="scenario-header">
+                        <div class="scenario-name">
                             <span class="scenario-icon">🧲</span>
                             <span>Max Pain 磁吸</span>
                         </div>
@@ -666,7 +766,7 @@
                     <div class="conditions-list">
                         <div class="range-label">成立條件</div>
                         
-                        <div class="condition-item">✓ 價格距離 Max Pain 29900 點</div>
+                        <div class="condition-item">✓ 價格距離 Max Pain 472 點</div>
                         
                         <div class="condition-item">✓ 結算日臨近，磁吸效應增強</div>
                         
@@ -679,50 +779,6 @@
                     <div class="strategy-box">
                         <div class="strategy-label">💡 操作建議</div>
                         <div class="strategy-text">預期價格向 29,900 靠攏，可布局雙賣策略</div>
-                    </div>
-                </div>
-                
-                <div class="scenario-card ">
-                    <div class="scenario-header">
-                        <div class="scenario-name">
-                            <span class="scenario-icon">🚀</span>
-                            <span>強勢上攻</span>
-                        </div>
-                        <div class="scenario-probability">15.0%</div>
-                    </div>
-                    
-                    <div class="scenario-range">
-                        <div class="range-label">預測區間</div>
-                        <div class="range-values">30,350 ～ 30,650</div>
-                    </div>
-                    
-                    <div class="range-label">關鍵價位</div>
-                    <div class="key-levels">
-                        
-                        <span class="level-badge">30,400</span>
-                        
-                        <span class="level-badge">30,500</span>
-                        
-                        <span class="level-badge">30,600</span>
-                        
-                    </div>
-                    
-                    <div class="conditions-list">
-                        <div class="range-label">成立條件</div>
-                        
-                        <div class="condition-item">✓ 多方持續加碼買權部位</div>
-                        
-                        <div class="condition-item">✓ P/C Ratio 持續下降</div>
-                        
-                        <div class="condition-item">✓ 價格突破近期高點</div>
-                        
-                        <div class="condition-item">✓ 成交量放大配合</div>
-                        
-                    </div>
-                    
-                    <div class="strategy-box">
-                        <div class="strategy-label">💡 操作建議</div>
-                        <div class="strategy-text">順勢做多，停利設在區間上緣 +100，停損在 Max Pain</div>
                     </div>
                 </div>
                 
@@ -750,6 +806,12 @@
                     
                 </div>
                 
+                <div class="metric-card">
+                    <div class="metric-label">當前價格</div>
+                    <div class="metric-value">30,372</div>
+                    
+                </div>
+                
             </div>
         </div>
 
@@ -758,10 +820,10 @@
 
         <!-- Footer -->
         <footer>
+            <a href="index.html" class="home-button">🏠 返回首頁</a>
             <p>本報告基於歷史數據與技術分析，僅供參考，不構成投資建議</p>
             <div class="footer-links">
-                <a href="../index.html">← 返回首頁</a>
-                <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub</a>
+                <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案</a>
             </div>
         </footer>
     </div>

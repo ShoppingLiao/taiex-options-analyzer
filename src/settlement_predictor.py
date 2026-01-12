@@ -159,10 +159,21 @@ class SettlementPredictor:
             
             data = {}
             
-            # 解析收盤價 (從價格走勢區塊)
-            close_match = re.search(r'<div class="close-price">([0-9,]+)</div>', html_content)
+            # 解析收盤價 (多種格式嘗試)
+            # 格式1: 📊 收盤價 29,869
+            close_match = re.search(r'📊 收盤價 ([0-9,]+)', html_content)
             if close_match:
                 data['close_price'] = int(close_match.group(1).replace(',', ''))
+            else:
+                # 格式2: <div class="close-price">29869</div>
+                close_match = re.search(r'<div class="close-price">([0-9,]+)</div>', html_content)
+                if close_match:
+                    data['close_price'] = int(close_match.group(1).replace(',', ''))
+                else:
+                    # 格式3: 收盤價: 29,869
+                    close_match = re.search(r'收盤價[:\s]+([0-9,]+)', html_content)
+                    if close_match:
+                        data['close_price'] = int(close_match.group(1).replace(',', ''))
             
             # 解析 P/C Ratio
             pc_match = re.search(r'P/C Ratio.*?(\d+\.\d+)', html_content, re.DOTALL)
@@ -471,8 +482,20 @@ class SettlementPredictor:
         metrics: Dict
     ) -> Tuple[int, int]:
         """預測結算區間"""
-        current_price = metrics.get('current_price', 23000)
-        max_pain = metrics.get('max_pain', 23000)
+        current_price = metrics.get('current_price', 0)
+        max_pain = metrics.get('max_pain', 0)
+        
+        # 如果沒有價格數據，使用預設範圍
+        if current_price == 0 and max_pain == 0:
+            return (23000, 24000)
+        
+        # 如果沒有當前價格，使用 Max Pain 作為基準
+        if current_price == 0:
+            current_price = max_pain
+        
+        # 如果沒有 Max Pain，使用當前價格作為基準
+        if max_pain == 0:
+            max_pain = current_price
         
         # 基於趨勢調整
         overall_trend, trend_strength = self._calculate_overall_trend(signals)
@@ -514,9 +537,17 @@ class SettlementPredictor:
         """生成結算劇本"""
         scenarios = []
         
-        current_price = metrics.get('current_price', 23000)
-        max_pain = metrics.get('max_pain', 23000)
+        current_price = metrics.get('current_price', 0)
+        max_pain = metrics.get('max_pain', 0)
+        
+        # 使用預測區間的中心點作為基準（當沒有價格數據時）
+        if current_price == 0:
+            current_price = (predicted_range[0] + predicted_range[1]) // 2
+        if max_pain == 0:
+            max_pain = current_price
+        
         lower, upper = predicted_range
+        center = (lower + upper) // 2
         center = (lower + upper) // 2
         
         # 劇本 1: 強勢上攻 🚀
