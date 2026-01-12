@@ -14,6 +14,7 @@ from .analyzer import AnalysisResult
 from .parser import OptionsData
 from .settlement_analyzer import SettlementAnalyzer, SettlementAnalysis
 from .ai_settlement_analysis import AISettlementAnalyzer
+from .ai_daily_analyzer import AIDailyAnalyzer
 
 
 def get_weekday_chinese(date_str: str) -> str:
@@ -85,6 +86,9 @@ class ReportGenerator:
         
         # 初始化 AI 分析器
         self.ai_analyzer = AISettlementAnalyzer()
+        
+        # 初始化每日 AI 交易員分析器
+        self.daily_ai_analyzer = AIDailyAnalyzer()
 
     def generate(
         self,
@@ -111,9 +115,17 @@ class ReportGenerator:
         
         # 進行 AI 深度分析
         ai_analysis = self.ai_analyzer.analyze_20260109_data(options_data)
+        
+        # 計算市場情緒（用於 AI 每日分析）
+        sentiment = self._calculate_sentiment(analysis_result.pc_ratio_oi)
+        
+        # 進行每日 AI 交易員分析
+        daily_ai_analysis = self.daily_ai_analyzer.analyze(analysis_result, options_data, sentiment)
 
         # 準備模板資料
-        template_data = self._prepare_template_data(analysis_result, options_data, settlement_analysis, ai_analysis)
+        template_data = self._prepare_template_data(
+            analysis_result, options_data, settlement_analysis, ai_analysis, daily_ai_analysis
+        )
 
         # 載入並渲染模板
         template = self.env.get_template("report.html")
@@ -132,7 +144,8 @@ class ReportGenerator:
         result: AnalysisResult,
         options_data: OptionsData,
         settlement_analysis: SettlementAnalysis = None,
-        ai_analysis: Dict = None
+        ai_analysis: Dict = None,
+        daily_ai_analysis: Dict = None
     ) -> dict:
         """
         準備模板所需的資料
@@ -147,16 +160,7 @@ class ReportGenerator:
         }
 
         pc_ratio = result.pc_ratio_oi
-        if pc_ratio < 0.7:
-            sentiment = 'extremely_bullish'
-        elif pc_ratio < 0.9:
-            sentiment = 'bullish'
-        elif pc_ratio < 1.1:
-            sentiment = 'neutral'
-        elif pc_ratio < 1.3:
-            sentiment = 'bearish'
-        else:
-            sentiment = 'extremely_bearish'
+        sentiment = self._calculate_sentiment(pc_ratio)
 
         # 準備圖表資料
         oi_chart_data = {
@@ -240,6 +244,9 @@ class ReportGenerator:
             
             # AI 深度分析
             'ai_analysis': ai_analysis if ai_analysis else {},
+            
+            # 每日 AI 交易員分析
+            'daily_ai_analysis': daily_ai_analysis if daily_ai_analysis else {},
             
             # 台指期貨基本資料
             'tx_data': {
@@ -418,6 +425,19 @@ class ReportGenerator:
 
         print(f"摘要報告已產生: {output_path}")
         return str(output_path)
+    
+    def _calculate_sentiment(self, pc_ratio: float) -> str:
+        """計算市場情緒"""
+        if pc_ratio < 0.7:
+            return 'extremely_bullish'
+        elif pc_ratio < 0.9:
+            return 'bullish'
+        elif pc_ratio < 1.1:
+            return 'neutral'
+        elif pc_ratio < 1.3:
+            return 'bearish'
+        else:
+            return 'extremely_bearish'
 
 
 if __name__ == "__main__":

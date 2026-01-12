@@ -8,6 +8,7 @@ from datetime import datetime
 from jinja2 import Template
 from typing import List
 from .settlement_predictor import SettlementPrediction, TrendSignal, Scenario
+from .ai_settlement_trader import AISettlementTrader
 
 
 class SettlementReportGenerator:
@@ -21,6 +22,9 @@ class SettlementReportGenerator:
         # 確保輸出目錄存在
         self.output_dir.mkdir(exist_ok=True)
         self.docs_dir.mkdir(exist_ok=True)
+        
+        # 初始化 AI 結算日交易員分析器
+        self.settlement_trader = AISettlementTrader()
     
     def generate_report(
         self,
@@ -93,6 +97,9 @@ class SettlementReportGenerator:
         # AI 分析數據
         ai_data = self._prepare_ai_analysis_data(prediction)
         
+        # AI 結算日交易員分析
+        settlement_trader_analysis = self.settlement_trader.analyze_settlement(prediction)
+        
         data = {
             # Header
             'settlement_date': prediction.settlement_date,
@@ -122,6 +129,9 @@ class SettlementReportGenerator:
             
             # Risks
             'risks': prediction.risks,
+            
+            # AI 結算日交易員分析
+            'settlement_trader_analysis': settlement_trader_analysis,
         }
         
         # 合併 AI 分析數據

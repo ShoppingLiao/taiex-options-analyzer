@@ -783,12 +783,28 @@
         }
 
         footer {
-            text-align: center;
+            background: white;
+            border-radius: 16px;
             padding: 20px;
+            text-align: center;
             color: var(--text-muted);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--border-color);
-            margin-top: 40px;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -832,7 +848,7 @@
                 📊 標準分析
             </button>
             <button class="tab-button" onclick="switchTab(event, 'ai-analysis')">
-                🤖 AI 情境分析
+                �‍💼 AI 交易員視角
             </button>
         </div>
 
@@ -1296,12 +1312,115 @@
 
         <footer>
             <p>報告產生時間: {{ generated_at }} | TAIEX Options Analyzer</p>
+            <div class="footer-links">
+                <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案</a>
+            </div>
         </footer>
         </div>
         <!-- 結束標準分析 Tab -->
 
-        <!-- AI 情境分析 Tab -->
+        <!-- AI 交易員視角 Tab -->
         <div id="ai-analysis" class="tab-content">
+            {% if daily_ai_analysis %}
+            
+            <!-- 經驗等級 & 學習進度 -->
+            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.8rem;">{{ daily_ai_analysis.level_icon }} AI 交易員分析</h2>
+                        <p style="margin: 8px 0 0 0; opacity: 0.9;">經驗等級: {{ daily_ai_analysis.experience_level }}</p>
+                    </div>
+                    <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; backdrop-filter: blur(10px);">
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">學習進度</div>
+                        <div style="font-size: 1.1rem; font-weight: 600;">{{ daily_ai_analysis.learning_summary }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 關鍵市場數據 -->
+            <div class="grid" style="margin-bottom: 30px;">
+                <div class="card">
+                    <div class="card-title">收盤價</div>
+                    <div class="card-value">{{ "{:,.0f}".format(daily_ai_analysis.key_data.close_price) }}</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">PC Ratio</div>
+                    <div class="card-value">{{ "{:.3f}".format(daily_ai_analysis.key_data.pc_ratio) }}</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">市場情緒</div>
+                    <div class="card-value" style="font-size: 1.3rem;">{{ market_sentiment }}</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">趨勢信號</div>
+                    <div class="card-value" style="font-size: 1.3rem;">
+                        {% if daily_ai_analysis.key_data.trend_signal == 'bullish' %}
+                        📈 偏多
+                        {% elif daily_ai_analysis.key_data.trend_signal == 'bearish' %}
+                        📉 偏空
+                        {% else %}
+                        ➡️ 中性
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 市場觀察（第一人稱） -->
+            <div class="ai-section">
+                <h2 class="analysis-title">👁️ 我今天的市場觀察</h2>
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid var(--primary-color); box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.market_observation }}</div>
+            </div>
+
+            <!-- 部位策略（第一人稱） -->
+            <div class="ai-section">
+                <h2 class="analysis-title">💼 我的部位策略</h2>
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #10b981; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.position_strategy }}</div>
+            </div>
+
+            <!-- 風險評估（第一人稱） -->
+            <div class="ai-section">
+                <h2 class="analysis-title">⚠️ 我的風險評估</h2>
+                <div style="background: #fef2f2; padding: 25px; border-radius: 12px; border-left: 4px solid #ef4444; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.risk_assessment }}</div>
+            </div>
+
+            <!-- 交易計劃（第一人稱） -->
+            <div class="ai-section">
+                <h2 class="analysis-title">📋 我的交易計劃</h2>
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #f59e0b; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.trading_plan }}</div>
+            </div>
+
+            <!-- 歷史洞察 -->
+            {% if daily_ai_analysis.historical_insights %}
+            <div class="ai-section">
+                <h2 class="analysis-title">📚 從過去經驗學到的</h2>
+                <div class="grid">
+                    {% for insight in daily_ai_analysis.historical_insights %}
+                    <div class="card" style="background: linear-gradient(135deg, #fef3c7, #fde68a);">
+                        <p style="margin: 0; font-style: italic;">💡 {{ insight }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 相似案例參考 -->
+            {% if daily_ai_analysis.similar_cases > 0 %}
+            <div style="margin-top: 20px; padding: 20px; background: #f0fdf4; border-radius: 12px; border: 1px solid #86efac;">
+                <p style="margin: 0; color: #166534;">
+                    📊 在我的記憶中，找到 <strong>{{ daily_ai_analysis.similar_cases }}</strong> 個類似的市場情境可供參考
+                </p>
+            </div>
+            {% endif %}
+
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 12px; text-align: center;">
+                <p style="font-style: italic; color: var(--text-muted);">
+                    🧑‍💼 以上是我作為 AI 交易員的個人觀點與計劃<br>
+                    我會持續學習並改進分析能力，每一次分析都會被記錄下來
+                </p>
+            </div>
+
+            {% else %}
+            <!-- 如果沒有每日AI分析，則保留原始AI分析 -->
             {% if ai_analysis %}
             
             <!-- 市場結構分析 -->
@@ -1474,8 +1593,9 @@
 
             {% else %}
             <div class="card">
-                <p>AI 分析功能尚未啟用</p>
+                <p>AI 交易員分析功能尚未啟用</p>
             </div>
+            {% endif %}
             {% endif %}
         </div>
         <!-- 結束 AI 分析 Tab -->

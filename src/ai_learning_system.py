@@ -1,0 +1,272 @@
+"""
+AI 學習系統
+累積並學習歷史分析記錄，持續改進分析品質
+"""
+
+import json
+from pathlib import Path
+from datetime import datetime
+from typing import List, Dict, Optional
+from dataclasses import dataclass, asdict
+
+
+@dataclass
+class AnalysisRecord:
+    """分析記錄"""
+    date: str  # YYYYMMDD
+    close_price: float
+    pc_ratio: float
+    sentiment: str
+    trend_signal: str  # 'bullish', 'bearish', 'neutral'
+    
+    # AI 分析內容
+    market_observation: str
+    position_strategy: str
+    risk_assessment: str
+    trading_plan: str
+    
+    # 後續驗證（可選）
+    next_day_price: Optional[float] = None
+    prediction_accuracy: Optional[str] = None  # 'correct', 'partially_correct', 'incorrect'
+    lessons_learned: Optional[str] = None
+
+
+class AILearningSystem:
+    """AI 學習系統 - 從歷史分析中學習並改進"""
+    
+    def __init__(self, data_dir: str = 'data/ai_learning'):
+        self.data_dir = Path(data_dir)
+        self.data_dir.mkdir(parents=True, exist_ok=True)
+        
+        self.records_file = self.data_dir / 'analysis_records.json'
+        self.insights_file = self.data_dir / 'learned_insights.json'
+        
+        self.records: List[AnalysisRecord] = []
+        self.insights: Dict = {}
+        
+        self._load_data()
+    
+    def _load_data(self):
+        """載入歷史資料"""
+        # 載入分析記錄
+        if self.records_file.exists():
+            with open(self.records_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                self.records = [AnalysisRecord(**record) for record in data]
+        
+        # 載入學習洞察
+        if self.insights_file.exists():
+            with open(self.insights_file, 'r', encoding='utf-8') as f:
+                self.insights = json.load(f)
+    
+    def _save_data(self):
+        """儲存資料"""
+        # 儲存分析記錄
+        with open(self.records_file, 'w', encoding='utf-8') as f:
+            json.dump([asdict(r) for r in self.records], f, ensure_ascii=False, indent=2)
+        
+        # 儲存學習洞察
+        with open(self.insights_file, 'w', encoding='utf-8') as f:
+            json.dump(self.insights, f, ensure_ascii=False, indent=2)
+    
+    def add_record(self, record: AnalysisRecord):
+        """新增分析記錄"""
+        self.records.append(record)
+        self._save_data()
+        self._update_insights()
+    
+    def _update_insights(self):
+        """更新學習洞察"""
+        if len(self.records) < 5:
+            return  # 至少需要 5 筆記錄才能開始學習
+        
+        # 分析 PC Ratio 與市場走勢的關係
+        self._analyze_pc_ratio_patterns()
+        
+        # 分析成功預測的共同特徵
+        self._analyze_successful_predictions()
+        
+        # 分析不同市場情境的表現
+        self._analyze_market_scenarios()
+        
+        self._save_data()
+    
+    def _analyze_pc_ratio_patterns(self):
+        """分析 PC Ratio 模式"""
+        patterns = {
+            'extremely_low': [],  # < 0.7
+            'low': [],            # 0.7 - 0.9
+            'neutral': [],        # 0.9 - 1.1
+            'high': [],           # 1.1 - 1.3
+            'extremely_high': []  # > 1.3
+        }
+        
+        for record in self.records:
+            if record.next_day_price is None:
+                continue
+            
+            price_change = record.next_day_price - record.close_price
+            change_pct = (price_change / record.close_price) * 100
+            
+            pc = record.pc_ratio
+            if pc < 0.7:
+                patterns['extremely_low'].append(change_pct)
+            elif pc < 0.9:
+                patterns['low'].append(change_pct)
+            elif pc < 1.1:
+                patterns['neutral'].append(change_pct)
+            elif pc < 1.3:
+                patterns['high'].append(change_pct)
+            else:
+                patterns['extremely_high'].append(change_pct)
+        
+        # 計算平均變化
+        self.insights['pc_ratio_patterns'] = {}
+        for level, changes in patterns.items():
+            if changes:
+                avg_change = sum(changes) / len(changes)
+                self.insights['pc_ratio_patterns'][level] = {
+                    'avg_change_pct': round(avg_change, 2),
+                    'sample_size': len(changes),
+                    'interpretation': self._interpret_pc_pattern(level, avg_change)
+                }
+    
+    def _interpret_pc_pattern(self, level: str, avg_change: float) -> str:
+        """解讀 PC Ratio 模式"""
+        if level == 'extremely_low':
+            if avg_change > 0:
+                return "極低 PC Ratio 通常伴隨上漲，市場過度樂觀需警惕反轉"
+            else:
+                return "極低 PC Ratio 反而下跌，可能是多頭陷阱"
+        elif level == 'extremely_high':
+            if avg_change < 0:
+                return "極高 PC Ratio 通常伴隨下跌，市場過度悲觀需注意反彈"
+            else:
+                return "極高 PC Ratio 反而上漲，可能是空頭陷阱"
+        return "中性區間，需搭配其他指標判斷"
+    
+    def _analyze_successful_predictions(self):
+        """分析成功預測的共同特徵"""
+        successful = [r for r in self.records if r.prediction_accuracy == 'correct']
+        
+        if len(successful) >= 3:
+            self.insights['success_factors'] = {
+                'total_predictions': len([r for r in self.records if r.prediction_accuracy]),
+                'successful_count': len(successful),
+                'success_rate': round(len(successful) / len([r for r in self.records if r.prediction_accuracy]) * 100, 1),
+                'common_traits': self._extract_common_traits(successful)
+            }
+    
+    def _extract_common_traits(self, records: List[AnalysisRecord]) -> List[str]:
+        """提取成功預測的共同特徵"""
+        traits = []
+        
+        # 分析情緒分布
+        sentiments = [r.sentiment for r in records]
+        if sentiments.count('neutral') / len(sentiments) > 0.5:
+            traits.append("中性市場較容易預測")
+        
+        # 分析趨勢信號
+        trends = [r.trend_signal for r in records]
+        if len(set(trends)) == 1:
+            traits.append(f"單一方向趨勢 ({trends[0]}) 較為明確")
+        
+        return traits
+    
+    def _analyze_market_scenarios(self):
+        """分析不同市場情境"""
+        scenarios = {}
+        
+        for record in self.records:
+            key = f"{record.sentiment}_{record.trend_signal}"
+            if key not in scenarios:
+                scenarios[key] = {
+                    'count': 0,
+                    'successful': 0,
+                    'observations': []
+                }
+            
+            scenarios[key]['count'] += 1
+            if record.prediction_accuracy == 'correct':
+                scenarios[key]['successful'] += 1
+            
+            if record.lessons_learned:
+                scenarios[key]['observations'].append(record.lessons_learned)
+        
+        self.insights['market_scenarios'] = scenarios
+    
+    def get_historical_context(self, current_pc_ratio: float, current_sentiment: str) -> Dict:
+        """獲取歷史背景資訊，幫助當前分析"""
+        context = {
+            'similar_situations': [],
+            'learned_insights': [],
+            'risk_warnings': []
+        }
+        
+        # 尋找相似情況
+        for record in self.records[-20:]:  # 最近 20 筆
+            if abs(record.pc_ratio - current_pc_ratio) < 0.1:
+                context['similar_situations'].append({
+                    'date': record.date,
+                    'pc_ratio': record.pc_ratio,
+                    'outcome': record.prediction_accuracy or '未驗證',
+                    'lesson': record.lessons_learned or '無'
+                })
+        
+        # 加入學習洞察
+        if 'pc_ratio_patterns' in self.insights:
+            for level, data in self.insights['pc_ratio_patterns'].items():
+                if self._is_pc_in_range(current_pc_ratio, level):
+                    context['learned_insights'].append(data['interpretation'])
+        
+        # 風險警告
+        if current_sentiment in ['extremely_bullish', 'extremely_bearish']:
+            context['risk_warnings'].append("極端情緒可能導致反轉，需謹慎")
+        
+        return context
+    
+    def _is_pc_in_range(self, pc_ratio: float, level: str) -> bool:
+        """判斷 PC Ratio 是否在特定範圍"""
+        if level == 'extremely_low':
+            return pc_ratio < 0.7
+        elif level == 'low':
+            return 0.7 <= pc_ratio < 0.9
+        elif level == 'neutral':
+            return 0.9 <= pc_ratio < 1.1
+        elif level == 'high':
+            return 1.1 <= pc_ratio < 1.3
+        elif level == 'extremely_high':
+            return pc_ratio >= 1.3
+        return False
+    
+    def generate_learning_summary(self) -> str:
+        """生成學習摘要"""
+        if len(self.records) < 5:
+            return "分析記錄不足，持續累積中..."
+        
+        summary_parts = []
+        summary_parts.append(f"📚 已累積 {len(self.records)} 筆分析記錄")
+        
+        if 'success_factors' in self.insights:
+            sf = self.insights['success_factors']
+            summary_parts.append(f"🎯 預測成功率: {sf['success_rate']}% ({sf['successful_count']}/{sf['total_predictions']})")
+        
+        if 'pc_ratio_patterns' in self.insights:
+            summary_parts.append(f"📊 已建立 {len(self.insights['pc_ratio_patterns'])} 種 PC Ratio 模式分析")
+        
+        return "\n".join(summary_parts)
+    
+    def get_experience_level(self) -> tuple[str, str]:
+        """獲取經驗等級"""
+        count = len(self.records)
+        
+        if count < 10:
+            return "新手", "🌱"
+        elif count < 30:
+            return "學習中", "📈"
+        elif count < 50:
+            return "進階", "🎓"
+        elif count < 100:
+            return "專家", "⭐"
+        else:
+            return "大師", "👑"
