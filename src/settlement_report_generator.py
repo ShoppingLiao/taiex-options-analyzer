@@ -5,13 +5,14 @@
 
 from pathlib import Path
 from datetime import datetime
-from jinja2 import Template
+from jinja2 import Template, Environment
 from typing import List, Optional
 from .settlement_predictor import SettlementPrediction, TrendSignal, Scenario
 from .ai_settlement_trader import AISettlementTrader
 from .ai_settlement_prediction import AISettlementPrediction
 from .ai_settlement_review import AISettlementReview
 from .ai_learning_system import AILearningSystem
+from .ai_performance_tracker import AIPerformanceTracker
 
 
 class SettlementReportGenerator:
@@ -35,6 +36,9 @@ class SettlementReportGenerator:
         # 初始化 AI 結算預測和檢討系統
         self.settlement_prediction = AISettlementPrediction(self.learning_system)
         self.settlement_review = AISettlementReview(self.learning_system, self.settlement_prediction)
+        
+        # 初始化績效追蹤器
+        self.performance_tracker = AIPerformanceTracker()
     
     def generate_report(
         self,
@@ -130,6 +134,9 @@ class SettlementReportGenerator:
         # 取得學習系統等級圖示
         level_text, level_icon = self.learning_system.get_experience_level()
         
+        # 獲取 AI 績效數據
+        performance_summary = self.performance_tracker.get_performance_summary()
+        
         data = {
             # Header
             'settlement_date': prediction.settlement_date,
@@ -168,6 +175,9 @@ class SettlementReportGenerator:
             'ai_settlement_prediction': ai_settlement_prediction,
             'ai_settlement_review': ai_settlement_review,
             'ai_level_icon': level_icon,
+            
+            # AI 績效數據
+            'ai_performance': performance_summary,
         }
         
         # 合併 AI 分析數據

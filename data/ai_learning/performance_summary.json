@@ -1,0 +1,162 @@
+{
+  "statistics": {
+    "total_predictions": 2,
+    "avg_accuracy": 100.0,
+    "avg_price_error": 18.5,
+    "range_success_rate": 100.0,
+    "direction_success_rate": 100.0,
+    "grade_distribution": {
+      "A+": 2
+    }
+  },
+  "trend_data": [
+    {
+      "date": "20260107",
+      "formatted_date": "01/07(三)",
+      "overall_accuracy": 100,
+      "price_error": 31,
+      "predicted_price": 30246,
+      "actual_price": 30215,
+      "in_range": true,
+      "direction_correct": true
+    },
+    {
+      "date": "20260109",
+      "formatted_date": "01/09(五)",
+      "overall_accuracy": 100,
+      "price_error": 6,
+      "predicted_price": 30450,
+      "actual_price": 30456,
+      "in_range": true,
+      "direction_correct": true
+    }
+  ],
+  "latest_review": {
+    "settlement_date": "20260109",
+    "weekday": "friday",
+    "prediction": {
+      "prediction_date": "20260112",
+      "settlement_date": "20260109",
+      "settlement_weekday": "friday",
+      "experience_level": [
+        "新手",
+        "🌱"
+      ],
+      "historical_data": [
+        {
+          "day": 1,
+          "date": "20260107",
+          "tx_close": 30215,
+          "pc_ratio": 0.7186363636363636,
+          "call_oi": 13200,
+          "put_oi": 9486
+        },
+        {
+          "day": 2,
+          "date": "20260108",
+          "tx_close": 30372,
+          "pc_ratio": 1.0008443568815086,
+          "call_oi": 42636,
+          "put_oi": 42672
+        }
+      ],
+      "trend_analysis": {
+        "trend_direction": "上漲",
+        "price_change": 157,
+        "price_change_pct": 0.52,
+        "pc_change": 0.28,
+        "sentiment_change": "恐慌升溫",
+        "momentum": "moderate"
+      },
+      "settlement_price_prediction": {
+        "predicted_price": 30450,
+        "upper_bound": 30907,
+        "lower_bound": 29993,
+        "base_price": 30372,
+        "expected_change": 78,
+        "nearest_100": 30400,
+        "confidence_range": "±1.5%"
+      },
+      "scenarios": [
+        {
+          "name": "✅ 符合預期情境",
+          "description": "結算價落在預測區間 29,993 - 30,907",
+          "probability": 60,
+          "strategy": "按照原定策略執行",
+          "action": "持有部位至結算"
+        },
+        {
+          "name": "📈 超預期上漲",
+          "description": "結算價突破 30,907",
+          "probability": 20,
+          "strategy": "Call 部位獲利，Put 可能止損",
+          "action": "考慮提前調整 Put 部位"
+        },
+        {
+          "name": "📉 超預期下跌",
+          "description": "結算價跌破 29,993",
+          "probability": 20,
+          "strategy": "Put 部位獲利，Call 可能止損",
+          "action": "考慮提前調整 Call 部位"
+        }
+      ],
+      "strategy_recommendation": {
+        "before_settlement": {
+          "timing": "結算日09:00前",
+          "action": "觀察開盤價格，決定是否提前調整",
+          "caution": "避免追高殺低"
+        },
+        "during_settlement": {
+          "timing": "13:30-13:45 (結算區間)",
+          "action": "密切關注結算價形成過程",
+          "caution": "注意最後五分鐘的劇烈波動"
+        },
+        "position_management": {
+          "if_bullish": "持有 Call 至結算，Put 考慮提前平倉",
+          "if_bearish": "持有 Put 至結算，Call 考慮提前平倉",
+          "if_neutral": "採取 Straddle 或 Strangle，兩邊對沖"
+        },
+        "risk_control": {
+          "stop_loss": "當走勢明顯偏離預測時，立即止損",
+          "position_size": "結算日部位不超過平時的50%",
+          "time_decay": "週五結算時間價值歸零，需特別注意"
+        }
+      },
+      "outlook": "🔮 **週五結算日展望**\n\n經過這兩天的盤勢觀察，我看到市場呈現上漲的態勢，價格上漲 157 點。\n\n今天的收盤價是 30,372，PC Ratio 為 1.00。市場情緒相對平衡，結算應該不會有太大意外。\n\n基於這些觀察，我預測週五的結算價會在 **30,450** 附近，合理區間應該是 29,993 到 30,907。\n\n週五是大結算日，需要特別注意最後時段的波動。\n\n我會密切關注開盤後的走勢，適時調整部位。",
+      "confidence_level": 77
+    },
+    "actual_result": {
+      "settlement_price": 30456,
+      "tx_close": 30456,
+      "pc_ratio": 0,
+      "call_oi": 14252,
+      "put_oi": 11103
+    },
+    "accuracy": {
+      "price_error": 6,
+      "price_error_percent": 0.02,
+      "in_predicted_range": true,
+      "direction_correct": true,
+      "predicted_price": 30450,
+      "actual_price": 30456,
+      "predicted_range": "29,993 - 30,907",
+      "overall_accuracy": 100
+    },
+    "self_reflection": "📝 **週五結算檢討**\n\n這次結算預測相當準確，我很滿意！（準確度：100%）\n\n**預測結算價**：30,450 點\n**實際結算價**：30,456 點\n**價格誤差**：6 點 (0.02%)\n\n✅ **區間預測正確**：結算價 30,456 確實落在我預測的區間 29,993 - 30,907 內。這證明我對市場波動幅度的判斷是準確的。\n\n✅ **方向判斷正確**：結算走勢與我的預期一致。\n\n**策略執行回顧**：\n按照我的週五結算策略執行，應該能夠獲得不錯的收益。",
+    "lessons_learned": [
+      "這次週五結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。"
+    ],
+    "improvement_areas": [
+      "✨ 繼續保持這個水準，累積更多結算日預測經驗"
+    ],
+    "score": "🏆 優秀 (A+)",
+    "review_date": "2026-01-12 22:34:51"
+  },
+  "best_prediction": {
+    "date": "20260109",
+    "price_error": 6,
+    "accuracy": 100,
+    "score": "🏆 優秀 (A+)"
+  },
+  "total_experience": 2
+}

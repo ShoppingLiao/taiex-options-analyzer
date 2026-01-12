@@ -1348,6 +1348,65 @@
 
         <!-- Settlement Review Tab -->
         <div id="settlement-review-tab" class="tab-content">
+            
+            <!-- AI Performance Overview -->
+            {% if ai_performance and ai_performance.statistics.total_predictions > 0 %}
+            <div class="section" style="background: linear-gradient(135deg, #dbeafe 0%, #3b82f6 100%);">
+                <div class="section-header" style="border-bottom-color: rgba(30, 64, 175, 0.2);">
+                    <span class="section-icon">📈</span>
+                    <h2 class="section-title" style="color: #1e40af;">AI 預測績效總覽</h2>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px;">
+                    <div style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid #3b82f6;">
+                        <div style="font-size: 0.85rem; color: #1e40af; margin-bottom: 8px; font-weight: 600;">總預測次數</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #2563eb;">{{ ai_performance.statistics.total_predictions }}</div>
+                        <div style="font-size: 0.75rem; color: #60a5fa; margin-top: 4px;">累積經驗</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid #10b981;">
+                        <div style="font-size: 0.85rem; color: #065f46; margin-bottom: 8px; font-weight: 600;">平均準確度</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #059669;">{{ ai_performance.statistics.avg_accuracy }}%</div>
+                        <div style="font-size: 0.75rem; color: #34d399; margin-top: 4px;">整體表現</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid #f59e0b;">
+                        <div style="font-size: 0.85rem; color: #92400e; margin-bottom: 8px; font-weight: 600;">平均誤差</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #d97706;">{{ ai_performance.statistics.avg_price_error|round(1) }}</div>
+                        <div style="font-size: 0.75rem; color: #fbbf24; margin-top: 4px;">點數</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 12px; text-align: center; border-left: 4px solid #8b5cf6;">
+                        <div style="font-size: 0.85rem; color: #5b21b6; margin-bottom: 8px; font-weight: 600;">區間命中率</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #7c3aed;">{{ ai_performance.statistics.range_success_rate }}%</div>
+                        <div style="font-size: 0.75rem; color: #a78bfa; margin-top: 4px;">預測精準度</div>
+                    </div>
+                </div>
+                
+                <!-- Best Prediction -->
+                {% if ai_performance.best_prediction %}
+                <div style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 12px; border: 2px solid #fbbf24;">
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.1rem;">⭐ 最佳預測記錄</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div>
+                            <div style="font-size: 0.8rem; color: #78716c; margin-bottom: 4px;">日期</div>
+                            <div style="font-size: 1.1rem; font-weight: 600; color: #1c1917;">{{ ai_performance.best_prediction.date }}</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: #78716c; margin-bottom: 4px;">價格誤差</div>
+                            <div style="font-size: 1.1rem; font-weight: 600; color: #059669;">{{ ai_performance.best_prediction.price_error }} 點</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: #78716c; margin-bottom: 4px;">準確度</div>
+                            <div style="font-size: 1.1rem; font-weight: 600; color: #2563eb;">{{ ai_performance.best_prediction.accuracy }}%</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: #78716c; margin-bottom: 4px;">評分</div>
+                            <div style="font-size: 1.1rem; font-weight: 600; color: #7c3aed;">{{ ai_performance.best_prediction.score }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
             <!-- AI Settlement Prediction -->
             {% if ai_settlement_prediction %}
             <div class="section" style="background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%); color: #78350f;">
