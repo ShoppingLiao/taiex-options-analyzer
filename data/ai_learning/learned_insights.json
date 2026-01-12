@@ -36,5 +36,23 @@
         "這次預測成功，我應該記住這次分析的邏輯和方法。"
       ]
     }
-  ]
+  ],
+  "pc_ratio_patterns": {},
+  "market_scenarios": {
+    "bullish_bullish": {
+      "count": 4,
+      "successful": 0,
+      "observations": []
+    },
+    "neutral_bearish": {
+      "count": 2,
+      "successful": 0,
+      "observations": []
+    },
+    "neutral_neutral": {
+      "count": 1,
+      "successful": 0,
+      "observations": []
+    }
+  }
 }

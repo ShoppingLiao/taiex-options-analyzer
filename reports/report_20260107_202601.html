@@ -37,6 +37,13 @@
             padding: 20px;
         }
 
+        /* 手機版減少 padding */
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+        }
+
         header {
             background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
             color: white;
@@ -96,24 +103,53 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
             margin-bottom: 30px;
+        }
+
+        /* 電腦版：4 欄布局 */
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* 平板版：3 欄布局 */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 手機版：3 欄布局 */
+        @media (max-width: 767px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
         }
 
         .card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 24px;
+            padding: 16px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
+        }
+
+        /* 手機版減少 card padding */
+        @media (max-width: 767px) {
+            .card {
+                padding: 12px;
+            }
         }
 
         /* RWD Card 容器 */
         .card-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 12px;
             margin-bottom: 30px;
         }
 
@@ -124,18 +160,12 @@
             }
         }
 
-        /* 每個卡片的最大寬度 */
-        .card-container .card {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        /* 手機版：單欄置中 */
+        /* 手機版：gap 更小 */
         @media (max-width: 767px) {
             .card-container {
                 max-width: 600px;
                 margin: 0 auto 30px auto;
+                gap: 8px;
             }
         }
 
@@ -179,12 +209,92 @@
             border: 1px solid var(--border-color);
         }
 
+        /* 手機版減少 chart-container padding */
+        @media (max-width: 767px) {
+            .chart-container {
+                padding: 12px;
+            }
+        }
+
         .chart-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--border-color);
+        }
+
+        /* 日內價格走勢樣式 */
+        .price-info-wrapper {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .close-price-display {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .close-price-label {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .price-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .price-item {
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .price-item-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .price-item-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* 手機版調整價格走勢 */
+        @media (max-width: 767px) {
+            .price-info-wrapper {
+                padding: 20px 12px;
+            }
+
+            .close-price-display {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            .close-price-label {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            .price-grid {
+                max-width: 100%;
+            }
+
+            .price-item {
+                padding: 10px 8px;
+            }
+
+            .price-item-label {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .price-item-value {
+                font-size: 1.1rem;
+            }
         }
 
         /* 表格樣式 - 設定行高 */
@@ -341,8 +451,31 @@
         }
 
         .scenarios-container {
-            display: grid;
+            display: flex;
             gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 手機版滾動條樣式 */
+        .scenarios-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .scenario-card {
@@ -351,6 +484,9 @@
             border-radius: 12px;
             padding: 20px;
             transition: all 0.3s ease;
+            min-width: 350px;
+            max-width: 400px;
+            flex-shrink: 0;
         }
 
         .scenario-card:hover {
@@ -647,12 +783,28 @@
         }
 
         footer {
-            text-align: center;
+            background: white;
+            border-radius: 16px;
             padding: 20px;
+            text-align: center;
             color: var(--text-muted);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--border-color);
-            margin-top: 40px;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -696,7 +848,7 @@
                 📊 標準分析
             </button>
             <button class="tab-button" onclick="switchTab(event, 'ai-analysis')">
-                🤖 AI 情境分析
+                �‍💼 AI 交易員視角
             </button>
         </div>
 
@@ -740,29 +892,29 @@
             <div class="chart-container">
                 <h3 class="chart-title">日內價格走勢</h3>
                 <div class="card">
-                    <div style="text-align: center; padding: 40px;">
-                        <div style="font-size: 3rem; margin-bottom: 20px;">
+                    <div class="price-info-wrapper">
+                        <div class="close-price-display">
                             30,215
                         </div>
-                        <div style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;">
+                        <div class="close-price-label">
                             收盤價格
                         </div>
-                        <div class="grid" style="max-width: 800px; margin: 0 auto;">
-                            <div style="padding: 15px; background: #f1f5f9; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">開盤</div>
-                                <div style="font-size: 1.5rem; font-weight: 600;">30,065</div>
+                        <div class="grid price-grid">
+                            <div class="price-item" style="background: #f1f5f9;">
+                                <div class="price-item-label">開盤</div>
+                                <div class="price-item-value">30,065</div>
                             </div>
-                            <div style="padding: 15px; background: #fee2e2; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">最高</div>
-                                <div style="font-size: 1.5rem; font-weight: 600; color: #dc2626;">30,275</div>
+                            <div class="price-item" style="background: #fee2e2;">
+                                <div class="price-item-label">最高</div>
+                                <div class="price-item-value" style="color: #dc2626;">30,275</div>
                             </div>
-                            <div style="padding: 15px; background: #dcfce7; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">最低</div>
-                                <div style="font-size: 1.5rem; font-weight: 600; color: #16a34a;">30,011</div>
+                            <div class="price-item" style="background: #dcfce7;">
+                                <div class="price-item-label">最低</div>
+                                <div class="price-item-value" style="color: #16a34a;">30,011</div>
                             </div>
-                            <div style="padding: 15px; background: #f1f5f9; border-radius: 8px;">
-                                <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 5px;">震盪幅度</div>
-                                <div style="font-size: 1.5rem; font-weight: 600;">264</div>
+                            <div class="price-item" style="background: #f1f5f9;">
+                                <div class="price-item-label">震盪幅度</div>
+                                <div class="price-item-value">264</div>
                             </div>
                         </div>
                     </div>
@@ -4226,432 +4378,123 @@
         </div>
 
         <footer>
-            <p>報告產生時間: 2026-01-12 17:05:19 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 21:40:16 | TAIEX Options Analyzer</p>
+            <div class="footer-links">
+                <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案</a>
+            </div>
         </footer>
         </div>
         <!-- 結束標準分析 Tab -->
 
-        <!-- AI 情境分析 Tab -->
+        <!-- AI 交易員視角 Tab -->
         <div id="ai-analysis" class="tab-content">
             
             
-            <!-- 市場結構分析 -->
+            <!-- 經驗等級 & 學習進度 -->
+            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.8rem;">🌱 AI 交易員分析</h2>
+                        <p style="margin: 8px 0 0 0; opacity: 0.9;">經驗等級: 新手</p>
+                    </div>
+                    <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; backdrop-filter: blur(10px);">
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">學習進度</div>
+                        <div style="font-size: 1.1rem; font-weight: 600;">分析記錄不足，持續累積中...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 關鍵市場數據 -->
+            <div class="grid" style="margin-bottom: 30px;">
+                <div class="card">
+                    <div class="card-title">收盤價</div>
+                    <div class="card-value">30,215</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">PC Ratio</div>
+                    <div class="card-value">0.719</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">市場情緒</div>
+                    <div class="card-value" style="font-size: 1.3rem;">偏多</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">趨勢信號</div>
+                    <div class="card-value" style="font-size: 1.3rem;">
+                        
+                        📈 偏多
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- 市場觀察（第一人稱） -->
             <div class="ai-section">
-                <h2 class="analysis-title">🧠 市場結構分析</h2>
-                <div class="ai-observation-list">
-                    
-                    <li>
-                        <strong style="color: var(--primary-color);">防線轉移現象</strong><br>
-                        Put OI 從 28,500 減少 192 口，同時 29,000 增加 192 口，顯示空方防線上移至 29,000
-                    </li>
-                    
-                    <li>
-                        <strong style="color: var(--primary-color);">30,000 關卡膠著</strong><br>
-                        30,000 點雙邊 OI 超過 3,200 口，是多空交戰的主戰場，Call 略減 12 口顯示多頭稍有退守
-                    </li>
-                    
-                    <li>
-                        <strong style="color: var(--primary-color);">上方壓力山</strong><br>
-                        30,300 以上 Call OI 持續增加（+36/+76/+27/+46），31,000 甚至暴增 +38 口，形成層層壓力
-                    </li>
-                    
-                    <li>
-                        <strong style="color: var(--primary-color);">29,800-30,000 核心區</strong><br>
-                        29,800（Max Pain）到 30,000 之間是 OI 最密集區域，結算日價格有強烈向此收斂的傾向
-                    </li>
-                    
-                </div>
+                <h2 class="analysis-title">👁️ 我今天的市場觀察</h2>
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid var(--primary-color); box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">今天收盤價在 30,215 點，我仔細觀察了選擇權市場的布局。
+
+PC Ratio 在 0.719，相對均衡。這種時候我會更依賴價格行為和成交量的變化來判斷方向。
+
+我注意到最大的 Call OI 在 30,000 點，而 Put OI 則集中在 27,000 點。</div>
             </div>
 
-            <!-- 籌碼分布 -->
+            <!-- 部位策略（第一人稱） -->
             <div class="ai-section">
-                <h2 class="analysis-title">📦 籌碼分布特徵</h2>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">28,500 - 29,000 - Put 防線區</span>
-                    <div class="ai-field-content">合計 Put OI 4,498 口，是空方最後堡壘，失守則恐慌性殺盤</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">29,700 - 30,000 - 主戰場</span>
-                    <div class="ai-field-content">Max Pain 29,800 + 重要關卡 30,000，雙邊 OI 超過 7,000 口，價格磁吸效應強</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">30,300 - 31,000 - Call 壓力帶</span>
-                    <div class="ai-field-content">Call OI 逐步增加且 Put OI 稀薄，顯示多頭謹慎佈局，不看好大漲</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">31,300 - 極限壓力</span>
-                    <div class="ai-field-content">Call OI 暴增 +188 口，是多頭心理防線，突破機率極低</div>
-                </div>
-                
+                <h2 class="analysis-title">💼 我的部位策略</h2>
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #10b981; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">我目前偏向做多，但不會盲目追高。
+
+如果價格回測到 30,063 附近，我會考慮買進 Call 或賣出 Put，設定停損在 {int(close_price * 0.99):,}。
+
+
+市場相對理性，我可以維持正常的部位大小，但仍會保留 30% 現金靈活調整。</div>
             </div>
 
-            <!-- 關鍵價位 -->
+            <!-- 風險評估（第一人稱） -->
             <div class="ai-section">
-                <h2 class="analysis-title">🎯 關鍵價位識別</h2>
-                <div class="grid">
-                    <div class="card">
-                        <h3 style="color: var(--put-color);">關鍵支撐</h3>
-                        
-                        <div class="ai-field">
-                            <span class="ai-key-level">29,000 點</span>
-                            <span class="badge" style="background: var(--put-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
-                                強
-                            </span>
-                            <div style="margin-top: 8px; font-size: 0.9rem;">Put OI 轉移目標，新防線</div>
-                        </div>
-                        
-                        <div class="ai-field">
-                            <span class="ai-key-level">28,500 點</span>
-                            <span class="badge" style="background: var(--put-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
-                                極強
-                            </span>
-                            <div style="margin-top: 8px; font-size: 0.9rem;">最大 Put OI，心理支撐</div>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="card">
-                        <h3 style="color: var(--primary-color);">樞紐區域</h3>
-                        
-                        <div class="ai-field">
-                            <span class="ai-key-level">29,800 點</span>
-                            <span class="badge" style="background: var(--primary-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
-                                Max Pain
-                            </span>
-                            <div style="margin-top: 8px; font-size: 0.9rem;">磁吸力: 極強</div>
-                        </div>
-                        
-                        <div class="ai-field">
-                            <span class="ai-key-level">30,000 點</span>
-                            <span class="badge" style="background: var(--primary-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
-                                整數關卡
-                            </span>
-                            <div style="margin-top: 8px; font-size: 0.9rem;">磁吸力: 強</div>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="card">
-                        <h3 style="color: var(--call-color);">關鍵壓力</h3>
-                        
-                        <div class="ai-field">
-                            <span class="ai-key-level">30,500 點</span>
-                            <span class="badge" style="background: var(--call-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
-                                強
-                            </span>
-                            <div style="margin-top: 8px; font-size: 0.9rem;">Call OI 增加，多頭獲利了結區</div>
-                        </div>
-                        
-                        <div class="ai-field">
-                            <span class="ai-key-level">31,000 點</span>
-                            <span class="badge" style="background: var(--call-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
-                                極強
-                            </span>
-                            <div style="margin-top: 8px; font-size: 0.9rem;">Call OI 1,733 口，多頭大本營</div>
-                        </div>
-                        
-                    </div>
-                </div>
+                <h2 class="analysis-title">⚠️ 我的風險評估</h2>
+                <div style="background: #fef2f2; padding: 25px; border-radius: 12px; border-left: 4px solid #ef4444; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">⚠️ 風險等級：中
+市場有方向但還不算極端，我會保持警覺但不過度恐慌。
+
+我特別關注以下風險：
+• 今天成交量偏低，流動性不佳可能導致價格跳動</div>
             </div>
 
-            <!-- AI 情境分析 -->
-            <h2 class="section-title" style="margin-top: 40px;">🎲 AI 深度情境推演</h2>
-            
-            <div class="ai-scenario-card">
-                <div class="ai-scenario-header">
-                    <h3 class="ai-scenario-title">情境一：破底恐慌（低機率）</h3>
-                    <span class="ai-probability">機率: 15%</span>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎯 目標區間</span>
-                    <div class="ai-field-content" style="font-size: 1.2rem; font-weight: 700; color: var(--primary-color);">
-                        28,200 - 28,800
-                    </div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🔑 進場條件</span>
-                    <div class="ai-field-content">若早盤直接跌破 29,000 且無法回穩</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">📈 價格行為</span>
-                    <div class="ai-field-content">連續跌破 29,000 → 28,500，Put OI 集中區失守引發加速下殺。目標直指 28,500 下方，可能測試 28,200 - 28,300 區間</div>
-                </div>
-                
-                <div class="ai-field" style="background: #fef9f3;">
-                    <span class="ai-field-label">📌 關鍵：若 29,000 在 11</span>
-                    <div class="ai-field-content"> 關鍵：若 29,000 在 11:00 前失守且成交量放大，此情境機率大增至 40%</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎮 莊家策略</span>
-                    <div class="ai-field-content">Put 賣方會在 28,500 附近拼命防守，因為此處 OI 高達 2,868 口</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⚖️ 風險報酬</span>
-                    <div class="ai-field-content">風險極高。若發生，Put 28500 以上全價內，Call 全滅</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⏰ 時間框架</span>
-                    <div class="ai-field-content">需在早盤就確立跌勢，午盤持續破底</div>
-                </div>
-            </div>
-            
-            <div class="ai-scenario-card">
-                <div class="ai-scenario-header">
-                    <h3 class="ai-scenario-title">情境二：Max Pain 磁吸（高機率）</h3>
-                    <span class="ai-probability">機率: 55%</span>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎯 目標區間</span>
-                    <div class="ai-field-content" style="font-size: 1.2rem; font-weight: 700; color: var(--primary-color);">
-                        29,700 - 29,950
-                    </div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🔑 進場條件</span>
-                    <div class="ai-field-content">開盤在 30,200 上下，盤中震盪逐步下滑</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">📈 價格行為</span>
-                    <div class="ai-field-content">從當前位置（假設 30,300）逐步回落至 Max Pain 29,800 附近。預期路徑：30,300 → 30,000（測試支撐）→ 29,800（Max Pain）</div>
-                </div>
-                
-                <div class="ai-field" style="background: #fef9f3;">
-                    <span class="ai-field-label">📌 這是最符合選擇權結算規律的走勢。29,800 附近莊家損失最小，會用盡各種手段（包括期貨部位）將價格拉向此處</span>
-                    <div class="ai-field-content"> 這是最符合選擇權結算規律的走勢。29,800 附近莊家損失最小，會用盡各種手段（包括期貨部位）將價格拉向此處</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎮 莊家策略</span>
-                    <div class="ai-field-content">上有 30,000 的 Call OI 1,789 口壓制，下有 29,800 的磁吸，莊家會在 29,800-30,000 區間反覆洗盤</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⚖️ 風險報酬</span>
-                    <div class="ai-field-content">中性偏空。30,000 的 Call 接近價外，29,000 的 Put 仍有部分價值</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⏰ 時間框架</span>
-                    <div class="ai-field-content">全天震盪，13:00-13:30 結算時段向 29,800 收斂</div>
-                </div>
-            </div>
-            
-            <div class="ai-scenario-card">
-                <div class="ai-scenario-header">
-                    <h3 class="ai-scenario-title">情境三：30,000 攻防戰（中機率）</h3>
-                    <span class="ai-probability">機率: 25%</span>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎯 目標區間</span>
-                    <div class="ai-field-content" style="font-size: 1.2rem; font-weight: 700; color: var(--primary-color);">
-                        29,900 - 30,150
-                    </div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🔑 進場條件</span>
-                    <div class="ai-field-content">多頭強勢護盤，開盤守穩 30,200 以上</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">📈 價格行為</span>
-                    <div class="ai-field-content">全天在 30,000 上下 100 點震盪。多頭試圖守住 30,000，但上方 30,300-30,500 的 Call OI 增倉壓力形成天花板</div>
-                </div>
-                
-                <div class="ai-field" style="background: #fef9f3;">
-                    <span class="ai-field-label">📌 若能守住 30,000，結算在 30,000-30,100 區間，可讓 30,000 的 Put OI 1,493 口歸零，是莊家次優選擇</span>
-                    <div class="ai-field-content"> 若能守住 30,000，結算在 30,000-30,100 區間，可讓 30,000 的 Put OI 1,493 口歸零，是莊家次優選擇</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎮 莊家策略</span>
-                    <div class="ai-field-content">30,000 雙邊 OI 超過 3,200 口，莊家兩難。若能撐住 30,000，Put 賣方不用賠；但 Call 賣方壓力增</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⚖️ 風險報酬</span>
-                    <div class="ai-field-content">風險中等。30,000 以上 Put 損失，Call 保值；反之亦然</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⏰ 時間框架</span>
-                    <div class="ai-field-content">需要外資或國安基金等大戶協助護盤，否則難以實現</div>
-                </div>
-            </div>
-            
-            <div class="ai-scenario-card">
-                <div class="ai-scenario-header">
-                    <h3 class="ai-scenario-title">情境四：突破壓力（極低機率）</h3>
-                    <span class="ai-probability">機率: 5%</span>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎯 目標區間</span>
-                    <div class="ai-field-content" style="font-size: 1.2rem; font-weight: 700; color: var(--primary-color);">
-                        30,400 - 30,700
-                    </div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🔑 進場條件</span>
-                    <div class="ai-field-content">需要重大利多或外資大舉作多</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">📈 價格行為</span>
-                    <div class="ai-field-content">突破 30,300 → 30,500 → 30,700，但會在 31,000 前遇到極強阻力</div>
-                </div>
-                
-                <div class="ai-field" style="background: #fef9f3;">
-                    <span class="ai-field-label">📌 30,300 以上每 100 點都有 Call OI 增倉（+36/+76/+27/+46），顯示多頭並不看好大漲，層層設防</span>
-                    <div class="ai-field-content"> 30,300 以上每 100 點都有 Call OI 增倉（+36/+76/+27/+46），顯示多頭並不看好大漲，層層設防</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">🎮 莊家策略</span>
-                    <div class="ai-field-content">此情境對 Call 賣方極為不利。會動用一切手段壓制，包括在期貨市場放空對沖</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⚖️ 風險報酬</span>
-                    <div class="ai-field-content">風險極高。若真發生，Call 賣方慘賠，Put 全滅</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">⏰ 時間框架</span>
-                    <div class="ai-field-content">需要從早盤就強勢突破，且持續有買盤湧入</div>
-                </div>
-            </div>
-            
+            <!-- 交易計劃（第一人稱） -->
+            <div class="ai-section">
+                <h2 class="analysis-title">📋 我的交易計劃</h2>
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #f59e0b; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">📋 我的明日交易計劃：
 
-            <!-- 盤中觀察重點 -->
-            <div class="ai-section" style="margin-top: 30px;">
-                <h2 class="analysis-title">⏰ 盤中觀察重點</h2>
-                
-                <h3 style="margin-top: 20px; color: var(--primary-color);">時段觀察</h3>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">09:00 - 10:00 - 開盤方向</span>
-                    <div class="ai-field-content">若開在 30,200 以上且站穩 → 情境三機率增；若開在 30,000 以下 → 情境二機率大增</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">10:00 - 12:00 - 29,000 和 30,000 防守</span>
-                    <div class="ai-field-content">測試這兩個關卡的次數和力度，判斷莊家意圖</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">12:30 - 13:00 - 尾盤走向</span>
-                    <div class="ai-field-content">結算前半小時，觀察是否有大單刻意引導價格</div>
-                </div>
-                
-                <div class="ai-field">
-                    <span class="ai-field-label">13:00 - 13:30 - 結算價形成</span>
-                    <div class="ai-field-content">現貨平均價計算期間，最後的攻防戰</div>
-                </div>
-                
-                
-                <h3 style="margin-top: 20px; color: var(--primary-color);">價位警示</h3>
-                <div class="grid">
-                    
-                    <div class="card" style="text-align: center;">
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
-                            29,000
-                        </div>
-                        <div style="margin: 8px 0; font-weight: 600;">跌破</div>
-                        <div style="font-size: 0.9rem;">⚠️ 轉為情境一，準備加速下殺</div>
-                    </div>
-                    
-                    <div class="card" style="text-align: center;">
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
-                            29,800
-                        </div>
-                        <div style="margin: 8px 0; font-weight: 600;">接近</div>
-                        <div style="font-size: 0.9rem;">✅ 情境二實現，Max Pain 磁吸</div>
-                    </div>
-                    
-                    <div class="card" style="text-align: center;">
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
-                            30,000
-                        </div>
-                        <div style="margin: 8px 0; font-weight: 600;">爭奪</div>
-                        <div style="font-size: 0.9rem;">⚡ 情境三，多空主戰場</div>
-                    </div>
-                    
-                    <div class="card" style="text-align: center;">
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
-                            30,300
-                        </div>
-                        <div style="margin: 8px 0; font-weight: 600;">突破</div>
-                        <div style="font-size: 0.9rem;">🚀 情境四機率增，但仍需謹慎</div>
-                    </div>
-                    
-                </div>
+多方布局：
+• 進場點：30,154 附近（回測進場）
+• 目標價：30,517（獲利 1%）
+• 停損點：29,973（風險控制 0.8%）
+
+倉位管理：
+• 維持 70-80% 倉位
+• 保留 20-30% 靈活資金
+
+應變方案：
+• 如果盤中出現異常大量，立即檢視部位
+• 重大消息公布前，減少暴險部位
+• 每天收盤後檢討，持續優化策略</div>
             </div>
 
-            <!-- 風險警示 -->
-            <div class="ai-section" style="margin-top: 30px;">
-                <h2 class="analysis-title">⚠️ 風險警示</h2>
-                
-                
-                <div class="ai-warning">
-                    <strong>流動性風險</strong><br>
-                    結算日最後 30 分鐘，流動性驟降，價差擴大，不宜追價
-                </div>
-                
-                <div class="ai-warning">
-                    <strong>大戶操縱風險</strong><br>
-                    30,000 和 29,800 附近 OI 極大，可能有大戶刻意引導價格至有利位置
-                </div>
-                
-                <div class="ai-warning">
-                    <strong>黑天鵝風險</strong><br>
-                    若有重大突發事件（國際政經、企業利空等），所有分析將失效
-                </div>
-                
-                <div class="ai-warning">
-                    <strong>滑價風險</strong><br>
-                    結算時段波動加劇，停損單可能無法以理想價格成交
-                </div>
-                
-                
-                <h3 style="margin-top: 20px; color: var(--primary-color);">💡 操作建議</h3>
-                
-                <div class="ai-recommendation">
-                    ✓ 在結算日避免持有深度價外的選擇權
-                </div>
-                
-                <div class="ai-recommendation">
-                    ✓ 注意部位集中在 29,800-30,000 區間的風險
-                </div>
-                
-                <div class="ai-recommendation">
-                    ✓ 設定好停損點，不要幻想極端情境
-                </div>
-                
-                <div class="ai-recommendation">
-                    ✓ 結算前 1 小時減少交易頻率，觀察為主
-                </div>
-                
+            <!-- 歷史洞察 -->
+            
+
+            <!-- 相似案例參考 -->
+            
+            <div style="margin-top: 20px; padding: 20px; background: #f0fdf4; border-radius: 12px; border: 1px solid #86efac;">
+                <p style="margin: 0; color: #166534;">
+                    📊 在我的記憶中，找到 <strong>2</strong> 個類似的市場情境可供參考
+                </p>
             </div>
+            
 
             <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 12px; text-align: center;">
                 <p style="font-style: italic; color: var(--text-muted);">
-                    ⚡ 本分析由 AI 基於 2026/01/09 盤後數據生成，僅供參考。實際交易請以盤中即時狀況為準。
+                    🧑‍💼 以上是我作為 AI 交易員的個人觀點與計劃<br>
+                    我會持續學習並改進分析能力，每一次分析都會被記錄下來
                 </p>
             </div>
 
@@ -4660,7 +4503,7 @@
         <!-- 結束 AI 分析 Tab -->
 
         <footer style="margin-top: 30px;">
-            <p>報告產生時間: 2026-01-12 17:05:19 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 21:40:16 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 

@@ -1587,7 +1587,7 @@
 
             <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 12px; text-align: center;">
                 <p style="font-style: italic; color: var(--text-muted);">
-                    ⚡ 本分析由 AI 基於 2026/01/09 盤後數據生成，僅供參考。實際交易請以盤中即時狀況為準。
+                    ⚡ 本分析由 AI 基於 2026/01/09 盤後數據生成，僅供參考。實際交易請以盤中變化調整。
                 </p>
             </div>
 
@@ -1596,6 +1596,213 @@
                 <p>AI 交易員分析功能尚未啟用</p>
             </div>
             {% endif %}
+            
+            <!-- AI 預測與檢討區塊 -->
+            {% if prediction or review %}
+            <div style="margin-top: 50px; padding-top: 40px; border-top: 3px solid #e2e8f0;">
+                
+                {% if prediction %}
+                <!-- 明日預測 -->
+                <div style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+                    <h2 style="margin: 0 0 10px 0; font-size: 1.8rem;">🔮 明日市場預測</h2>
+                    <p style="margin: 0; opacity: 0.9;">預測日期: {{ prediction.prediction_date[:4] }}/{{ prediction.prediction_date[4:6] }}/{{ prediction.prediction_date[6:] }} → {{ prediction.next_trading_day[:4] }}/{{ prediction.next_trading_day[4:6] }}/{{ prediction.next_trading_day[6:] }}</p>
+                </div>
+                
+                <div class="ai-section">
+                    <h3 class="analysis-title">💭 市場展望</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #fbbf24; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ prediction.outlook }}</div>
+                </div>
+                
+                <div class="grid" style="margin: 30px 0;">
+                    <div class="card">
+                        <h3 style="color: var(--primary-color);">方向預測</h3>
+                        <div style="font-size: 2rem; font-weight: 700; margin: 15px 0;">
+                            {% if prediction.direction_prediction.direction == '看漲' %}
+                            📈 {{ prediction.direction_prediction.direction }}
+                            {% elif prediction.direction_prediction.direction == '看跌' %}
+                            📉 {{ prediction.direction_prediction.direction }}
+                            {% else %}
+                            ➡️ {{ prediction.direction_prediction.direction }}
+                            {% endif %}
+                        </div>
+                        <div style="font-size: 1.2rem; color: var(--text-muted);">
+                            機率: {{ prediction.direction_prediction.probability }}%
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            {{ prediction.direction_prediction.reasoning }}
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="color: var(--primary-color);">預測區間</h3>
+                        <div style="margin: 15px 0;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">上界</div>
+                            <div style="font-size: 1.3rem; font-weight: 600; color: var(--call-color);">
+                                {{ "{:,}".format(prediction.range_prediction.upper_bound) }}
+                            </div>
+                        </div>
+                        <div style="margin: 15px 0; padding: 10px; background: #f3f4f6; border-radius: 8px;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">現價</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">
+                                {{ "{:,}".format(prediction.range_prediction.current) }}
+                            </div>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">下界</div>
+                            <div style="font-size: 1.3rem; font-weight: 600; color: var(--put-color);">
+                                {{ "{:,}".format(prediction.range_prediction.lower_bound) }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="color: var(--primary-color);">信心水準</h3>
+                        <div style="font-size: 3rem; font-weight: 700; margin: 20px 0; color: var(--primary-color);">
+                            {{ prediction.confidence_level }}%
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">
+                            經驗等級: {{ prediction.experience_level[0] }} {{ prediction.experience_level[1] }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <h3 class="analysis-title">🎯 策略建議</h3>
+                    <div class="grid">
+                        <div class="card">
+                            <h4 style="color: var(--primary-color);">主要策略</h4>
+                            <div style="font-size: 1.2rem; font-weight: 600; margin: 10px 0;">
+                                {{ prediction.strategy_recommendation.primary }}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--primary-color);">替代方案</h4>
+                            <div style="font-size: 1.2rem; font-weight: 600; margin: 10px 0;">
+                                {{ prediction.strategy_recommendation.alternative }}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--primary-color);">進場時機</h4>
+                            <div style="font-size: 1rem; margin: 10px 0;">
+                                {{ prediction.strategy_recommendation.entry_timing }}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--call-color);">停損點</h4>
+                            <div style="font-size: 1rem; margin: 10px 0; color: var(--call-color); font-weight: 600;">
+                                {{ prediction.strategy_recommendation.stop_loss }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <h3 class="analysis-title">⚠️ 風險警告</h3>
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 8px; white-space: pre-wrap;">{{ prediction.risk_warning }}</div>
+                </div>
+                {% endif %}
+                
+                {% if review %}
+                <!-- 盤後檢討 -->
+                <div style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; padding: 25px; border-radius: 12px; margin: 50px 0 30px 0;">
+                    <h2 style="margin: 0 0 10px 0; font-size: 1.8rem;">📝 盤後檢討報告</h2>
+                    <p style="margin: 0; opacity: 0.9;">預測日: {{ review.prediction_date[:4] }}/{{ review.prediction_date[4:6] }}/{{ review.prediction_date[6:] }} | 實際日: {{ review.actual_date[:4] }}/{{ review.actual_date[4:6] }}/{{ review.actual_date[6:] }}</p>
+                </div>
+                
+                <div class="grid" style="margin-bottom: 30px;">
+                    <div class="card" style="text-align: center;">
+                        <h4 style="color: var(--text-muted); margin-bottom: 10px;">準確度</h4>
+                        <div style="font-size: 3rem; font-weight: 700; 
+                            {% if review.accuracy.overall_accuracy >= 80 %}color: #10b981;
+                            {% elif review.accuracy.overall_accuracy >= 60 %}color: #3b82f6;
+                            {% elif review.accuracy.overall_accuracy >= 40 %}color: #f59e0b;
+                            {% else %}color: #ef4444;{% endif %}">
+                            {{ review.accuracy.overall_accuracy }}%
+                        </div>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4 style="color: var(--text-muted); margin-bottom: 10px;">評分</h4>
+                        <div style="font-size: 2rem; font-weight: 700; margin-top: 15px;">
+                            {{ review.score }}
+                        </div>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4 style="color: var(--text-muted); margin-bottom: 10px;">方向預測</h4>
+                        <div style="font-size: 2.5rem; margin-top: 10px;">
+                            {% if review.accuracy.direction_correct %}
+                            ✅ 正確
+                            {% else %}
+                            ❌ 錯誤
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4 style="color: var(--text-muted); margin-bottom: 10px;">價格誤差</h4>
+                        <div style="font-size: 1.5rem; font-weight: 700; margin-top: 10px;">
+                            {{ review.accuracy.price_error }} 點
+                        </div>
+                        <div style="font-size: 1rem; color: var(--text-muted); margin-top: 5px;">
+                            ({{ review.accuracy.price_error_percent }}%)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <h3 class="analysis-title">💭 自我反思</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #8b5cf6; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ review.self_reflection }}</div>
+                </div>
+                
+                <div class="ai-section">
+                    <h3 class="analysis-title">📚 學到的教訓</h3>
+                    <div style="background: #fef3c7; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                        {% for lesson in review.lessons_learned %}
+                        <div style="padding: 10px 0; {% if not loop.last %}border-bottom: 1px solid #fbbf24;{% endif %}">
+                            <strong style="color: #f59e0b;">💡</strong> {{ lesson }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <h3 class="analysis-title">🎯 改進方向</h3>
+                    <div style="background: #dbeafe; padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                        {% for improvement in review.improvement_areas %}
+                        <div style="padding: 10px 0; {% if not loop.last %}border-bottom: 1px solid #93c5fd;{% endif %}">
+                            {{ improvement }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="grid" style="margin-top: 30px;">
+                    <div class="card">
+                        <h4 style="color: var(--text-muted);">預測時數據</h4>
+                        <div style="margin-top: 10px;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">台指期貨</div>
+                            <div style="font-size: 1.3rem; font-weight: 600;">{{ "{:,}".format(review.prediction.current_metrics.tx_close) }}</div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">PC Ratio</div>
+                            <div style="font-size: 1.3rem; font-weight: 600;">{{ review.prediction.current_metrics.pc_ratio }}</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--text-muted);">實際數據</h4>
+                        <div style="margin-top: 10px;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">台指期貨</div>
+                            <div style="font-size: 1.3rem; font-weight: 600;">{{ "{:,}".format(review.actual_result.tx_close) }}</div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">PC Ratio</div>
+                            <div style="font-size: 1.3rem; font-weight: 600;">{{ review.actual_result.pc_ratio }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+            </div>
+            {% endif %}
+            
             {% endif %}
         </div>
         <!-- 結束 AI 分析 Tab -->

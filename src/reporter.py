@@ -15,6 +15,9 @@ from .parser import OptionsData
 from .settlement_analyzer import SettlementAnalyzer, SettlementAnalysis
 from .ai_settlement_analysis import AISettlementAnalyzer
 from .ai_daily_analyzer import AIDailyAnalyzer
+from .ai_prediction_generator import AIPredictionGenerator
+from .ai_review_analyzer import AIReviewAnalyzer
+from .ai_learning_system import AILearningSystem
 
 
 def get_weekday_chinese(date_str: str) -> str:
@@ -89,6 +92,11 @@ class ReportGenerator:
         
         # 初始化每日 AI 交易員分析器
         self.daily_ai_analyzer = AIDailyAnalyzer()
+        
+        # 初始化 AI 學習系統
+        self.ai_learning_system = AILearningSystem()
+        self.prediction_generator = AIPredictionGenerator(self.ai_learning_system)
+        self.review_analyzer = AIReviewAnalyzer(self.ai_learning_system, self.prediction_generator)
 
     def generate(
         self,
@@ -121,10 +129,16 @@ class ReportGenerator:
         
         # 進行每日 AI 交易員分析
         daily_ai_analysis = self.daily_ai_analyzer.analyze(analysis_result, options_data, sentiment)
+        
+        # 載入預測和檢討數據
+        current_date = analysis_result.date
+        prediction = self.prediction_generator.load_prediction(current_date)
+        review = self.review_analyzer.load_review(current_date)
 
         # 準備模板資料
         template_data = self._prepare_template_data(
-            analysis_result, options_data, settlement_analysis, ai_analysis, daily_ai_analysis
+            analysis_result, options_data, settlement_analysis, ai_analysis, 
+            daily_ai_analysis, prediction, review
         )
 
         # 載入並渲染模板
@@ -145,7 +159,9 @@ class ReportGenerator:
         options_data: OptionsData,
         settlement_analysis: SettlementAnalysis = None,
         ai_analysis: Dict = None,
-        daily_ai_analysis: Dict = None
+        daily_ai_analysis: Dict = None,
+        prediction: Dict = None,
+        review: Dict = None
     ) -> dict:
         """
         準備模板所需的資料
@@ -247,6 +263,10 @@ class ReportGenerator:
             
             # 每日 AI 交易員分析
             'daily_ai_analysis': daily_ai_analysis if daily_ai_analysis else {},
+            
+            # AI 預測與檢討
+            'prediction': prediction if prediction else None,
+            'review': review if review else None,
             
             # 台指期貨基本資料
             'tx_data': {
