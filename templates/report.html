@@ -368,6 +368,140 @@
             display: inline-block;
         }
 
+        /* Tab 導航樣式 */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            color: var(--primary-color);
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* AI 分析樣式 */
+        .ai-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .ai-scenario-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .ai-scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .ai-scenario-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .ai-probability {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .ai-field {
+            margin: 16px 0;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .ai-field-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .ai-field-content {
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .ai-observation-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ai-observation-list li {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-left: 3px solid #22c55e;
+            border-radius: 4px;
+        }
+
+        .ai-key-level {
+            display: inline-block;
+            background: #dbeafe;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .ai-warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .ai-recommendation {
+            background: #dcfce7;
+            border-left: 4px solid #22c55e;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
         /* 圖例 */
         .chart-legend {
             display: flex;
@@ -462,6 +596,18 @@
             </div>
         </header>
 
+        <!-- Tab 導航 -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab(event, 'standard-analysis')">
+                📊 標準分析
+            </button>
+            <button class="tab-button" onclick="switchTab(event, 'ai-analysis')">
+                🤖 AI 情境分析
+            </button>
+        </div>
+
+        <!-- 標準分析 Tab -->
+        <div id="standard-analysis" class="tab-content active">
         <!-- 關鍵指標卡片 -->
         <div class="grid">
             <div class="card">
@@ -638,9 +784,214 @@
         <footer>
             <p>報告產生時間: {{ generated_at }} | TAIEX Options Analyzer</p>
         </footer>
+        </div>
+        <!-- 結束標準分析 Tab -->
+
+        <!-- AI 情境分析 Tab -->
+        <div id="ai-analysis" class="tab-content">
+            {% if ai_analysis %}
+            
+            <!-- 市場結構分析 -->
+            <div class="ai-section">
+                <h2 class="analysis-title">🧠 {{ ai_analysis.market_structure.title }}</h2>
+                <div class="ai-observation-list">
+                    {% for obs in ai_analysis.market_structure.observations %}
+                    <li>
+                        <strong style="color: var(--primary-color);">{{ obs.point }}</strong><br>
+                        {{ obs.detail }}
+                    </li>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- 籌碼分布 -->
+            <div class="ai-section">
+                <h2 class="analysis-title">📦 {{ ai_analysis.oi_analysis.title }}</h2>
+                {% for feature in ai_analysis.oi_analysis.features %}
+                <div class="ai-field">
+                    <span class="ai-field-label">{{ feature.level }} - {{ feature.characteristic }}</span>
+                    <div class="ai-field-content">{{ feature.detail }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- 關鍵價位 -->
+            <div class="ai-section">
+                <h2 class="analysis-title">🎯 關鍵價位識別</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3 style="color: var(--put-color);">關鍵支撐</h3>
+                        {% for support in ai_analysis.key_levels.critical_support %}
+                        <div class="ai-field">
+                            <span class="ai-key-level">{{ "{:,}".format(support.price) }} 點</span>
+                            <span class="badge" style="background: var(--put-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
+                                {{ support.strength }}
+                            </span>
+                            <div style="margin-top: 8px; font-size: 0.9rem;">{{ support.reason }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="color: var(--primary-color);">樞紐區域</h3>
+                        {% for pivot in ai_analysis.key_levels.pivot_zones %}
+                        <div class="ai-field">
+                            <span class="ai-key-level">{{ "{:,}".format(pivot.price) }} 點</span>
+                            <span class="badge" style="background: var(--primary-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
+                                {{ pivot.role }}
+                            </span>
+                            <div style="margin-top: 8px; font-size: 0.9rem;">磁吸力: {{ pivot.magnet }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="color: var(--call-color);">關鍵壓力</h3>
+                        {% for resist in ai_analysis.key_levels.critical_resistance %}
+                        <div class="ai-field">
+                            <span class="ai-key-level">{{ "{:,}".format(resist.price) }} 點</span>
+                            <span class="badge" style="background: var(--call-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
+                                {{ resist.strength }}
+                            </span>
+                            <div style="margin-top: 8px; font-size: 0.9rem;">{{ resist.reason }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI 情境分析 -->
+            <h2 class="section-title" style="margin-top: 40px;">🎲 AI 深度情境推演</h2>
+            {% for scenario in ai_analysis.scenarios %}
+            <div class="ai-scenario-card">
+                <div class="ai-scenario-header">
+                    <h3 class="ai-scenario-title">{{ scenario.title }}</h3>
+                    <span class="ai-probability">機率: {{ scenario.probability }}</span>
+                </div>
+                
+                <div class="ai-field">
+                    <span class="ai-field-label">🎯 目標區間</span>
+                    <div class="ai-field-content" style="font-size: 1.2rem; font-weight: 700; color: var(--primary-color);">
+                        {{ scenario.target_range }}
+                    </div>
+                </div>
+                
+                <div class="ai-field">
+                    <span class="ai-field-label">🔑 進場條件</span>
+                    <div class="ai-field-content">{{ scenario.entry_condition }}</div>
+                </div>
+                
+                <div class="ai-field">
+                    <span class="ai-field-label">📈 價格行為</span>
+                    <div class="ai-field-content">{{ scenario.price_action }}</div>
+                </div>
+                
+                <div class="ai-field" style="background: #fef9f3;">
+                    <span class="ai-field-label">{{ scenario.key_observation.split(':')[0] }}</span>
+                    <div class="ai-field-content">{{ scenario.key_observation.split('📌')[1] if '📌' in scenario.key_observation else scenario.key_observation }}</div>
+                </div>
+                
+                <div class="ai-field">
+                    <span class="ai-field-label">🎮 莊家策略</span>
+                    <div class="ai-field-content">{{ scenario.dealer_strategy }}</div>
+                </div>
+                
+                <div class="ai-field">
+                    <span class="ai-field-label">⚖️ 風險報酬</span>
+                    <div class="ai-field-content">{{ scenario.risk_reward }}</div>
+                </div>
+                
+                <div class="ai-field">
+                    <span class="ai-field-label">⏰ 時間框架</span>
+                    <div class="ai-field-content">{{ scenario.time_frame }}</div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- 盤中觀察重點 -->
+            <div class="ai-section" style="margin-top: 30px;">
+                <h2 class="analysis-title">⏰ {{ ai_analysis.intraday_watch.title }}</h2>
+                
+                <h3 style="margin-top: 20px; color: var(--primary-color);">時段觀察</h3>
+                {% for watch in ai_analysis.intraday_watch.time_based %}
+                <div class="ai-field">
+                    <span class="ai-field-label">{{ watch.time }} - {{ watch.watch }}</span>
+                    <div class="ai-field-content">{{ watch.detail }}</div>
+                </div>
+                {% endfor %}
+                
+                <h3 style="margin-top: 20px; color: var(--primary-color);">價位警示</h3>
+                <div class="grid">
+                    {% for alert in ai_analysis.intraday_watch.price_alerts %}
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
+                            {{ "{:,}".format(alert.level) }}
+                        </div>
+                        <div style="margin: 8px 0; font-weight: 600;">{{ alert.direction }}</div>
+                        <div style="font-size: 0.9rem;">{{ alert.meaning }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- 風險警示 -->
+            <div class="ai-section" style="margin-top: 30px;">
+                <h2 class="analysis-title">⚠️ {{ ai_analysis.risk_warnings.title }}</h2>
+                
+                {% for warning in ai_analysis.risk_warnings.warnings %}
+                <div class="ai-warning">
+                    <strong>{{ warning.type }}</strong><br>
+                    {{ warning.detail }}
+                </div>
+                {% endfor %}
+                
+                <h3 style="margin-top: 20px; color: var(--primary-color);">💡 操作建議</h3>
+                {% for rec in ai_analysis.risk_warnings.recommendations %}
+                <div class="ai-recommendation">
+                    {{ rec }}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 12px; text-align: center;">
+                <p style="font-style: italic; color: var(--text-muted);">
+                    ⚡ 本分析由 AI 基於 2026/01/09 盤後數據生成，僅供參考。實際交易請以盤中即時狀況為準。
+                </p>
+            </div>
+
+            {% else %}
+            <div class="card">
+                <p>AI 分析功能尚未啟用</p>
+            </div>
+            {% endif %}
+        </div>
+        <!-- 結束 AI 分析 Tab -->
+
+        <footer style="margin-top: 30px;">
+            <p>報告產生時間: {{ generated_at }} | TAIEX Options Analyzer</p>
+        </footer>
     </div>
 
     <script>
+        // Tab 切換功能
+        function switchTab(event, tabId) {
+            // 隱藏所有 tab 內容
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let content of tabContents) {
+                content.classList.remove('active');
+            }
+            
+            // 移除所有 tab 按鈕的 active 狀態
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let button of tabButtons) {
+                button.classList.remove('active');
+            }
+            
+            // 顯示選中的 tab
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
         // OI 分布圖 - 水平對稱式 (履約價在中間)
         const oiData = {{ oi_chart_data | safe }};
         const maxPain = {{ max_pain }};

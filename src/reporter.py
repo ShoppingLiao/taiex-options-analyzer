@@ -8,11 +8,12 @@ from datetime import datetime
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from dataclasses import dataclass
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Dict
 
 from .analyzer import AnalysisResult
 from .parser import OptionsData
 from .settlement_analyzer import SettlementAnalyzer, SettlementAnalysis
+from .ai_settlement_analysis import AISettlementAnalyzer
 
 
 class ReportGenerator:
@@ -45,6 +46,9 @@ class ReportGenerator:
         
         # 初始化結算情境分析器
         self.settlement_analyzer = SettlementAnalyzer()
+        
+        # 初始化 AI 分析器
+        self.ai_analyzer = AISettlementAnalyzer()
 
     def generate(
         self,
@@ -68,9 +72,12 @@ class ReportGenerator:
 
         # 進行結算情境分析
         settlement_analysis = self.settlement_analyzer.analyze_settlement_scenarios(options_data)
+        
+        # 進行 AI 深度分析
+        ai_analysis = self.ai_analyzer.analyze_20260109_data(options_data)
 
         # 準備模板資料
-        template_data = self._prepare_template_data(analysis_result, options_data, settlement_analysis)
+        template_data = self._prepare_template_data(analysis_result, options_data, settlement_analysis, ai_analysis)
 
         # 載入並渲染模板
         template = self.env.get_template("report.html")
@@ -88,7 +95,8 @@ class ReportGenerator:
         self,
         result: AnalysisResult,
         options_data: OptionsData,
-        settlement_analysis: SettlementAnalysis = None
+        settlement_analysis: SettlementAnalysis = None,
+        ai_analysis: Dict = None
     ) -> dict:
         """
         準備模板所需的資料
@@ -192,6 +200,9 @@ class ReportGenerator:
             'settlement_scenarios': settlement_scenarios,
             'dealer_position': settlement_analysis.dealer_position if settlement_analysis else '',
             'market_bias': settlement_analysis.market_bias if settlement_analysis else '',
+            
+            # AI 深度分析
+            'ai_analysis': ai_analysis if ai_analysis else {},
         }
 
     def _generate_analysis_items(self, result: AnalysisResult, sentiment: str) -> list:
