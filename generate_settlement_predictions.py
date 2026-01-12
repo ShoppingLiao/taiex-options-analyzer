@@ -31,9 +31,9 @@ def main():
             "historical_dates": ["20260105", "20260106"]  # 週一、週二
         },
         {
-            "settlement_date": "20260110",  # 週五結算  
+            "settlement_date": "20260109",  # 週五結算  
             "weekday": "friday",
-            "historical_dates": ["20260108", "20260109"]  # 週四、週五
+            "historical_dates": ["20260107", "20260108"]  # 週三、週四
         }
     ]
     

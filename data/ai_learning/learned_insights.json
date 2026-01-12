@@ -151,6 +151,18 @@
       "lessons": [
         "這次週三結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。"
       ]
+    },
+    {
+      "date": "20260109",
+      "type": "settlement",
+      "weekday": "friday",
+      "prediction_accuracy": 100,
+      "in_range": true,
+      "direction_correct": true,
+      "price_error": 6,
+      "lessons": [
+        "這次週五結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。"
+      ]
     }
   ]
 }
