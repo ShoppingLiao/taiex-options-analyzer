@@ -931,20 +931,103 @@
             </div>
         </div>
 
-        <!-- OI 變化圖 (蝴蝶圖樣式) -->
+        <!-- OI 變化表格 -->
         <div class="chart-container">
-            <h3 class="chart-title">選擇權 OI 變化</h3>
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <div class="legend-color legend-call"></div>
-                    <span>Call OI 增減</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color legend-put"></div>
-                    <span>Put OI 增減</span>
+            <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 8px 8px 0 0; margin: -24px -24px 20px -24px;">
+                選擇權 OI 變化
+            </h3>
+            
+            <!-- OI 變化表格 -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                    <thead>
+                        <tr style="background: linear-gradient(to right, #ef4444, #3b82f6, #22c55e);">
+                            <th colspan="2" style="background: #ef4444; color: white; padding: 12px; text-align: center; font-size: 1.1rem; border: 1px solid #dc2626;">Call 變化</th>
+                            <th style="background: #3b82f6; color: white; padding: 12px; text-align: center; font-size: 1.1rem; border: 1px solid #2563eb;">履約價</th>
+                            <th colspan="2" style="background: #22c55e; color: white; padding: 12px; text-align: center; font-size: 1.1rem; border: 1px solid #16a34a;">Put 變化</th>
+                        </tr>
+                        <tr style="background: #f3f4f6;">
+                            <th style="background: #fecaca; color: #dc2626; padding: 10px; text-align: center; border: 1px solid #fca5a5; font-weight: 600;">增加</th>
+                            <th style="background: #fecaca; color: #dc2626; padding: 10px; text-align: center; border: 1px solid #fca5a5; font-weight: 600;">減少</th>
+                            <th style="background: #1f2937; color: white; padding: 10px; text-align: center; border: 1px solid #374151; font-weight: 600;">Strike</th>
+                            <th style="background: #bbf7d0; color: #16a34a; padding: 10px; text-align: center; border: 1px solid #86efac; font-weight: 600;">增加</th>
+                            <th style="background: #bbf7d0; color: #16a34a; padding: 10px; text-align: center; border: 1px solid #86efac; font-weight: 600;">減少</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data_rows %}
+                        {% set strike = row.strike %}
+                        {% set call_change = row.call_oi_change %}
+                        {% set put_change = row.put_oi_change %}
+                        {% set total_change = call_change|abs + put_change|abs %}
+                        
+                        {% if total_change > 0 %}
+                        <tr style="{% if strike == tx_data.close %}background: #fef3c7;{% elif strike == max_pain %}background: #fed7aa;{% else %}background: white;{% endif %}">
+                            <!-- Call 增加 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                {% if call_change > 0 %}
+                                <div style="position: relative; z-index: 1; color: #ef4444; font-weight: 600;">+{{ "{:,}".format(call_change) }}</div>
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(239, 68, 68, 0.2); width: {{ (call_change / 200 * 100) if call_change < 200 else 100 }}%; z-index: 0;"></div>
+                                {% endif %}
+                            </td>
+                            
+                            <!-- Call 減少 -->
+                            <td style="padding: 8px; text-align: right; border: 1px solid #e5e7eb; position: relative;">
+                                {% if call_change < 0 %}
+                                <div style="position: relative; z-index: 1; color: #dc2626; font-weight: 700;">{{ "{:,}".format(call_change) }}</div>
+                                <div style="position: absolute; right: 0; top: 0; height: 100%; background: rgba(220, 38, 38, 0.3); width: {{ ((call_change|abs) / 200 * 100) if (call_change|abs) < 200 else 100 }}%; z-index: 0;"></div>
+                                {% endif %}
+                            </td>
+                            
+                            <!-- 履約價 -->
+                            <td style="padding: 8px; text-align: center; border: 1px solid #374151; background: #1f2937; color: white; font-weight: 700;">
+                                {{ "{:,}".format(strike) }}
+                            </td>
+                            
+                            <!-- Put 增加 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                {% if put_change > 0 %}
+                                <div style="position: relative; z-index: 1; color: #22c55e; font-weight: 600;">+{{ "{:,}".format(put_change) }}</div>
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(34, 197, 94, 0.2); width: {{ (put_change / 200 * 100) if put_change < 200 else 100 }}%; z-index: 0;"></div>
+                                {% endif %}
+                            </td>
+                            
+                            <!-- Put 減少 -->
+                            <td style="padding: 8px; text-align: left; border: 1px solid #e5e7eb; position: relative;">
+                                {% if put_change < 0 %}
+                                <div style="position: relative; z-index: 1; color: #16a34a; font-weight: 700;">{{ "{:,}".format(put_change) }}</div>
+                                <div style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(22, 163, 74, 0.3); width: {{ ((put_change|abs) / 200 * 100) if (put_change|abs) < 200 else 100 }}%; z-index: 0;"></div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: #1f2937; color: white; font-weight: 700; font-size: 1rem;">
+                            <td style="padding: 12px; text-align: center; border: 1px solid #374151;" colspan="2">
+                                Call 總變化: {% if call_oi_change > 0 %}+{% endif %}{{ "{:,}".format(call_oi_change) }}
+                            </td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #374151; background: #111827;">
+                                合計
+                            </td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #374151;" colspan="2">
+                                Put 總變化: {% if put_oi_change > 0 %}+{% endif %}{{ "{:,}".format(put_oi_change) }}
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <!-- 圖例說明 -->
+            <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; font-size: 0.85rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #fca5a5; border: 1px solid #f87171; margin-right: 5px;"></span>Call 增加（淡紅）</div>
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #dc2626; border: 1px solid #b91c1c; margin-right: 5px;"></span>Call 減少（深紅）</div>
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #86efac; border: 1px solid #4ade80; margin-right: 5px;"></span>Put 增加（淡綠）</div>
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #16a34a; border: 1px solid #15803d; margin-right: 5px;"></span>Put 減少（深綠）</div>
                 </div>
             </div>
-            <div id="oi-change-chart" class="chart"></div>
         </div>
 
         <!-- 詳細資料表 -->
@@ -1364,6 +1447,8 @@
         */
 
         // OI 變化圖使用 Plotly
+        // 已改為表格形式呈現，不使用圖表
+        /*
         const oiData = {{ oi_chart_data | safe }};
         
         // OI 變化圖 - 同樣採用蝴蝶圖樣式，只顯示有變化的履約價
@@ -1454,7 +1539,8 @@
             paper_bgcolor: 'white'
         };
 
-        Plotly.newPlot('oi-change-chart', [callChangeTrace, putChangeTrace], changeLayout, {responsive: true, displayModeBar: false});
+        // Plotly.newPlot('oi-change-chart', [callChangeTrace, putChangeTrace], changeLayout, {responsive: true, displayModeBar: false});
+        */
     </script>
 </body>
 </html>
