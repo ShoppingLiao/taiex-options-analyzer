@@ -43,6 +43,7 @@
             padding: 30px 20px;
             margin-bottom: 30px;
             border-radius: 12px;
+            position: relative;
         }
 
         header h1 {
@@ -53,6 +54,44 @@
         header .subtitle {
             font-size: 1.1rem;
             opacity: 0.9;
+        }
+
+        /* 回首頁按鈕 */
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 手機版調整 */
+        @media (max-width: 768px) {
+            .home-button {
+                position: static;
+                display: inline-flex;
+                margin-top: 15px;
+            }
+            
+            header {
+                text-align: center;
+            }
         }
 
         .grid {
@@ -638,6 +677,10 @@
 <body>
     <div class="container">
         <header>
+            <a href="index.html" class="home-button">
+                <span>🏠</span>
+                <span>回首頁</span>
+            </a>
             <h1>台指選擇權分析報告</h1>
             <div class="subtitle">
                 交易日期: 20260105 | 契約月份: 202601 | 結算日: 2026/01/21
@@ -4229,7 +4272,7 @@
         </div>
 
         <footer>
-            <p>報告產生時間: 2026-01-12 15:33:40 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 16:33:00 | TAIEX Options Analyzer</p>
         </footer>
         </div>
         <!-- 結束標準分析 Tab -->
@@ -4663,7 +4706,7 @@
         <!-- 結束 AI 分析 Tab -->
 
         <footer style="margin-top: 30px;">
-            <p>報告產生時間: 2026-01-12 15:33:40 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-12 16:33:00 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 
