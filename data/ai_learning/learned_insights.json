@@ -1,1 +1,40 @@
-{}
+{
+  "reviews": [
+    {
+      "date": "20260106",
+      "prediction_accuracy": 50,
+      "direction_correct": false,
+      "price_error": 251,
+      "lessons": [
+        "PC Ratio 低於 0.77 時的樂觀情緒，不見得會立即導致回檔，多頭動能可能持續。"
+      ]
+    },
+    {
+      "date": "20260107",
+      "prediction_accuracy": 100,
+      "direction_correct": true,
+      "price_error": 95,
+      "lessons": [
+        "這次預測成功，我應該記住這次分析的邏輯和方法。"
+      ]
+    },
+    {
+      "date": "20260108",
+      "prediction_accuracy": 50,
+      "direction_correct": false,
+      "price_error": 157,
+      "lessons": [
+        "PC Ratio 低於 0.72 時的樂觀情緒，不見得會立即導致回檔，多頭動能可能持續。"
+      ]
+    },
+    {
+      "date": "20260109",
+      "prediction_accuracy": 100,
+      "direction_correct": true,
+      "price_error": 84,
+      "lessons": [
+        "這次預測成功，我應該記住這次分析的邏輯和方法。"
+      ]
+    }
+  ]
+}

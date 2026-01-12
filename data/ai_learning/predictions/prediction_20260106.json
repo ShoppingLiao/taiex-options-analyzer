@@ -1,0 +1,42 @@
+{
+  "prediction_date": "20260106",
+  "next_trading_day": "20260107",
+  "experience_level": [
+    "新手",
+    "🌱"
+  ],
+  "current_metrics": {
+    "tx_close": 30120,
+    "pc_ratio": 1.02,
+    "call_oi": 53554,
+    "put_oi": 54796
+  },
+  "outlook": "🔮 **明日市場展望**\n\n今天的 PC Ratio 為 1.02，處於相對平衡的狀態。我認為明天盤勢將以區間震盪為主。",
+  "direction_prediction": {
+    "direction": "震盪",
+    "probability": 55,
+    "reasoning": "市場情緒中性，方向不明確"
+  },
+  "range_prediction": {
+    "current": 30120,
+    "upper_bound": 30572,
+    "lower_bound": 29668,
+    "key_resistance": 30421,
+    "key_support": 29819
+  },
+  "strategy_recommendation": {
+    "primary": "Iron Condor / Butterfly",
+    "alternative": "觀望為主",
+    "entry_timing": "區間震盪時布局",
+    "stop_loss": "破區間立即出場"
+  },
+  "risk_warning": "⚠️ 請務必設定停損點，控制單筆風險在 2% 以內\n⚠️ 預測僅供參考，實際應根據盤中變化調整",
+  "confidence_level": 50,
+  "key_levels": {
+    "current_close": 30120,
+    "nearest_100": 30100,
+    "nearest_50": 30100,
+    "psychological_high": 30200,
+    "psychological_low": 30000
+  }
+}

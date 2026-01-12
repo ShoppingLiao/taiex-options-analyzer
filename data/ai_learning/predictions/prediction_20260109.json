@@ -1,0 +1,42 @@
+{
+  "prediction_date": "20260109",
+  "next_trading_day": "20260112",
+  "experience_level": [
+    "新手",
+    "🌱"
+  ],
+  "current_metrics": {
+    "tx_close": 30456,
+    "pc_ratio": 0.78,
+    "call_oi": 14252,
+    "put_oi": 11103
+  },
+  "outlook": "🔮 **明日市場展望**\n\n今天的 PC Ratio 僅 0.78，市場過度樂觀讓我有些擔心。我預期明天可能會有獲利回吐的壓力。",
+  "direction_prediction": {
+    "direction": "看跌",
+    "probability": 60.4,
+    "reasoning": "樂觀情緒過度，可能有回檔壓力"
+  },
+  "range_prediction": {
+    "current": 30456,
+    "upper_bound": 30913,
+    "lower_bound": 29999,
+    "key_resistance": 30761,
+    "key_support": 30151
+  },
+  "strategy_recommendation": {
+    "primary": "買進 Put / 賣出 Call",
+    "alternative": "Bear Put Spread",
+    "entry_timing": "反彈時分批進場",
+    "stop_loss": "突破當日高點"
+  },
+  "risk_warning": "⚠️ 請務必設定停損點，控制單筆風險在 2% 以內\n⚠️ 預測僅供參考，實際應根據盤中變化調整",
+  "confidence_level": 50,
+  "key_levels": {
+    "current_close": 30456,
+    "nearest_100": 30500,
+    "nearest_50": 30450,
+    "psychological_high": 30600,
+    "psychological_low": 30400
+  }
+}

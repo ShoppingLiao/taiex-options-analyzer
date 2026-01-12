@@ -1,0 +1,67 @@
+{
+  "prediction_date": "20260108",
+  "actual_date": "20260109",
+  "prediction": {
+    "prediction_date": "20260108",
+    "next_trading_day": "20260109",
+    "experience_level": [
+      "新手",
+      "🌱"
+    ],
+    "current_metrics": {
+      "tx_close": 30372,
+      "pc_ratio": 1.0,
+      "call_oi": 42636,
+      "put_oi": 42672
+    },
+    "outlook": "🔮 **明日市場展望**\n\n今天的 PC Ratio 為 1.00，處於相對平衡的狀態。我認為明天盤勢將以區間震盪為主。",
+    "direction_prediction": {
+      "direction": "震盪",
+      "probability": 55,
+      "reasoning": "市場情緒中性，方向不明確"
+    },
+    "range_prediction": {
+      "current": 30372,
+      "upper_bound": 30828,
+      "lower_bound": 29916,
+      "key_resistance": 30676,
+      "key_support": 30068
+    },
+    "strategy_recommendation": {
+      "primary": "Iron Condor / Butterfly",
+      "alternative": "觀望為主",
+      "entry_timing": "區間震盪時布局",
+      "stop_loss": "破區間立即出場"
+    },
+    "risk_warning": "⚠️ 請務必設定停損點，控制單筆風險在 2% 以內\n⚠️ 預測僅供參考，實際應根據盤中變化調整",
+    "confidence_level": 50,
+    "key_levels": {
+      "current_close": 30372,
+      "nearest_100": 30400,
+      "nearest_50": 30350,
+      "psychological_high": 30500,
+      "psychological_low": 30300
+    }
+  },
+  "actual_result": {
+    "tx_close": 30456,
+    "pc_ratio": 0.78,
+    "call_oi": 14252,
+    "put_oi": 11103
+  },
+  "accuracy": {
+    "direction_correct": true,
+    "price_error": 84,
+    "price_error_percent": 0.28,
+    "in_predicted_range": true,
+    "overall_accuracy": 100
+  },
+  "self_reflection": "📝 **盤後自我檢討**\n\n今天的預測相當準確，我感到很滿意！（準確度：100%）\n\n✅ **方向判斷正確**：我預測震盪，實際走勢確實如此。這證明我對市場情緒的解讀是準確的。\n\n✅ **價格預測精準**：誤差僅 84 點（0.28%），我對價格區間的掌握相當好。\n\n**策略執行回顧**：\n如果按照我建議的「Iron Condor / Butterfly」策略執行，應該能夠獲利。這個策略在當時的市況下是正確的選擇。",
+  "lessons_learned": [
+    "這次預測成功，我應該記住這次分析的邏輯和方法。"
+  ],
+  "improvement_areas": [
+    "✨ 繼續保持目前的分析水準，累積更多成功經驗"
+  ],
+  "score": "🏆 優秀 (A+)"
+}
