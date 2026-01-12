@@ -5,17 +5,20 @@
 ### 1. 價格數據解析錯誤
 
 **問題描述：**
+
 - 當前價格顯示為 0
 - 預測區間錯誤：17,100 ~ 18,300（實際應為 29,000 ~ 30,500）
 - 劇本區間也跟著錯誤
 
 **根本原因：**
+
 ```python
 # 原始解析邏輯只支援一種格式
 close_match = re.search(r'<div class="close-price">([0-9,]+)</div>', html_content)
 ```
 
 但實際報告中的格式是：
+
 ```html
 📊 收盤價 29,869
 ```
@@ -23,10 +26,12 @@ close_match = re.search(r'<div class="close-price">([0-9,]+)</div>', html_conten
 ### 2. 預測邏輯缺乏容錯
 
 **問題描述：**
+
 - 當 `current_price = 0` 時，仍然用於計算
 - 導致預測區間計算錯誤
 
 **原始邏輯：**
+
 ```python
 current_price = metrics.get('current_price', 23000)  # 預設值不合理
 ```
@@ -38,6 +43,7 @@ current_price = metrics.get('current_price', 23000)  # 預設值不合理
 ### 1. 增強 HTML 解析
 
 **新的解析邏輯：**
+
 ```python
 def _parse_report_html(self, html_path: Path) -> Optional[Dict]:
     # 格式1: 📊 收盤價 29,869
@@ -57,6 +63,7 @@ def _parse_report_html(self, html_path: Path) -> Optional[Dict]:
 ```
 
 **優點：**
+
 - 支援多種價格格式
 - 從最可能的格式開始嘗試
 - 增加成功率
@@ -64,27 +71,29 @@ def _parse_report_html(self, html_path: Path) -> Optional[Dict]:
 ### 2. 改進預測區間計算
 
 **新的邏輯：**
+
 ```python
 def _predict_settlement_range(self, reports, signals, metrics):
     current_price = metrics.get('current_price', 0)
     max_pain = metrics.get('max_pain', 0)
-    
+
     # 如果沒有價格數據，使用預設範圍
     if current_price == 0 and max_pain == 0:
         return (23000, 24000)
-    
+
     # 如果沒有當前價格，使用 Max Pain 作為基準
     if current_price == 0:
         current_price = max_pain
-    
+
     # 如果沒有 Max Pain，使用當前價格作為基準
     if max_pain == 0:
         max_pain = current_price
-    
+
     # ... 後續計算
 ```
 
 **優點：**
+
 - 有完整的容錯機制
 - 優先使用真實數據
 - 有合理的 fallback 邏輯
@@ -92,17 +101,18 @@ def _predict_settlement_range(self, reports, signals, metrics):
 ### 3. 劇本生成容錯
 
 **新的邏輯：**
+
 ```python
 def _generate_scenarios(self, reports, predicted_range, signals, metrics):
     current_price = metrics.get('current_price', 0)
     max_pain = metrics.get('max_pain', 0)
-    
+
     # 使用預測區間的中心點作為基準（當沒有價格數據時）
     if current_price == 0:
         current_price = (predicted_range[0] + predicted_range[1]) // 2
     if max_pain == 0:
         max_pain = current_price
-    
+
     # ... 後續計算
 ```
 
@@ -113,39 +123,46 @@ def _generate_scenarios(self, reports, predicted_range, signals, metrics):
 ### 新增返回首頁按鈕
 
 **CSS 設計：**
+
 ```css
 .home-button {
-    display: inline-block;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 10px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    margin-bottom: 15px;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .home-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
-    text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+  text-decoration: none;
 }
 ```
 
 **HTML：**
+
 ```html
 <footer>
-    <a href="index.html" class="home-button">🏠 返回首頁</a>
-    <p>本報告基於歷史數據與技術分析，僅供參考，不構成投資建議</p>
-    <div class="footer-links">
-        <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案</a>
-    </div>
+  <a href="index.html" class="home-button">🏠 返回首頁</a>
+  <p>本報告基於歷史數據與技術分析，僅供參考，不構成投資建議</p>
+  <div class="footer-links">
+    <a
+      href="https://github.com/ShoppingLiao/taiex-options-analyzer"
+      target="_blank"
+      >GitHub 專案</a
+    >
+  </div>
 </footer>
 ```
 
 **特色：**
+
 - 漂亮的漸層背景
 - Hover 時向上浮動效果
 - 陰影增強立體感
@@ -158,6 +175,7 @@ def _generate_scenarios(self, reports, predicted_range, signals, metrics):
 ### 週三結算報告 (2026/01/08)
 
 #### 修正前 ❌
+
 ```
 當前價格: 0
 預測區間: 17,100 ~ 18,300
@@ -166,6 +184,7 @@ def _generate_scenarios(self, reports, predicted_range, signals, metrics):
 ```
 
 #### 修正後 ✅
+
 ```
 當前價格: 30,120
 預測區間: 29,200 ~ 30,400
@@ -177,12 +196,14 @@ def _generate_scenarios(self, reports, predicted_range, signals, metrics):
 ### 週五結算報告 (2026/01/10)
 
 #### 修正前 ❌
+
 ```
 當前價格: 0
 預測區間: 29,300 ~ 30,400
 ```
 
 #### 修正後 ✅
+
 ```
 當前價格: 30,372
 預測區間: 29,400 ~ 30,300
@@ -195,7 +216,7 @@ def _generate_scenarios(self, reports, predicted_range, signals, metrics):
 
 ## 🧪 測試結果
 
-### 測試1: 週一二數據 → 週三預測
+### 測試 1: 週一二數據 → 週三預測
 
 ```bash
 python3 generate_settlement_report.py \
@@ -205,12 +226,13 @@ python3 generate_settlement_report.py \
 ```
 
 **結果：**
+
 - ✅ 當前價格: 30,120（正確）
 - ✅ 預測區間: 29,200 ~ 30,400（合理）
 - ✅ 趨勢訊號: 3 個（正常）
 - ✅ 結算劇本: 3 個（機率合理）
 
-### 測試2: 週三四數據 → 週五預測
+### 測試 2: 週三四數據 → 週五預測
 
 ```bash
 python3 generate_settlement_report.py \
@@ -220,12 +242,13 @@ python3 generate_settlement_report.py \
 ```
 
 **結果：**
+
 - ✅ 當前價格: 30,372（正確）
 - ✅ 預測區間: 29,400 ~ 30,300（合理）
 - ✅ 趨勢訊號: 3 個（正常）
 - ✅ 結算劇本: 3 個（機率合理）
 
-### 測試3: 返回首頁按鈕
+### 測試 3: 返回首頁按鈕
 
 - ✅ 按鈕顯示正常
 - ✅ Hover 效果正常
@@ -250,6 +273,7 @@ python3 generate_settlement_report.py \
 當數據缺失時，系統應該有合理的處理方式。
 
 **改進：**
+
 - 檢查數據是否為 0 或 None
 - 提供合理的預設值或使用其他數據替代
 - 記錄警告訊息供調試
@@ -260,6 +284,7 @@ python3 generate_settlement_report.py \
 用模擬數據測試可能無法發現實際問題。
 
 **改進：**
+
 - 使用真實的報告檔案測試
 - 驗證輸出的數值是否合理
 - 比對預期結果
@@ -270,6 +295,7 @@ python3 generate_settlement_report.py \
 好的 UI 能提升使用體驗。
 
 **改進：**
+
 - 返回首頁按鈕放在顯眼位置
 - 使用漂亮的樣式和動畫
 - 保持視覺一致性
@@ -285,14 +311,14 @@ def _validate_price_data(self, data: Dict) -> bool:
     """驗證價格數據的合理性"""
     if 'close_price' not in data:
         return False
-    
+
     price = data['close_price']
-    
+
     # 檢查價格範圍（台指期合理範圍）
     if price < 10000 or price > 50000:
         print(f"警告: 價格 {price} 超出合理範圍")
         return False
-    
+
     return True
 ```
 
@@ -301,7 +327,7 @@ def _validate_price_data(self, data: Dict) -> bool:
 ```python
 def _parse_report_html(self, html_path: Path):
     print(f"📄 解析報告: {html_path.name}")
-    
+
     if 'close_price' in data:
         print(f"  ✓ 收盤價: {data['close_price']:,}")
     else:
@@ -344,11 +370,13 @@ def _parse_report_html(self, html_path: Path):
 ### 修改的檔案
 
 1. `src/settlement_predictor.py`
+
    - `_parse_report_html()` - 增強解析邏輯
    - `_predict_settlement_range()` - 改進容錯
    - `_generate_scenarios()` - 修正基準價格
 
 2. `templates/settlement_report.html`
+
    - 新增 `.home-button` 樣式
    - 更新 footer 結構
 
@@ -369,10 +397,12 @@ def _parse_report_html(self, html_path: Path):
 這次修正解決了關鍵的數據解析問題，讓結算日報告的預測更加準確和可靠：
 
 1. **數據正確性** ✅
+
    - 當前價格從 0 → 30,120
    - 預測區間從 17,100~18,300 → 29,200~30,400
 
 2. **系統穩健性** ✅
+
    - 支援多種 HTML 格式
    - 完善的容錯機制
    - 合理的預設值處理

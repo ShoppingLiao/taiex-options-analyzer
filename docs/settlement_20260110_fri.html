@@ -520,6 +520,307 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
             text-decoration: none;
         }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            background: var(--bg-color);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 18px 24px;
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: rgba(37, 99, 235, 0.05);
+            color: var(--primary-color);
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            background: white;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        .tab-icon {
+            margin-right: 8px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .tabs-header {
+                flex-direction: column;
+            }
+            .tab-button {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* AI Analysis Styles */
+        .ai-intro {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .ai-persona {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .ai-avatar {
+            font-size: 3rem;
+        }
+
+        .ai-role {
+            flex: 1;
+        }
+
+        .ai-role-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .ai-role-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .ai-note {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .analysis-section {
+            margin-bottom: 30px;
+        }
+
+        .analysis-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .analysis-block {
+            background: var(--bg-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .block-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .block-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .block-content p {
+            margin-bottom: 15px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .highlight-box strong {
+            color: #92400e;
+        }
+
+        .conclusion-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .conclusion-box strong {
+            color: #1e40af;
+        }
+
+        .price-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .price-level {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 3px solid;
+        }
+
+        .price-level.resistance {
+            border-left-color: var(--danger-color);
+        }
+
+        .price-level.support {
+            border-left-color: var(--success-color);
+        }
+
+        .level-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .level-range {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .level-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .trading-tips {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .tips-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #991b1b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tip-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .tip-item strong {
+            color: #991b1b;
+        }
+
+        .scenario-prediction {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .prediction-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .prediction-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .prediction-prob {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .prediction-detail {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
@@ -540,11 +841,26 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">報告生成</div>
-                    <div class="info-value">2026/01/12 20:11</div>
+                    <div class="info-value">2026/01/12 20:21</div>
                 </div>
             </div>
         </header>
 
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-button active" onclick="switchTab('technical')">
+                    <span class="tab-icon">📊</span>技術分析
+                </button>
+                <button class="tab-button" onclick="switchTab('ai-analysis')">
+                    <span class="tab-icon">🤖</span>AI 操盤分析
+                </button>
+            </div>
+        </div>
+
+        <!-- Technical Analysis Tab -->
+        <div id="technical-tab" class="tab-content active">
+        
         <!-- Trend Overview -->
         <div class="section">
             <div class="section-header">
@@ -818,6 +1134,196 @@
         <!-- Risks -->
         
 
+        </div>
+        <!-- End Technical Analysis Tab -->
+
+        <!-- AI Analysis Tab -->
+        <div id="ai-analysis-tab" class="tab-content">
+            
+            <!-- AI Persona Introduction -->
+            <div class="section">
+                <div class="ai-intro">
+                    <div class="ai-persona">
+                        <div class="ai-avatar">👨‍💼</div>
+                        <div class="ai-role">
+                            <div class="ai-role-title">資深選擇權操盤手視角</div>
+                            <div class="ai-role-desc">20年實戰經驗 | 專注台指選擇權結算日策略</div>
+                        </div>
+                    </div>
+                    <div class="ai-note">
+                        <strong>第一人稱視角：</strong>我是一位老練的選擇權操盤手，以下是我對本次結算日的深度分析。這不只是冷冰冰的數據，而是我多年來在市場廝殺累積的實戰經驗與判斷。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settlement Range Analysis -->
+            <div class="section">
+                <div class="analysis-section">
+                    <h3 class="analysis-title">
+                        <span>🎯</span>結算區間預測：莊家的「最佳利益點」
+                    </h3>
+
+                    <div class="analysis-block">
+                        <div class="block-content">
+                            <p>根據目前的 OI 籌碼圖和夜盤走勢，我看到了莊家（賣方）非常清晰的防線布局。在結算日這種關鍵時刻，市場不是隨機遊走，而是一場多空雙方的籌碼博弈。</p>
+                        </div>
+                    </div>
+
+                    <div class="price-levels">
+                        <div class="price-level resistance">
+                            <div class="level-label" style="color: var(--danger-color);">🔴 上檔天花板</div>
+                            <div class="level-range">30,200 ~ 30,600</div>
+                            <div class="level-desc">
+                                夜盤高點 29,975 接近壓力區便拉回，這印證了 Call OI 大增的壓制力。<strong>除非早盤有極大利多，否則要結算在此之上的機率較低</strong>，因為莊家會全力守住這道防線以賺取 Call 的權利金。
+                            </div>
+                        </div>
+
+                        <div class="price-level support">
+                            <div class="level-label" style="color: var(--success-color);">🟢 下檔地板</div>
+                            <div class="level-range">29,300 ~ 29,600</div>
+                            <div class="level-desc">
+                                夜盤低點 29,717 守在此關卡之上，距離 Put OI 重兵區尚有空間。<strong>此位附近有支撐</strong>，若今日回測此位，通常會有買盤或莊家護盤。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conclusion-box">
+                        <strong>我的判斷：</strong>結算價高機率落在 <strong>29,600 ~ 30,200</strong> 這個區間，讓兩邊的權利金最大程度被消耗。這是莊家的最佳利益點。
+                    </div>
+                </div>
+            </div>
+
+            <!-- P/C Ratio Analysis -->
+            <div class="section">
+                <div class="analysis-section">
+                    <h3 class="analysis-title">
+                        <span>📉</span>P/C Ratio 轉弱的實戰意義
+                    </h3>
+
+                    <div class="analysis-block">
+                        <div class="block-content">
+                            <p>昨天的 P/C Ratio 顯示 <strong>大幅下滑（0.87）</strong>，配合夜盤 並未突破昨日高點，這代表：</p>
+                            
+                            <div class="highlight-box">
+                                <p><strong>✓ 市場追價意願 放緩</strong></p>
+                                <p><strong>✓ 今天走勢高機率是「高檔狹幅震盪」</strong></p>
+                                <p>目的是讓選擇權的權利金（IV）雙殺，回歸到莊家設定的區間。</p>
+                            </div>
+
+                            <p>這種情況下，我不會貿然追高或搶短，而是耐心等待莊家露出底牌。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intraday Observation -->
+            <div class="section">
+                <div class="analysis-section">
+                    <h3 class="analysis-title">
+                        <span>👀</span>今日 (2026/01/10) 操作觀察重點
+                    </h3>
+
+                    <div class="scenario-prediction">
+                        <div class="prediction-card">
+                            <div class="prediction-header">
+                                <div class="prediction-title">🔔 開盤位階</div>
+                            </div>
+                            <div class="prediction-detail">
+                                若開在 <strong>29,850</strong> 附近，代表多空平衡。<br><br>
+                                <strong>偏高開：</strong>注意是否為誘多，觀察 30 分鐘內能否守住。<br>
+                                <strong>偏低開：</strong>留意是否測試支撐後反彈。
+                            </div>
+                        </div>
+
+                        <div class="prediction-card">
+                            <div class="prediction-header">
+                                <div class="prediction-title">⏰ 最後 30 分鐘</div>
+                                <div class="prediction-prob">關鍵時刻</div>
+                            </div>
+                            <div class="prediction-detail">
+                                <strong>13:00 - 13:30</strong><br><br>
+                                台指結算價是採<strong>現貨最後半小時的平均價</strong>。<br><br>
+                                如果價格接近 29,800，莊家可能會試圖將價格壓在此之下或拉上此位，以決定哪些履約價的選擇權會歸零。
+                            </div>
+                        </div>
+
+                        <div class="prediction-card">
+                            <div class="prediction-header">
+                                <div class="prediction-title">🎲 預期結算價</div>
+                                <div class="prediction-prob">高機率</div>
+                            </div>
+                            <div class="prediction-detail">
+                                落在 <strong>29,600 ~ 30,200</strong><br><br>
+                                這個區間讓莊家兩邊的權利金收益最大化，同時避免單邊出現過大履約壓力。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trading Tips -->
+            <div class="section">
+                <div class="trading-tips">
+                    <div class="tips-title">
+                        <span>💡</span>實戰小叮嚀
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>時間價值流逝加速：</strong><br>
+                        因為 IV（隱含波動率）昨天是上升的，這代表今天即便指數不動，選擇權的價格也會因為「時間價值流逝」與「波動率回落」而縮水很快。結算日的 Theta Decay（時間價值衰減）是最兇猛的。
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>如果您手上有 1月 近月部位：</strong><br>
+                        建議早盤若有衝高至 <strong>30,250</strong> 以上，可考慮先行平倉，不一定要賭到最後結算。因為莊家守 30,200 的決心很強，繼續持有風險報酬比不划算。
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>如果您想進場：</strong><br>
+                        結算日當天當沖風險較大，建議觀察結算後的<strong>新月份（2月 全月或 3月）</strong>籌碼重新布局。新月份的 OI 分布會更清晰地反映市場對未來走勢的預期。
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>留意黑天鵝事件：</strong><br>
+                        雖然籌碼面給出明確的區間預測，但若出現重大國際消息（如美股暴漲暴跌、地緣政治突發事件），一切技術分析都會失效。<strong>務必設好停損</strong>，不要過度自信。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conclusion -->
+            <div class="section">
+                <div class="analysis-section">
+                    <h3 class="analysis-title">
+                        <span>📝</span>總結：我的結算日策略
+                    </h3>
+
+                    <div class="analysis-block">
+                        <div class="block-content">
+                            <p style="font-size: 1.1rem; line-height: 1.9;">
+                                作為一個在市場打滾多年的老手，<strong>我不會在結算日冒險追高殺低</strong>。今天的策略很簡單：
+                            </p>
+
+                            <div class="highlight-box">
+                                <p><strong>1️⃣ 持倉部位：</strong>看到接近上檔壓力 30,200 就減碼，落袋為安</p>
+                                <p><strong>2️⃣ 新進場：</strong>等結算後再說，不急於一時</p>
+                                <p><strong>3️⃣ 觀察重點：</strong>最後 30 分鐘的價格行為，這會告訴我下個月的方向</p>
+                            </div>
+
+                            <p style="font-size: 1.1rem; margin-top: 20px;">
+                                記住，<strong>市場永遠是對的，我們只是順勢而為</strong>。莊家布下的籌碼陷阱已經很明顯了，我們要做的就是不要成為被收割的韭菜。保護本金，等待更好的機會，這才是長期獲利的王道。
+                            </p>
+
+                            <div class="conclusion-box" style="margin-top: 20px;">
+                                <p style="font-size: 1.05rem;"><strong>祝大家操作順利，結算日平安！</strong> 🍀</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End AI Analysis Tab -->
+
         <!-- Footer -->
         <footer>
             <a href="index.html" class="home-button">🏠 返回首頁</a>
@@ -827,5 +1333,28 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            if (tabName === 'technical') {
+                document.getElementById('technical-tab').classList.add('active');
+                document.querySelectorAll('.tab-button')[0].classList.add('active');
+            } else if (tabName === 'ai-analysis') {
+                document.getElementById('ai-analysis-tab').classList.add('active');
+                document.querySelectorAll('.tab-button')[1].classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
