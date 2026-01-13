@@ -5,6 +5,7 @@
 ## 📚 文檔結構
 
 ### 📖 [guides/](./guides/) - 使用指南與操作文檔
+
 - `DEPLOYMENT.md` - 部署指南
 - `QUICK_ACCESS.md` - 快速訪問指南
 - `NAVIGATION.md` - 導航說明
@@ -15,6 +16,7 @@
 - `UPGRADE_TWSE_API_INTEGRATION.md` - TWSE API 升級整合
 
 ### 🎨 [design/](./design/) - 設計系統文檔
+
 - `DESIGN_GUIDELINE.md` - 設計指南
 - `DESIGN_MIGRATION_GUIDE.md` - 設計遷移指南
 - `DESIGN_QUICK_REFERENCE.md` - 設計快速參考
@@ -23,17 +25,20 @@
 - `DESIGN_SYSTEM_SUMMARY.md` - 設計系統摘要
 
 ### 🐛 [issues/](./issues/) - 問題修復記錄
+
 - `BUGFIX_SETTLEMENT_DATE_VALIDATION.md` - 結算日期驗證修復
 - `FIX_SETTLEMENT_ANALYSIS.md` - 結算分析修復
 - `ISSUE_CONTRACT_TYPE_PARSING.md` - 契約類型解析問題
 - `ISSUE_PDF_PARSING_20260112.md` - PDF 解析問題
 
 ### 🚀 [releases/](./releases/) - 版本發布記錄
+
 - `RELEASE_v1.0.0.md` - v1.0.0 版本發布說明
 - `V1.0.0_RELEASE_SUMMARY.md` - v1.0.0 發布摘要
 - `VERSION_HISTORY.md` - 版本歷史
 
 ### ✨ [features/](./features/) - 功能開發文檔
+
 - `AI_ANALYSIS_TAB.md` - AI 分析標籤
 - `AI_PREDICTION_SYSTEM_REPORT.md` - AI 預測系統報告
 - `AI_TRADER_STRATEGY_UPDATE.md` - AI 交易者策略更新
@@ -46,31 +51,37 @@
 - `HOMEPAGE_REPORT_CATEGORIES.md` - 首頁報告分類
 
 ### 📝 其他文檔
+
 - `CHANGELOG.md` - 變更日誌
 
 ## 🔍 快速查找
 
 ### 新手入門
+
 1. 查看根目錄的 `README.md` 了解專案概述
 2. 閱讀 `guides/QUICK_ACCESS.md` 快速上手
 3. 參考 `guides/DEPLOYMENT.md` 進行部署
 
 ### 開發者
+
 1. 查看 `guides/PROJECT_STRUCTURE.md` 了解專案架構
 2. 閱讀 `design/DESIGN_GUIDELINE.md` 遵循設計規範
 3. 參考 `CHANGELOG.md` 了解最新變更
 
 ### 問題排查
+
 1. 查看 `issues/` 目錄中的相關問題修復記錄
 2. 檢查 `releases/VERSION_HISTORY.md` 確認版本資訊
 
 ### 功能了解
+
 1. 瀏覽 `features/` 目錄查看各項功能文檔
 2. 查看對應功能的開發記錄和使用說明
 
 ## 📌 維護說明
 
 所有新增的文檔應放置在對應的分類目錄中：
+
 - 使用指南 → `guides/`
 - 設計相關 → `design/`
 - 問題修復 → `issues/`

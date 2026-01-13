@@ -138,10 +138,45 @@
             border: 1px solid var(--border-color);
         }
 
+        /* Section Content */
+        .section-content {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 2px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            line-height: 1.9;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            color: #3c3c3c;
+        }
+
+        .section-content.success {
+            border-left-color: var(--success-color);
+        }
+
+        .section-content.danger {
+            border-left-color: var(--danger-color);
+            background: #fef2f2;
+        }
+
+        .section-content.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .section-content.purple {
+            border-left-color: var(--purple-color);
+        }
+
         /* 手機版減少 card padding */
         @media (max-width: 767px) {
             .card {
                 padding: 12px;
+            }
+            
+            .section-content {
+                padding: 16px;
+                font-size: 0.85rem;
             }
         }
 
@@ -808,20 +843,113 @@
         }
 
         @media (max-width: 768px) {
-            .key-levels {
-                grid-template-columns: 1fr;
+            /* 全域緊湊 */
+            body {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .container {
+                padding: 6px;
+            }
+
+            /* Header 縮減到 40% */
+            header {
+                padding: 10px 12px;
+                margin-bottom: 8px;
+                border-radius: 2px;
             }
 
             header h1 {
-                font-size: 1.5rem;
+                font-size: 1.1rem;
+                margin-bottom: 3px;
             }
 
+            header .subtitle {
+                font-size: 0.75rem;
+            }
+
+            .home-button {
+                position: static;
+                display: inline-flex;
+                margin-top: 6px;
+                padding: 5px 10px;
+                font-size: 0.75rem;
+                gap: 4px;
+            }
+
+            /* 卡片緊湊化 */
             .card-value {
-                font-size: 1.5rem;
+                font-size: 1.1rem !important;
             }
 
+            .card-label {
+                font-size: 0.7rem !important;
+            }
+
+            .card {
+                padding: 8px 10px !important;
+            }
+
+            /* Grid 優化 */
+            .grid {
+                gap: 6px;
+                margin-bottom: 12px;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            /* 關鍵價位 */
+            .key-levels {
+                grid-template-columns: 1fr !important;
+                gap: 6px !important;
+            }
+
+            /* 圖表高度 */
             .chart {
-                height: 500px;
+                height: 300px !important;
+            }
+
+            /* Section */
+            .section {
+                margin-bottom: 8px !important;
+                padding: 10px 8px !important;
+                border-radius: 2px !important;
+            }
+
+            .section h2 {
+                font-size: 1rem !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Tab 按鈕 - 橫向滾動 */
+            .tabs {
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                -webkit-overflow-scrolling: touch !important;
+                white-space: nowrap !important;
+                gap: 4px !important;
+                padding: 4px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .tabs::-webkit-scrollbar {
+                height: 3px !important;
+            }
+
+            .tab-button {
+                display: inline-block !important;
+                padding: 6px 10px !important;
+                font-size: 0.8rem !important;
+                border-radius: 2px 6px 0 0 !important;
+                min-width: auto !important;
+            }
+
+            /* Footer */
+            footer {
+                margin-top: 12px !important;
+                padding: 10px !important;
+                font-size: 0.7rem !important;
+                border-radius: 2px 4px 0 0;
             }
         }
     </style>
@@ -859,32 +987,32 @@
             <div class="grid">
                 <div class="card">
                     <div class="card-title">開盤價</div>
-                    <div class="card-value">30,065</div>
+                    <div class="card-value">30,412</div>
                     <div class="card-subtitle">Opening Price</div>
                 </div>
                 <div class="card">
                     <div class="card-title">最高價</div>
-                    <div class="card-value" style="color: #ef4444;">30,275</div>
+                    <div class="card-value" style="color: #ef4444;">30,570</div>
                     <div class="card-subtitle">Highest Price</div>
                 </div>
                 <div class="card">
                     <div class="card-title">最低價</div>
-                    <div class="card-value" style="color: #22c55e;">30,011</div>
+                    <div class="card-value" style="color: #22c55e;">30,306</div>
                     <div class="card-subtitle">Lowest Price</div>
                 </div>
                 <div class="card">
                     <div class="card-title">收盤價</div>
-                    <div class="card-value negative">30,215</div>
+                    <div class="card-value negative">30,435</div>
                     <div class="card-subtitle">Closing Price</div>
                 </div>
                 <div class="card">
                     <div class="card-title">成交量</div>
-                    <div class="card-value">87,456</div>
+                    <div class="card-value">0</div>
                     <div class="card-subtitle">口 (Contracts)</div>
                 </div>
                 <div class="card">
                     <div class="card-title">結算價</div>
-                    <div class="card-value">30,215</div>
+                    <div class="card-value">0</div>
                     <div class="card-subtitle">Settlement Price</div>
                 </div>
             </div>
@@ -894,7 +1022,7 @@
                 <div class="card">
                     <div class="price-info-wrapper">
                         <div class="close-price-display">
-                            30,215
+                            30,435
                         </div>
                         <div class="close-price-label">
                             收盤價格
@@ -902,15 +1030,15 @@
                         <div class="grid price-grid">
                             <div class="price-item" style="background: #f1f5f9;">
                                 <div class="price-item-label">開盤</div>
-                                <div class="price-item-value">30,065</div>
+                                <div class="price-item-value">30,412</div>
                             </div>
                             <div class="price-item" style="background: #fee2e2;">
                                 <div class="price-item-label">最高</div>
-                                <div class="price-item-value" style="color: #dc2626;">30,275</div>
+                                <div class="price-item-value" style="color: #dc2626;">30,570</div>
                             </div>
                             <div class="price-item" style="background: #dcfce7;">
                                 <div class="price-item-label">最低</div>
-                                <div class="price-item-value" style="color: #16a34a;">30,011</div>
+                                <div class="price-item-value" style="color: #16a34a;">30,306</div>
                             </div>
                             <div class="price-item" style="background: #f1f5f9;">
                                 <div class="price-item-label">震盪幅度</div>
@@ -926,15 +1054,15 @@
                 <div class="card">
                     <ul style="list-style: none; padding: 0;">
                         <li style="padding: 15px; border-bottom: 1px solid var(--border-color);">
-                            <div style="font-weight: 600; margin-bottom: 5px;">📊 收盤價 30,215</div>
+                            <div style="font-weight: 600; margin-bottom: 5px;">📊 收盤價 30,435</div>
                             <div style="color: var(--text-muted); font-size: 0.875rem;">當日最後成交價格，作為選擇權結算分析的重要參考</div>
                         </li>
                         <li style="padding: 15px; border-bottom: 1px solid var(--border-color);">
                             <div style="font-weight: 600; margin-bottom: 5px;">📈 日內震盪 264 點</div>
-                            <div style="color: var(--text-muted); font-size: 0.875rem;">最高價 30,275 - 最低價 30,011</div>
+                            <div style="color: var(--text-muted); font-size: 0.875rem;">最高價 30,570 - 最低價 30,306</div>
                         </li>
                         <li style="padding: 15px;">
-                            <div style="font-weight: 600; margin-bottom: 5px;">📉 成交量 87,456 口</div>
+                            <div style="font-weight: 600; margin-bottom: 5px;">📉 成交量 0 口</div>
                             <div style="color: var(--text-muted); font-size: 0.875rem;">當日台指期貨總成交量，反映市場參與度</div>
                         </li>
                     </ul>
@@ -1175,15 +1303,14 @@
         
 
         <!-- RWD Card 容器：包含兩個表格 -->
+        
+        <!-- 單一契約模式：顯示原有的單一表格 -->
         <div class="card-container">
-            <!-- OI 分布表格 (近月選擇權 OI 變化) -->
+            <!-- OI 分布表格 -->
             <div class="chart-container card">
                 <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 2px 8px 0 0; margin: -24px -24px 20px -24px;">
-                    近月選擇權 OI 變化
+                    選擇權 OI 分布
                 </h3>
-                <div style="text-align: center; margin-bottom: 15px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;">
-                    結算日：2026/01/21
-                </div>
                 
                 <!-- OI 分布表格 -->
             <div style="overflow-x: auto;">
@@ -2628,7 +2755,7 @@
             <!-- 圖例說明 -->
             <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 2px; font-size: 0.85rem;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #fef3c7; border: 1px solid #fde047; margin-right: 5px;"></span>收盤價: 30,215</div>
+                    <div><span style="display: inline-block; width: 15px; height: 15px; background: #fef3c7; border: 1px solid #fde047; margin-right: 5px;"></span>收盤價: 30,435.47</div>
                     <div><span style="display: inline-block; width: 15px; height: 15px; background: #fed7aa; border: 1px solid #fdba74; margin-right: 5px;"></span>Max Pain: 29,800</div>
                     <div><span style="display: inline-block; width: 15px; height: 15px; background: #fee2e2; border: 1px solid #fca5a5; margin-right: 5px;"></span>最大 Call OI: 30,000</div>
                     <div><span style="display: inline-block; width: 15px; height: 15px; background: #dcfce7; border: 1px solid #86efac; margin-right: 5px;"></span>最大 Put OI: 27,000</div>
@@ -3939,9 +4066,12 @@
             </div>
             </div>
         </div>
+        
         <!-- 結束 card-container -->
 
         <!-- 詳細資料表 -->
+        
+        <!-- 單一契約模式：顯示原有的單一表格 -->
         <h2 class="section-title">詳細資料</h2>
         <div class="card">
             <table>
@@ -4376,9 +4506,10 @@
                 </tbody>
             </table>
         </div>
+        
 
         <footer>
-            <p>報告產生時間: 2026-01-12 21:40:16 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-13 11:04:54 | TAIEX Options Analyzer</p>
             <div class="footer-links">
                 <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案</a>
             </div>
@@ -4394,12 +4525,13 @@
             <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 2px; margin-bottom: 30px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
                     <div>
-                        <h2 style="margin: 0; font-size: 1.8rem;">🌱 AI 交易員分析</h2>
-                        <p style="margin: 8px 0 0 0; opacity: 0.9;">經驗等級: 新手</p>
+                        <h2 style="margin: 0; font-size: 1.8rem;">📈 AI 交易員分析</h2>
+                        <p style="margin: 8px 0 0 0; opacity: 0.9;">經驗等級: 學習中</p>
                     </div>
                     <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 2px; backdrop-filter: blur(10px);">
                         <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">學習進度</div>
-                        <div style="font-size: 1.1rem; font-weight: 600;">分析記錄不足，持續累積中...</div>
+                        <div style="font-size: 1.1rem; font-weight: 600;">📚 已累積 17 筆分析記錄
+📊 已建立 0 種 PC Ratio 模式分析</div>
                     </div>
                 </div>
             </div>
@@ -4408,7 +4540,7 @@
             <div class="grid" style="margin-bottom: 30px;">
                 <div class="card">
                     <div class="card-title">收盤價</div>
-                    <div class="card-value">30,215</div>
+                    <div class="card-value">30,435</div>
                 </div>
                 <div class="card">
                     <div class="card-title">PC Ratio</div>
@@ -4431,7 +4563,7 @@
             <!-- 市場觀察（第一人稱） -->
             <div class="ai-section">
                 <h2 class="analysis-title">👁️ 我今天的市場觀察</h2>
-                <div class="section-content">今天收盤價在 30,215 點，我仔細觀察了選擇權市場的布局。
+                <div class="section-content">今天收盤價在 30,435.47 點，我仔細觀察了選擇權市場的布局。
 
 PC Ratio 在 0.719，相對均衡。這種時候我會更依賴價格行為和成交量的變化來判斷方向。
 
@@ -4443,7 +4575,7 @@ PC Ratio 在 0.719，相對均衡。這種時候我會更依賴價格行為和�
                 <h2 class="analysis-title">💼 我的部位策略</h2>
                 <div class="section-content success">我目前偏向做多，但不會盲目追高。
 
-如果價格回測到 30,063 附近，我會考慮買進 Call 或賣出 Put，設定停損在 {int(close_price * 0.99):,}。
+如果價格回測到 30,283 附近，我會考慮買進 Call 或賣出 Put，設定停損在 {int(close_price * 0.99):,}。
 
 
 市場相對理性，我可以維持正常的部位大小，但仍會保留 30% 現金靈活調整。</div>
@@ -4465,9 +4597,9 @@ PC Ratio 在 0.719，相對均衡。這種時候我會更依賴價格行為和�
                 <div class="section-content warning">📋 我的明日交易計劃：
 
 多方布局：
-• 進場點：30,154 附近（回測進場）
-• 目標價：30,517（獲利 1%）
-• 停損點：29,973（風險控制 0.8%）
+• 進場點：30,374 附近（回測進場）
+• 目標價：30,739（獲利 1%）
+• 停損點：30,191（風險控制 0.8%）
 
 倉位管理：
 • 維持 70-80% 倉位
@@ -4486,7 +4618,7 @@ PC Ratio 在 0.719，相對均衡。這種時候我會更依賴價格行為和�
             
             <div style="margin-top: 20px; padding: 20px; background: #f0fdf4; border-radius: 2px; border: 1px solid #86efac;">
                 <p style="margin: 0; color: #166534;">
-                    📊 在我的記憶中，找到 <strong>2</strong> 個類似的市場情境可供參考
+                    📊 在我的記憶中，找到 <strong>9</strong> 個類似的市場情境可供參考
                 </p>
             </div>
             
@@ -4503,7 +4635,7 @@ PC Ratio 在 0.719，相對均衡。這種時候我會更依賴價格行為和�
         <!-- 結束 AI 分析 Tab -->
 
         <footer style="margin-top: 30px;">
-            <p>報告產生時間: 2026-01-12 21:40:16 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-13 11:04:54 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 
@@ -4532,7 +4664,7 @@ PC Ratio 在 0.719，相對均衡。這種時候我會更依賴價格行為和�
         // OI 分布圖 - 水平對稱式 (履約價在中間)
         const oiData = {"strikes": [27000, 28500, 29500, 29600, 29700, 29750, 29800, 29850, 29900, 29950, 30000, 30050, 30100, 30150, 30200, 30250, 30300, 30350, 30400, 30450, 30500, 30550, 30600, 30650, 30700, 30750, 30800, 30850, 30900, 30950, 31000, 32000], "call_oi": [26, 448, 1136, 853, 547, 0, 1210, 0, 487, 0, 1832, 0, 283, 0, 348, 1, 406, 2, 386, 12, 658, 10, 533, 4, 336, 3, 410, 8, 307, 2, 1711, 1241], "put_oi": [2276, 1990, 785, 467, 365, 5, 598, 4, 281, 5, 1340, 23, 275, 3, 191, 4, 164, 8, 149, 11, 220, 3, 95, 1, 62, 0, 31, 0, 81, 0, 48, 1], "call_oi_change": [0, -4, 24, -182, 0, 0, -203, 0, -23, 0, -250, 0, 2, 0, -101, 1, 1, 2, 4, 12, 43, 10, 52, 4, -25, 3, 43, 8, -21, 2, 52, 543], "put_oi_change": [25, 627, 51, 15, 34, 5, 184, 4, 65, 5, 35, 23, 56, 3, 5, 4, 18, 8, 44, 11, 105, 3, 22, 1, 25, 0, -1, 0, 15, 0, 9, -1]};
         const maxPain = 29800;
-        const closePrice = 30215;
+        const closePrice = 30435.47;
 
         // 過濾出有意義的履約價（OI > 0 的價位）
         const filteredIndices = oiData.strikes.map((strike, idx) => {

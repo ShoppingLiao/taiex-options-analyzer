@@ -6,7 +6,7 @@
 
 自動化分析台灣期貨交易所的選擇權盤後日報，產生視覺化分析報告。
 
-> **🎉 版本 1## 📚 文檔中心
+> \*\*🎉 版本 1## 📚 文檔中心
 
 ### 🎯 快速導航
 
@@ -29,10 +29,10 @@
 
 - **[DESIGN_SYSTEM_README.md](documentation/design/DESIGN_SYSTEM_README.md)** - 設計系統
 - **[SETTLEMENT_REPORT_SYSTEM.md](documentation/features/SETTLEMENT_REPORT_SYSTEM.md)** - 結算報告系統
-- **[AI_ANALYSIS_TAB.md](documentation/features/AI_ANALYSIS_TAB.md)** - AI 分析功能發布！** (2026-01-13)  
-> 設計系統已穩定，模板已優化，未來每日/每週報告會自動保持一致的樣式。
-> 
-> **📚 [查看完整文檔中心](documentation/README.md)** - 所有專案文檔已整理分類
+- **[AI_ANALYSIS_TAB.md](documentation/features/AI_ANALYSIS_TAB.md)** - AI 分析功能發布！\*\* (2026-01-13)
+  > 設計系統已穩定，模板已優化，未來每日/每週報告會自動保持一致的樣式。
+  >
+  > **📚 [查看完整文檔中心](documentation/README.md)** - 所有專案文檔已整理分類
 
 ## 🌟 功能特色
 
