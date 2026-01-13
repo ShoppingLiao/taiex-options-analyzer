@@ -12,7 +12,20 @@
 
 ### 📅 單日報告
 
-- 📊 **自動解析 PDF**：從期交所盤後日報提取選擇權資料
+- 📊 **自動解析 PDF**## 📚 文檔
+
+### 核心文檔
+- **[README.md](README.md)** - 專案說明（本文件）
+- **[VERSION_HISTORY.md](VERSION_HISTORY.md)** - 版本歷史與未來規劃
+- **[CHANGELOG.md](CHANGELOG.md)** - 詳細變更日誌
+- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - 專案結構總覽
+- **[RELEASE_v1.0.0.md](RELEASE_v1.0.0.md)** - v1.0.0 發布說明
+
+### 系統文檔
+- **[DESIGN_SYSTEM_README.md](DESIGN_SYSTEM_README.md)** - 設計系統完整文檔
+- **[SETTLEMENT_REPORT_SYSTEM.md](SETTLEMENT_REPORT_SYSTEM.md)** - 結算日報告系統說明
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - 部署指南
+- **[maintenance/README.md](maintenance/README.md)** - 維護工具說明（第一版開發歷史）日報提取選擇權資料
 - 🎯 **Max Pain 分析**：計算最大痛點價位
 - 📈 **OI 分布視覺化**：表格化呈現未平倉量分布
 - 🤖 **AI 深度分析**：結算情境智能分析
