@@ -6,26 +6,28 @@
 
 ## 📁 資料夾對比
 
-| 項目 | reports/ | docs/ |
-|------|----------|-------|
-| **用途** | 本地開發與測試 | GitHub Pages 部署 |
-| **更新方式** | Python 腳本直接生成 | 手動複製或 CI/CD 部署 |
-| **內容同步** | ❌ 不會自動同步到 docs/ | ❌ 不會自動同步到 reports/ |
-| **檔案狀態** | 最新版本 | 可能較舊 |
-| **額外檔案** | 無 | index.html, rwd_demo.html, .md 文檔 |
-| **Git 追蹤** | ✅ 是 | ✅ 是 |
-| **線上訪問** | ❌ 否 | ✅ 是 (GitHub Pages) |
+| 項目         | reports/                | docs/                               |
+| ------------ | ----------------------- | ----------------------------------- |
+| **用途**     | 本地開發與測試          | GitHub Pages 部署                   |
+| **更新方式** | Python 腳本直接生成     | 手動複製或 CI/CD 部署               |
+| **內容同步** | ❌ 不會自動同步到 docs/ | ❌ 不會自動同步到 reports/          |
+| **檔案狀態** | 最新版本                | 可能較舊                            |
+| **額外檔案** | 無                      | index.html, rwd_demo.html, .md 文檔 |
+| **Git 追蹤** | ✅ 是                   | ✅ 是                               |
+| **線上訪問** | ❌ 否                   | ✅ 是 (GitHub Pages)                |
 
 ## 🔍 詳細分析
 
 ### 📂 reports/ - 本地開發目錄
 
-**目的**: 
+**目的**:
+
 - 本地生成和測試報告
 - 開發時的主要工作目錄
 - Python 腳本的預設輸出位置
 
 **特點**:
+
 ```python
 # main.py 預設輸出到 reports/
 reporter = ReportGenerator(
@@ -34,6 +36,7 @@ reporter = ReportGenerator(
 ```
 
 **內容** (2026-01-13 11:05 最新):
+
 ```
 reports/
 ├── report_20260105_202601.html      # 單日報告
@@ -51,6 +54,7 @@ reports/
 ```
 
 **更新時機**:
+
 - 執行 `main.py` 時
 - 執行 `generate_batch_reports.py` 時
 - 執行 `generate_settlement_report.py` 時
@@ -59,20 +63,23 @@ reports/
 ### 📂 docs/ - GitHub Pages 部署目錄
 
 **目的**:
+
 - 透過 GitHub Pages 提供線上訪問
 - 公開展示專案成果
 - 提供永久性的報告連結
 
 **特點**:
+
 ```yaml
 # .github/workflows/deploy.yml
 - name: Upload artifact
   uses: actions/upload-pages-artifact@v3
   with:
-    path: "./docs"  # 部署 docs/ 目錄
+    path: "./docs" # 部署 docs/ 目錄
 ```
 
 **內容** (2026-01-13 09:03 較舊):
+
 ```
 docs/
 ├── index.html                       # 📌 首頁索引 (reports/ 沒有)
@@ -95,6 +102,7 @@ docs/
 ```
 
 **線上訪問**:
+
 - 首頁: https://shoppingliao.github.io/taiex-options-analyzer/
 - 單日報告: https://shoppingliao.github.io/taiex-options-analyzer/report_20260109_202601.html
 
@@ -103,6 +111,7 @@ docs/
 ### 1. **內容不同步**
 
 檢測結果:
+
 ```bash
 # 檔案大小不同
 reports/report_20260109_202601.html  233K  (11:05 最新)
@@ -113,7 +122,8 @@ reports: 102418e96f0ec27537114f0ef9aeb9e
 docs:    65366ee0c74630c8b449cfdf7a21f937
 ```
 
-**原因**: 
+**原因**:
+
 - `reports/` 在 11:05 重新生成（多契約 OI 分布表格更新後）
 - `docs/` 停留在 09:03 的舊版本
 - 沒有自動同步機制
@@ -121,6 +131,7 @@ docs:    65366ee0c74630c8b449cfdf7a21f937
 ### 2. **手動複製風險**
 
 目前的工作流程:
+
 ```bash
 # 1. 生成報告到 reports/
 python main.py --date 20260109 --output reports
@@ -135,6 +146,7 @@ git push
 ```
 
 **風險**:
+
 - ❌ 容易忘記複製
 - ❌ 可能複製錯檔案
 - ❌ 版本不一致
@@ -142,6 +154,7 @@ git push
 ### 3. **docs/ 獨有檔案**
 
 這些檔案只存在於 `docs/`:
+
 - `index.html` - 首頁索引
 - `rwd_demo.html` - RWD 示範
 - `report_20260109_old.html` - 舊版備份
@@ -154,12 +167,14 @@ git push
 
 ### 方案 A: 統一輸出到 docs/
 
-**優點**: 
+**優點**:
+
 - ✅ 消除雙重目錄
 - ✅ 自動保持同步
 - ✅ 生成即部署
 
 **實作**:
+
 ```python
 # 修改 main.py
 reporter = ReportGenerator(
@@ -168,17 +183,20 @@ reporter = ReportGenerator(
 ```
 
 **缺點**:
+
 - ❌ 開發測試時會污染部署目錄
 - ❌ Git 歷史會有大量測試檔案
 
 ### 方案 B: 增加同步腳本
 
 **優點**:
+
 - ✅ 保持 reports/ 作為開發目錄
 - ✅ 明確的同步流程
 - ✅ 可選擇性複製
 
 **實作**:
+
 ```python
 # sync_to_docs.py
 import shutil
@@ -188,7 +206,7 @@ def sync_reports():
     """同步 reports/ 到 docs/"""
     reports_dir = Path('reports')
     docs_dir = Path('docs')
-    
+
     # 只複製 HTML 報告
     for html_file in reports_dir.glob('*.html'):
         shutil.copy2(html_file, docs_dir / html_file.name)
@@ -199,6 +217,7 @@ if __name__ == "__main__":
 ```
 
 使用:
+
 ```bash
 # 1. 生成報告
 python main.py --date 20260109
@@ -215,11 +234,13 @@ git push
 ### 方案 C: GitHub Actions 自動同步
 
 **優點**:
+
 - ✅ 全自動化
 - ✅ 推送即部署
 - ✅ 減少人為錯誤
 
 **實作**:
+
 ```yaml
 # .github/workflows/sync-reports.yml
 name: Sync Reports to Docs
@@ -227,18 +248,18 @@ name: Sync Reports to Docs
 on:
   push:
     paths:
-      - 'reports/*.html'
+      - "reports/*.html"
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Sync reports to docs
         run: |
           cp -r reports/*.html docs/
-          
+
       - name: Commit changes
         run: |
           git config user.name "GitHub Actions"
@@ -288,14 +309,17 @@ git push
 ## 🎓 最佳實踐建議
 
 1. **明確職責**:
+
    - `reports/` = 開發測試
    - `docs/` = 生產部署
 
 2. **自動化同步**:
+
    - 使用腳本或 CI/CD
    - 減少手動操作
 
 3. **版本控制**:
+
    - 提交時註明是否已同步
    - Commit message 格式: `sync: 描述`
 

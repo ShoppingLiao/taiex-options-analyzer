@@ -274,8 +274,10 @@ class ReportGenerator:
                 'high': options_data.tx_high or 0,
                 'low': options_data.tx_low or 0,
                 'close': options_data.tx_close or 0,
-                'volume': options_data.tx_volume or 0,
-                'settlement': options_data.tx_settlement or 0,
+                # 成交量和結算價目前無法從外部 API 獲取
+                # 顯示為 None 以便模板區分「無數據」和「數值為0」
+                'volume': options_data.tx_volume if options_data.tx_volume is not None else None,
+                'settlement': options_data.tx_settlement if options_data.tx_settlement is not None else None,
             },
         }
 
