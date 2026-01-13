@@ -1,12 +1,38 @@
 # 台指選擇權分析工具
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](VERSION_HISTORY.md)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](documentation/releases/VERSION_HISTORY.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Documentation](https://img.shields.io/badge/docs-📚_文檔中心-brightgreen.svg)](documentation/README.md)
 
 自動化分析台灣期貨交易所的選擇權盤後日報，產生視覺化分析報告。
 
-> **🎉 版本 1.0.0 正式發布！** (2026-01-13)  
+> **🎉 版本 1## 📚 文檔中心
+
+### 🎯 快速導航
+
+- **[📚 完整文檔中心](documentation/README.md)** - 所有文檔索引與分類
+- **[📖 使用指南](documentation/guides/)** - 部署、快速開始、專案結構
+- **[🎨 設計系統](documentation/design/)** - UI/UX 設計規範
+- **[🐛 問題修復](documentation/issues/)** - Bug 修復記錄
+- **[🚀 版本發布](documentation/releases/)** - 版本歷史與發布說明
+- **[✨ 功能文檔](documentation/features/)** - 各功能開發說明
+
+### 📖 核心文檔
+
+- **[README.md](README.md)** - 專案說明（本文件）
+- **[VERSION_HISTORY.md](documentation/releases/VERSION_HISTORY.md)** - 版本歷史
+- **[CHANGELOG.md](documentation/CHANGELOG.md)** - 詳細變更日誌
+- **[PROJECT_STRUCTURE.md](documentation/guides/PROJECT_STRUCTURE.md)** - 專案結構
+- **[DEPLOYMENT.md](documentation/guides/DEPLOYMENT.md)** - 部署指南
+
+### 📋 重要系統文檔
+
+- **[DESIGN_SYSTEM_README.md](documentation/design/DESIGN_SYSTEM_README.md)** - 設計系統
+- **[SETTLEMENT_REPORT_SYSTEM.md](documentation/features/SETTLEMENT_REPORT_SYSTEM.md)** - 結算報告系統
+- **[AI_ANALYSIS_TAB.md](documentation/features/AI_ANALYSIS_TAB.md)** - AI 分析功能發布！** (2026-01-13)  
 > 設計系統已穩定，模板已優化，未來每日/每週報告會自動保持一致的樣式。
+> 
+> **📚 [查看完整文檔中心](documentation/README.md)** - 所有專案文檔已整理分類
 
 ## 🌟 功能特色
 
@@ -251,7 +277,7 @@ taiex-options-analyzer/
    - 風險管理理念
    - 長期獲利心法
 
-📚 **詳細說明**：參見 [AI_ANALYSIS_TAB.md](AI_ANALYSIS_TAB.md)
+📚 **詳細說明**：參見 [AI_ANALYSIS_TAB.md](documentation/features/AI_ANALYSIS_TAB.md)
 
 ## 🎨 視覺化特色
 
@@ -349,7 +375,7 @@ tx_data_map = {
 
 ## 🔄 未來開發計畫
 
-請參見 [VERSION_HISTORY.md](VERSION_HISTORY.md) 的「未來規劃」章節。
+請參見 [VERSION_HISTORY.md](documentation/releases/VERSION_HISTORY.md) 的「未來規劃」章節。
 
 ## �📝 License
 
