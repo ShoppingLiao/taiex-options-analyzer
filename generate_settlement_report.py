@@ -82,9 +82,23 @@ def main():
     
     # 驗證結算日期格式
     try:
-        datetime.strptime(args.settlement, '%Y/%m/%d')
+        settlement_dt = datetime.strptime(args.settlement, '%Y/%m/%d')
     except ValueError:
         print(f'❌ 錯誤: 結算日期格式不正確 "{args.settlement}"，應為 YYYY/MM/DD')
+        return 1
+    
+    # 驗證結算日期必須是週三或週五
+    weekday = settlement_dt.weekday()  # 0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 5=Saturday, 6=Sunday
+    weekday_name = settlement_dt.strftime('%A')
+    
+    if args.weekday == 'wednesday' and weekday != 2:
+        print(f'❌ 錯誤: 指定為週三結算，但 {args.settlement} 是 {weekday_name}（週{["一", "二", "三", "四", "五", "六", "日"][weekday]}）')
+        print(f'   提示: 選擇權結算日只會在週三和週五')
+        return 1
+    
+    if args.weekday == 'friday' and weekday != 4:
+        print(f'❌ 錯誤: 指定為週五結算，但 {args.settlement} 是 {weekday_name}（週{["一", "二", "三", "四", "五", "六", "日"][weekday]}）')
+        print(f'   提示: 選擇權結算日只會在週三和週五')
         return 1
     
     print('\n🎯 結算日報告生成工具')
