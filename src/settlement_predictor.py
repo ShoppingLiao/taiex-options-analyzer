@@ -517,13 +517,13 @@ class SettlementPredictor:
             # 中性：Max Pain 附近
             center = max_pain
         
-        # 計算波動範圍 (根據趨勢強度)
-        base_range = 300
-        volatility = int(base_range * (1 + trend_strength * 0.2))
-        
-        # 計算區間 (取整百)
-        lower = (center - volatility) // 100 * 100
-        upper = (center + volatility) // 100 * 100
+        # 計算波動範圍 - 固定 200 點區間，不因趨勢強度放大
+        # 目標：精準預測，寧可錯誤也不要太寬泛
+        half_range = 100  # 上下各 100 點 = 總共 200 點
+
+        # 計算區間 (取整到 50 點，更精準)
+        lower = (center - half_range) // 50 * 50
+        upper = (center + half_range) // 50 * 50
         
         return (lower, upper)
     
@@ -550,29 +550,30 @@ class SettlementPredictor:
         center = (lower + upper) // 2
         center = (lower + upper) // 2
         
-        # 劇本 1: 強勢上攻 🚀
+        # 劇本 1: 強勢上攻 🚀 (預測區間上移 150 點)
+        bullish_center = upper + 100
         scenarios.append(Scenario(
             name='強勢上攻',
             probability=self._calculate_scenario_probability('bullish', signals),
-            price_range=(upper - 50, upper + 250),
-            key_levels=[upper, upper + 100, upper + 200],
+            price_range=(bullish_center - 100, bullish_center + 100),
+            key_levels=[upper, bullish_center, bullish_center + 100],
             conditions=[
                 '✓ 多方持續加碼買權部位',
                 '✓ P/C Ratio 持續下降',
                 '✓ 價格突破近期高點',
                 '✓ 成交量放大配合'
             ],
-            strategy='順勢做多，停利設在區間上緣 +100，停損在 Max Pain',
+            strategy='順勢做多，停利設在區間上緣，停損在 Max Pain',
             color='#22c55e',
             icon='🚀'
         ))
-        
-        # 劇本 2: 震盪整理 ⚖️
+
+        # 劇本 2: 震盪整理 ⚖️ (維持主預測區間)
         scenarios.append(Scenario(
             name='震盪整理',
             probability=self._calculate_scenario_probability('neutral', signals),
             price_range=(lower, upper),
-            key_levels=[max_pain, center, (lower + upper) // 2],
+            key_levels=[lower, center, upper],
             conditions=[
                 '✓ 多空力道均衡',
                 '✓ OI 分佈集中在特定區間',
@@ -583,30 +584,31 @@ class SettlementPredictor:
             color='#f59e0b',
             icon='⚖️'
         ))
-        
-        # 劇本 3: 回檔修正 📉
+
+        # 劇本 3: 回檔修正 📉 (預測區間下移 150 點)
+        bearish_center = lower - 100
         scenarios.append(Scenario(
             name='回檔修正',
             probability=self._calculate_scenario_probability('bearish', signals),
-            price_range=(lower - 250, lower + 50),
-            key_levels=[lower - 200, lower - 100, lower],
+            price_range=(bearish_center - 100, bearish_center + 100),
+            key_levels=[lower, bearish_center, bearish_center - 100],
             conditions=[
                 '✓ 空方持續加碼賣權部位',
                 '✓ P/C Ratio 持續上升',
                 '✓ 價格跌破近期低點',
                 '✓ 恐慌性賣壓出現'
             ],
-            strategy='順勢做空，停利設在區間下緣 -100，停損在 Max Pain',
+            strategy='順勢做空，停利設在區間下緣，停損在 Max Pain',
             color='#ef4444',
             icon='📉'
         ))
         
-        # 劇本 4: Max Pain 磁吸 🧲
+        # 劇本 4: Max Pain 磁吸 🧲 (200 點區間)
         pain_distance = abs(current_price - max_pain)
-        if pain_distance > 200:
+        if pain_distance > 150:
             scenarios.append(Scenario(
                 name='Max Pain 磁吸',
-                probability=min(40.0, pain_distance / 10),
+                probability=min(45.0, pain_distance / 8),
                 price_range=(max_pain - 100, max_pain + 100),
                 key_levels=[max_pain - 100, max_pain, max_pain + 100],
                 conditions=[
