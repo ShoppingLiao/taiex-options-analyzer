@@ -17,309 +17,163 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
-        /* Desktop 樣式 */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: var(--bg-color);
             min-height: 100vh;
             padding: 20px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         header {
-            background: white;
+            background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
+            color: white;
             border-radius: 2px;
             padding: 40px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         h1 {
             font-size: 2.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 10px;
         }
         .subtitle {
-            color: #64748b;
+            opacity: 0.9;
             font-size: 1.1rem;
         }
-        
+
         /* 報告類型區塊 */
         .report-section {
             background: white;
             border-radius: 2px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
         }
-        
+
         .section-header {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid var(--border-color);
         }
-        
+
         .section-icon {
             font-size: 1.8rem;
             margin-right: 12px;
         }
-        
+
         .section-title {
             font-size: 1.5rem;
             font-weight: 700;
             color: #1e293b;
             margin: 0;
         }
-        
+
         .section-count {
             margin-left: auto;
             background: #f1f5f9;
             color: #64748b;
             padding: 4px 12px;
-            border-radius: 2px;
+            border-radius: 12px;
             font-size: 0.9rem;
             font-weight: 600;
         }
-        
+
         .section-description {
             color: #64748b;
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
-        
+
         .reports-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
-        
+
         .report-card {
-            background: white;
+            background: var(--bg-color);
             border-radius: 2px;
-            padding: 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             text-decoration: none;
             color: var(--text-color);
             display: block;
         }
         .report-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
         }
         .report-date {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 8px;
-            color: #2563eb;
+            color: var(--primary-color);
         }
         .report-month {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #64748b;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
         .report-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-color);
             color: white;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 2px;
-            font-size: 0.85rem;
-            margin-top: 8px;
+            font-size: 0.8rem;
         }
         .latest-badge {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: #ef4444;
         }
+
+        /* 空狀態 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
         footer {
             text-align: center;
-            color: white;
+            color: #64748b;
             margin-top: 40px;
             padding: 20px;
+            font-size: 0.9rem;
         }
         footer a {
-            color: white;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        footer a:hover {
             text-decoration: underline;
         }
-        
-        /* Mobile 一頁式佈局 */
+
         @media (max-width: 768px) {
-            /* 移除 body padding，使用 100vh */
-            html, body {
-                height: 100%;
-                overflow: hidden;
-            }
-            
-            body {
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            .container {
-                width: 92vw;
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                padding: 0;
-            }
-            
-            /* Header - 約 10% vh */
-            header {
-                flex: 0 0 auto;
-                border-radius: 0 0 2px 8px;
-                padding: 12px 16px;
-                margin-bottom: 0;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            }
-            
             h1 {
-                font-size: 1.3rem;
-                margin-bottom: 2px;
+                font-size: 1.8rem;
             }
-            
-            .subtitle {
-                font-size: 0.7rem;
-            }
-            
-            /* 主要內容區 - 約 75-80% vh */
-            .reports-container {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                padding: 8px;
-                overflow: hidden;
-            }
-            
-            /* 結算日報告和單日報告各佔一半 */
-            .report-section {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                padding: 12px;
-                margin-bottom: 0;
-                border-radius: 2px;
-                overflow: hidden;
-            }
-            
-            .section-header {
-                flex: 0 0 auto;
-                margin-bottom: 8px;
-                padding-bottom: 8px;
-            }
-            
-            .section-icon {
-                font-size: 1.2rem;
-                margin-right: 8px;
-            }
-            
-            .section-title {
-                font-size: 1rem;
-            }
-            
-            .section-count {
-                padding: 2px 8px;
-                font-size: 0.7rem;
-                border-radius: 2px;
-            }
-            
-            /* 隱藏描述以節省空間 */
-            .section-description {
-                display: none;
-            }
-            
-            /* 報告列表 - 可滾動 */
             .reports-grid {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: thin;
-                scrollbar-color: #667eea transparent;
-                padding-right: 4px;
+                grid-template-columns: 1fr;
             }
-            
-            .reports-grid::-webkit-scrollbar {
-                width: 4px;
+            header {
+                padding: 24px 16px;
             }
-            
-            .reports-grid::-webkit-scrollbar-thumb {
-                background: #667eea;
-                border-radius: 5px;
-            }
-            
-            .reports-grid::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            
-            /* 緊湊的卡片樣式 */
-            .report-card {
-                padding: 10px 12px;
-                border-radius: 2px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-                flex-shrink: 0;
-                display: flex;
-                flex-direction: column;
-                gap: 4px;
-            }
-            
-            .report-card:active {
-                transform: scale(0.98);
-            }
-            
-            /* Row 1: 日期 */
-            .report-date {
-                font-size: 0.95rem;
-                margin-bottom: 0;
-            }
-            
-            /* Row 2: 月份 + Badge */
-            .report-card-row2 {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            .report-month {
-                font-size: 0.7rem;
-                margin-bottom: 0;
-            }
-            
-            .report-badge {
-                font-size: 0.65rem;
-                padding: 2px 8px;
-                margin-top: 0;
-            }
-            
-            /* Footer - 約 5-8% vh */
-            footer {
-                flex: 0 0 auto;
-                margin-top: 0;
-                padding: 8px 12px;
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border-radius: 8px 8px 0 0;
-            }
-            
-            footer p {
-                font-size: 0.7rem;
-                margin-bottom: 2px;
-            }
-            
-            footer a {
-                font-size: 0.7rem;
+            .report-section {
+                padding: 20px 16px;
             }
         }
     </style>
@@ -327,109 +181,82 @@
 <body>
     <div class="container">
         <header>
-            <h1>📊 台指選擇權分析報告</h1>
+            <h1>台指選擇權分析報告</h1>
             <p class="subtitle">Taiwan Stock Index Options Analysis</p>
         </header>
-        
-        <div class="reports-container">
-            <!-- 結算日報告區塊 -->
-            <div class="report-section">
-                <div class="section-header">
-                    <span class="section-icon">🎯</span>
-                    <h2 class="section-title">結算日報告</h2>
-                    <span class="section-count">3 份</span>
-                </div>
-                <p class="section-description">選擇權結算日專題分析，包含趨勢分析、結算劇本預測等深度內容</p>
-                <div class="reports-grid">
-                    <a href="settlement_20260114_wed.html" class="report-card">
-                        <div class="report-date">2026/01/14 (週三)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">結算日預測分析</div>
-                            <span class="report-badge latest-badge">最新報告</span>
-                        </div>
-                    </a>
-                    <a href="settlement_20260109_fri.html" class="report-card">
-                        <div class="report-date">2026/01/09 (週五)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">結算日預測分析</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                    <a href="settlement_20260107_wed.html" class="report-card">
-                        <div class="report-date">2026/01/07 (週三)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">結算日預測分析</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                </div>
+
+        <!-- 每日報告區塊 -->
+        <div class="report-section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2 class="section-title">每日報告</h2>
+                <span class="section-count">6 份報告</span>
             </div>
-            
-            <!-- 單日報告區塊 -->
-            <div class="report-section">
-                <div class="section-header">
-                    <span class="section-icon">📅</span>
-                    <h2 class="section-title">單日報告</h2>
-                    <span class="section-count">7 份</span>
-                </div>
-                <p class="section-description">每日選擇權市場分析，包含 OI 分佈、價格走勢、結算情境預測等詳細資訊</p>
-                <div class="reports-grid">
-                    <a href="report_20260113_202601F3.html" class="report-card">
-                        <div class="report-date">2026/01/13 (一)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">週選契約 202601F3</div>
-                            <span class="report-badge latest-badge">最新報告</span>
-                        </div>
-                    </a>
-                    <a href="report_20260112_202601W2.html" class="report-card">
-                        <div class="report-date">2026/01/12 (一)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">週選契約 202601W2</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                    <a href="report_20260109_202601.html" class="report-card">
-                        <div class="report-date">2026/01/09 (五)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">202601 月份契約</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                    <a href="report_20260108_202601.html" class="report-card">
-                        <div class="report-date">2026/01/08 (四)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">202601 月份契約</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                    <a href="report_20260107_202601.html" class="report-card">
-                        <div class="report-date">2026/01/07 (三)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">202601 月份契約</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                    <a href="report_20260106_202601.html" class="report-card">
-                        <div class="report-date">2026/01/06 (二)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">202601 月份契約</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                    <a href="report_20260105_202601.html" class="report-card">
-                        <div class="report-date">2026/01/05 (一)</div>
-                        <div class="report-card-row2">
-                            <div class="report-month">202601 月份契約</div>
-                            <span class="report-badge">歷史報告</span>
-                        </div>
-                    </a>
-                </div>
+            <p class="section-description">每日選擇權市場分析，包含 OI 分佈、Max Pain、結算情境預測等</p>
+            <div class="reports-grid">
+                <a href="report_20260112_202601W2.html" class="report-card">
+                    <div class="report-date">2026/01/12 (週一)</div>
+                    <div class="report-month">202601W2 週選</div>
+                    <span class="report-badge latest-badge">最新</span>
+                </a>
+                <a href="report_20260109_202601.html" class="report-card">
+                    <div class="report-date">2026/01/09 (週五)</div>
+                    <div class="report-month">202601 月份</div>
+                    <span class="report-badge ">歷史</span>
+                </a>
+                <a href="report_20260108_202601.html" class="report-card">
+                    <div class="report-date">2026/01/08 (週四)</div>
+                    <div class="report-month">202601 月份</div>
+                    <span class="report-badge ">歷史</span>
+                </a>
+                <a href="report_20260107_202601.html" class="report-card">
+                    <div class="report-date">2026/01/07 (週三)</div>
+                    <div class="report-month">202601 月份</div>
+                    <span class="report-badge ">歷史</span>
+                </a>
+                <a href="report_20260106_202601.html" class="report-card">
+                    <div class="report-date">2026/01/06 (週二)</div>
+                    <div class="report-month">202601 月份</div>
+                    <span class="report-badge ">歷史</span>
+                </a>
+                <a href="report_20260105_202601.html" class="report-card">
+                    <div class="report-date">2026/01/05 (週一)</div>
+                    <div class="report-month">202601 月份</div>
+                    <span class="report-badge ">歷史</span>
+                </a>
             </div>
         </div>
-        
+
+        <!-- 結算日報告區塊 -->
+        <div class="report-section">
+            <div class="section-header">
+                <span class="section-icon">🎯</span>
+                <h2 class="section-title">結算日報告</h2>
+                <span class="section-count">3 份報告</span>
+            </div>
+            <p class="section-description">結算日專題分析，包含趨勢分析、結算劇本預測、AI 交易員視角等</p>
+            <div class="reports-grid">
+                <a href="settlement_20260114_wed.html" class="report-card">
+                    <div class="report-date">2026/01/14 (週三)</div>
+                    <div class="report-month">結算日預測分析</div>
+                    <span class="report-badge latest-badge">最新</span>
+                </a>
+                <a href="settlement_20260109_fri.html" class="report-card">
+                    <div class="report-date">2026/01/09 (週五)</div>
+                    <div class="report-month">結算日預測分析</div>
+                    <span class="report-badge ">歷史</span>
+                </a>
+                <a href="settlement_20260107_wed.html" class="report-card">
+                    <div class="report-date">2026/01/07 (週三)</div>
+                    <div class="report-month">結算日預測分析</div>
+                    <span class="report-badge ">歷史</span>
+                </a>
+            </div>
+        </div>
+
         <footer>
-            <p>🚀 自動生成於 2026年1月13日</p>
-            <p><a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">查看專案原始碼</a></p>
+            <p>自動生成於 2026年01月13日 20:08</p>
+            <p><a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案原始碼</a></p>
         </footer>
     </div>
 </body>
