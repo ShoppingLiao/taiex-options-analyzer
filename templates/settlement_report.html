@@ -1710,27 +1710,37 @@
             <div class="section">
                 <div class="trading-tips">
                     <div class="tips-title">
-                        <span>💡</span>實戰小叮嚀
+                        <span>💡</span>結算日組合單操作要點
                     </div>
 
                     <div class="tip-item">
-                        <strong>時間價值流逝加速：</strong><br>
-                        因為 IV（隱含波動率）昨天是上升的，這代表今天即便指數不動，選擇權的價格也會因為「時間價值流逝」與「波動率回落」而縮水很快。結算日的 Theta Decay（時間價值衰減）是最兇猛的。
+                        <strong>時間價值是你的朋友：</strong><br>
+                        結算日的 Theta Decay（時間價值衰減）最快，隨著時間接近 13:30，選擇權價格會快速歸零。如果你用的是價差組合單，時間站在你這一邊，只要方向對了，獲利會隨時間增加。
                     </div>
 
                     <div class="tip-item">
-                        <strong>如果您手上有 {{ contract_month }} 近月部位：</strong><br>
-                        建議早盤若有衝高至 <strong>{{ exit_level_high }}</strong> 以上，可考慮先行平倉，不一定要賭到最後結算。因為莊家守 {{ resistance_key_level }} 的決心很強，繼續持有風險報酬比不划算。
+                        <strong>組合單必須同時成交：</strong><br>
+                        使用券商的「組合單下單」功能，確保買 Call + 賣 Call（或買 Put + 賣 Put）同時成交。千萬不要分開下單，否則會有單腿風險，可能造成巨大虧損。
                     </div>
 
                     <div class="tip-item">
-                        <strong>如果您想進場：</strong><br>
-                        結算日當天當沖風險較大，建議觀察結算後的<strong>新月份（{{ next_month_1 }} 全月或 {{ next_month_2 }}）</strong>籌碼重新布局。新月份的 OI 分布會更清晰地反映市場對未來走勢的預期。
+                        <strong>選擇流動性好的履約價：</strong><br>
+                        建立組合單時，要選擇成交量 > 100 的履約價，確保進出場順暢。價內一檔、價平、價外一檔通常流動性最好。太價外的履約價雖然便宜，但可能賣不掉。
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>設定明確的出場點：</strong><br>
+                        建倉後立即設定「獲利 60% 平倉」和「虧損 50% 停損」的條件單。不要貪心等最大獲利，也不要期待虧損部位會反轉。紀律是組合單成功的關鍵。
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>最後 30 分鐘不要調整：</strong><br>
+                        13:00-13:30 流動性變差、波動加劇，這時候調整組合單風險很大。如果要平倉，建議在 12:30 前決定。最後 30 分鐘就讓組合單自然結算。
                     </div>
 
                     <div class="tip-item">
                         <strong>留意黑天鵝事件：</strong><br>
-                        雖然籌碼面給出明確的區間預測，但若出現重大國際消息（如美股暴漲暴跌、地緣政治突發事件），一切技術分析都會失效。<strong>務必設好停損</strong>，不要過度自信。
+                        雖然組合單風險有限，但若出現重大國際消息（如美股暴漲暴跌、地緣政治突發事件），價格可能大幅偏離預測區間。<strong>必要時要果斷平倉</strong>，不要硬撐。
                     </div>
                 </div>
             </div>
@@ -1739,27 +1749,34 @@
             <div class="section">
                 <div class="analysis-section">
                     <h3 class="analysis-title">
-                        <span>📝</span>總結：我的結算日策略
+                        <span>📝</span>總結：組合單交易員的心法
                     </h3>
 
                     <div class="analysis-block">
                         <div class="block-content">
                             <p style="font-size: 0.85rem; line-height: 1.7;">
-                                作為一個在市場打滾多年的老手，<strong>我不會在結算日冒險追高殺低</strong>。今天的策略很簡單：
+                                作為一個專注結算日組合單的交易員，<strong>我只在週三和週五進場</strong>。每週的單日報告都是為了今天做準備：
                             </p>
 
                             <div class="highlight-box">
-                                <p style="font-size: 0.85rem;"><strong>1️⃣ 持倉部位：</strong>看到接近上檔壓力 {{ resistance_key_level }} 就減碼，落袋為安</p>
-                                <p style="font-size: 0.85rem;"><strong>2️⃣ 新進場：</strong>等結算後再說，不急於一時</p>
-                                <p style="font-size: 0.85rem;"><strong>3️⃣ 觀察重點：</strong>最後 30 分鐘的價格行為，這會告訴我下個月的方向</p>
+                                <p style="font-size: 0.85rem;"><strong>1️⃣ 組合單策略：</strong>根據趨勢選擇 Bull/Bear Spread 或 Iron Condor</p>
+                                <p style="font-size: 0.85rem;"><strong>2️⃣ 風險控管：</strong>獲利 60% 平倉、虧損 50% 停損，嚴守紀律</p>
+                                <p style="font-size: 0.85rem;"><strong>3️⃣ 等待結算：</strong>13:30 系統自動結算，賺取價差利潤</p>
                             </div>
 
                             <p style="font-size: 0.85rem; margin-top: 15px; line-height: 1.7;">
-                                記住，<strong>市場永遠是對的，我們只是順勢而為</strong>。莊家布下的籌碼陷阱已經很明顯了，我們要做的就是不要成為被收割的韭菜。保護本金，等待更好的機會，這才是長期獲利的王道。
+                                組合單讓我在結算日有明確的風險收益比。<strong>最大虧損在建倉時就確定了</strong>，不會因為市場波動而無限擴大。
+                                這就是為什麼我專注於結算日操作 —— 時間價值歸零、自動結算、風險可控。
+                            </p>
+
+                            <p style="font-size: 0.85rem; margin-top: 15px; line-height: 1.7;">
+                                記住，<strong>所有的單日報告都是為了週三和週五的組合單交易做準備</strong>。
+                                我每天觀察盤勢、分析趨勢、累積經驗，就是為了在結算日做出最正確的判斷。
+                                保護本金、遵守紀律、持續學習 —— 這是我的長期獲利之道。
                             </p>
 
                             <div class="conclusion-box" style="margin-top: 15px;">
-                                <p style="font-size: 0.9rem;"><strong>祝大家操作順利，結算日平安！</strong> 🍀</p>
+                                <p style="font-size: 0.9rem;"><strong>週三/週五結算日，讓我們用組合單專業操作！</strong> �</p>
                             </div>
                         </div>
                     </div>

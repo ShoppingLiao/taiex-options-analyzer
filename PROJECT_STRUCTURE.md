@@ -108,19 +108,23 @@ taiex-options-analyzer/
 ## 📊 檔案分類統計
 
 ### 核心程式碼
+
 - Python 檔案: 12 個
 - 核心模組: 4 個（src/）
 
 ### 模板系統
+
 - HTML 模板: 4 個
 - ✅ 已優化完成，包含所有樣式定義
 
 ### 生成報告
+
 - 單日報告: 5 個（2026/01/05-09）
 - 結算報告: 3 個（週三、週五）
 - ✅ 所有報告使用統一樣式
 
 ### 文檔系統
+
 - 總文檔數: 30+ 個
 - 核心文檔: 5 個（✨ 標記）
 - 設計系統: 5 個
@@ -134,21 +138,25 @@ taiex-options-analyzer/
 ### 必讀文檔（依優先順序）
 
 1. **README.md** - 從這裡開始！
+
    - 專案概述
    - 快速開始指南
    - 功能特色說明
 
 2. **VERSION_HISTORY.md** - 版本演進
+
    - 開發歷程
    - 版本更新記錄
    - 未來規劃
 
 3. **DESIGN_SYSTEM_README.md** - 設計規範
+
    - Section-content 系統
    - 主題變體使用
    - 響應式設計
 
 4. **SETTLEMENT_REPORT_SYSTEM.md** - 結算報告
+
    - 四大分頁說明
    - 預測邏輯
    - 使用指南
@@ -161,11 +169,13 @@ taiex-options-analyzer/
 ### 模板檔案（未來修改樣式時使用）
 
 1. **templates/report.html**
+
    - 單日報告的 HTML 模板
    - 包含所有 CSS 定義
    - 修改後重新執行 `main.py`
 
 2. **templates/settlement_report.html**
+
    - 結算日報告的 HTML 模板
    - 包含四個分頁的完整樣式
    - 修改後重新執行 `generate_settlement_report.py`
@@ -177,6 +187,7 @@ taiex-options-analyzer/
 ## 🔄 工作流程
 
 ### 每日報告生成流程
+
 ```
 1. PDF 下載
    ↓
@@ -192,6 +203,7 @@ taiex-options-analyzer/
 ```
 
 ### 結算日報告生成流程
+
 ```
 1. 讀取已生成的單日報告
    ↓
@@ -207,6 +219,7 @@ taiex-options-analyzer/
 ```
 
 ### 首頁更新流程
+
 ```
 1. 掃描 docs/ 中的所有報告
    ↓
@@ -220,6 +233,7 @@ taiex-options-analyzer/
 ## 📝 未來新增報告時
 
 ### 單日報告
+
 ```bash
 # 1. 如需新日期，先在 src/parser.py 添加台指資料
 tx_data_map['20260113'] = {
@@ -241,6 +255,7 @@ python3 generate_index_with_weekday.py
 ```
 
 ### 結算日報告
+
 ```bash
 # 週三結算（使用週一、週二數據）
 python3 generate_settlement_report.py wed
@@ -255,11 +270,13 @@ python3 generate_index_with_weekday.py
 ## ⚠️ 重要提醒
 
 ### ✅ 正確做法
+
 1. 修改 `templates/` 中的模板
 2. 重新執行生成腳本
 3. 新報告自動使用更新後的樣式
 
 ### ❌ 錯誤做法
+
 1. ~~執行 `maintenance/scripts/` 中的腳本~~
 2. ~~手動修改已生成的 HTML 報告~~
 3. ~~複製舊報告並修改內容~~

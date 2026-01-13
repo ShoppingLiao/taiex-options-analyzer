@@ -15,6 +15,7 @@
 - 📊 **自動解析 PDF**## 📚 文檔
 
 ### 核心文檔
+
 - **[README.md](README.md)** - 專案說明（本文件）
 - **[VERSION_HISTORY.md](VERSION_HISTORY.md)** - 版本歷史與未來規劃
 - **[CHANGELOG.md](CHANGELOG.md)** - 詳細變更日誌
@@ -22,6 +23,7 @@
 - **[RELEASE_v1.0.0.md](RELEASE_v1.0.0.md)** - v1.0.0 發布說明
 
 ### 系統文檔
+
 - **[DESIGN_SYSTEM_README.md](DESIGN_SYSTEM_README.md)** - 設計系統完整文檔
 - **[SETTLEMENT_REPORT_SYSTEM.md](SETTLEMENT_REPORT_SYSTEM.md)** - 結算日報告系統說明
 - **[DEPLOYMENT.md](DEPLOYMENT.md)** - 部署指南

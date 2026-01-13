@@ -28,6 +28,7 @@ maintenance/
 這些腳本用於批量更新已生成的報告文件，**僅在需要修復歷史文件時使用**。
 
 ### update_section_content.py
+
 **用途**: 批量替換內聯樣式為 `section-content` class  
 **執行時機**: 當需要將舊版報告更新為使用 section-content class 時  
 **影響範圍**: reports/ 和 docs/ 中的所有 HTML 文件
@@ -37,6 +38,7 @@ python3 maintenance/scripts/update_section_content.py
 ```
 
 ### add_section_content_css.py
+
 **用途**: 為已生成的報告添加 section-content CSS 定義  
 **執行時機**: 當已生成的報告缺少 section-content 樣式定義時  
 **影響範圍**: 指定的 HTML 文件
@@ -46,6 +48,7 @@ python3 maintenance/scripts/add_section_content_css.py
 ```
 
 ### update_ai_performance_layout.py
+
 **用途**: 將 AI 預測績效總覽從 grid 布局更新為橫排單行布局  
 **執行時機**: 當需要修復舊版結算日報告的 AI 績效總覽樣式時  
 **影響範圍**: 結算日報告文件
@@ -55,6 +58,7 @@ python3 maintenance/scripts/update_ai_performance_layout.py
 ```
 
 ### update_border_radius.py
+
 **用途**: 統一更新所有元素的 border-radius 為 2px  
 **執行時機**: 當需要調整圓角風格時  
 **影響範圍**: templates/ 中的所有模板文件
@@ -112,11 +116,13 @@ python3 maintenance/scripts/update_border_radius.py
 ### 如果需要更新樣式
 
 **正確做法**:
+
 1. 修改 `templates/` 中的模板文件
 2. 重新執行生成腳本（如 `generate_settlement_report.py`）
 3. 新生成的報告會自動使用更新後的樣式
 
 **錯誤做法**:
+
 1. ❌ 執行 maintenance/scripts/ 中的腳本
 2. ❌ 手動修改已生成的報告文件
 
@@ -141,5 +147,5 @@ python3 maintenance/scripts/update_border_radius.py
 
 ---
 
-**第一版發布日期**: 2026年1月13日  
+**第一版發布日期**: 2026 年 1 月 13 日  
 **維護者**: Shopping Liao
