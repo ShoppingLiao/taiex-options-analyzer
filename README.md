@@ -1,6 +1,12 @@
 # 台指選擇權分析工具
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](VERSION_HISTORY.md)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 自動化分析台灣期貨交易所的選擇權盤後日報，產生視覺化分析報告。
+
+> **🎉 版本 1.0.0 正式發布！** (2026-01-13)  
+> 設計系統已穩定，模板已優化，未來每日/每週報告會自動保持一致的樣式。
 
 ## 🌟 功能特色
 
@@ -105,13 +111,21 @@ taiex-options-analyzer/
 │   ├── settlement_predictor.py     # 結算日預測器
 │   └── settlement_report_generator.py  # 結算報告生成器
 ├── templates/            # HTML 模板
-│   ├── report.html       # 單日報告模板
-│   └── settlement_report.html  # 結算日報告模板
+│   ├── report.html              # 單日報告模板
+│   ├── settlement_report.html   # 結算日報告模板
+│   ├── design_system.html       # 設計系統文檔
+│   └── components_preview.html  # 組件預覽
+├── maintenance/          # 維護工具（第一版開發歷史）
+│   ├── scripts/         # 一次性更新腳本（已不使用）
+│   └── reports/         # 歷史更新記錄
 ├── main.py              # 單日報告主程式
 ├── generate_batch_reports.py      # 批量生成腳本
 ├── generate_settlement_report.py  # 結算報告生成工具
-└── generate_index_with_weekday.py # 首頁生成器
+├── generate_index_with_weekday.py # 首頁生成器
+└── VERSION_HISTORY.md   # 版本歷史
 ```
+
+> **💡 提示**: `maintenance/` 資料夾包含第一版開發過程中的更新工具和記錄，僅供參考，無需執行。
 
 ## 📊 報告內容
 
@@ -310,14 +324,29 @@ tx_data_map = {
 }
 ```
 
-## 📝 License
+## � 文檔
+
+- **[VERSION_HISTORY.md](VERSION_HISTORY.md)** - 版本歷史與更新日誌
+- **[DESIGN_SYSTEM_README.md](DESIGN_SYSTEM_README.md)** - 設計系統完整文檔
+- **[SETTLEMENT_REPORT_SYSTEM.md](SETTLEMENT_REPORT_SYSTEM.md)** - 結算日報告系統說明
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - 部署指南
+- **[maintenance/README.md](maintenance/README.md)** - 維護工具說明（第一版開發歷史）
+
+## 🔄 未來開發計畫
+
+請參見 [VERSION_HISTORY.md](VERSION_HISTORY.md) 的「未來規劃」章節。
+
+## �📝 License
 
 MIT
 
 ## 👤 Author
 
-ShoppingLiao
+**Shopping Liao**  
+GitHub: [@ShoppingLiao](https://github.com/ShoppingLiao)
 
 ---
 
 ⭐️ 如果這個專案對你有幫助，請給個星星！
+
+**目前版本**: 1.0.0 | **最後更新**: 2026-01-13

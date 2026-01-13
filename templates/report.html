@@ -49,7 +49,7 @@
             color: white;
             padding: 30px 20px;
             margin-bottom: 30px;
-            border-radius: 12px;
+            border-radius: 2px;
             position: relative;
         }
 
@@ -71,7 +71,7 @@
             background: rgba(255, 255, 255, 0.2);
             color: white;
             padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 2px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -132,16 +132,51 @@
 
         .card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 2px;
             padding: 16px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
+        }
+
+        /* Section Content */
+        .section-content {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 2px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            line-height: 1.9;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            color: #3c3c3c;
+        }
+
+        .section-content.success {
+            border-left-color: var(--success-color);
+        }
+
+        .section-content.danger {
+            border-left-color: var(--danger-color);
+            background: #fef2f2;
+        }
+
+        .section-content.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .section-content.purple {
+            border-left-color: var(--purple-color);
         }
 
         /* 手機版減少 card padding */
         @media (max-width: 767px) {
             .card {
                 padding: 12px;
+            }
+            
+            .section-content {
+                padding: 16px;
+                font-size: 0.85rem;
             }
         }
 
@@ -202,7 +237,7 @@
 
         .chart-container {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 2px;
             padding: 24px;
             margin-bottom: 30px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -249,7 +284,7 @@
 
         .price-item {
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 2px;
         }
 
         .price-item-label {
@@ -342,7 +377,7 @@
         .level-card {
             text-align: center;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 2px;
         }
 
         .level-card.resistance {
@@ -379,7 +414,7 @@
         /* 市場解讀區塊 */
         .analysis-section {
             background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-radius: 12px;
+            border-radius: 2px;
             padding: 24px;
             margin-bottom: 30px;
             border-left: 4px solid var(--primary-color);
@@ -442,7 +477,7 @@
         .settlement-meta {
             background: #f1f5f9;
             padding: 16px;
-            border-radius: 8px;
+            border-radius: 2px;
             margin-bottom: 20px;
         }
 
@@ -466,12 +501,12 @@
 
         .scenarios-container::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .scenarios-container::-webkit-scrollbar-thumb {
             background: #888;
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .scenarios-container::-webkit-scrollbar-thumb:hover {
@@ -481,7 +516,7 @@
         .scenario-card {
             background: linear-gradient(135deg, #fafafa, #ffffff);
             border: 2px solid #e5e7eb;
-            border-radius: 12px;
+            border-radius: 2px;
             padding: 20px;
             transition: all 0.3s ease;
             min-width: 350px;
@@ -511,7 +546,7 @@
 
         .scenario-probability {
             padding: 6px 16px;
-            border-radius: 20px;
+            border-radius: 5px;
             font-size: 0.875rem;
             font-weight: 600;
         }
@@ -550,7 +585,7 @@
         .scenario-range {
             background: linear-gradient(135deg, #dbeafe, #bfdbfe);
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 2px;
             font-weight: 600;
             font-size: 1.1rem;
             color: #1e40af;
@@ -567,13 +602,13 @@
             margin: 4px 0;
             background: #f8fafc;
             border-left: 3px solid var(--primary-color);
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .scenario-description, .scenario-impact {
             background: #f9fafb;
             padding: 12px 16px;
-            border-radius: 6px;
+            border-radius: 2px;
             line-height: 1.7;
         }
 
@@ -585,7 +620,7 @@
         .scenario-levels {
             background: #ecfdf5;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 2px;
             font-weight: 600;
             color: #059669;
             display: inline-block;
@@ -631,14 +666,14 @@
         /* AI 分析樣式 */
         .ai-section {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-radius: 12px;
+            border-radius: 2px;
             padding: 24px;
             margin-bottom: 30px;
         }
 
         .ai-scenario-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 2px;
             padding: 24px;
             margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -662,7 +697,7 @@
             background: linear-gradient(135deg, #f59e0b, #d97706);
             color: white;
             padding: 6px 16px;
-            border-radius: 20px;
+            border-radius: 5px;
             font-weight: 600;
             font-size: 0.9rem;
         }
@@ -671,7 +706,7 @@
             margin: 16px 0;
             padding: 12px;
             background: #f9fafb;
-            border-radius: 8px;
+            border-radius: 2px;
         }
 
         .ai-field-label {
@@ -696,7 +731,7 @@
             margin: 8px 0;
             background: white;
             border-left: 3px solid #22c55e;
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .ai-key-level {
@@ -704,7 +739,7 @@
             background: #dbeafe;
             padding: 6px 12px;
             margin: 4px;
-            border-radius: 6px;
+            border-radius: 2px;
             font-weight: 600;
             color: #1e40af;
         }
@@ -713,7 +748,7 @@
             background: #fef3c7;
             border-left: 4px solid #f59e0b;
             padding: 16px;
-            border-radius: 8px;
+            border-radius: 2px;
             margin: 12px 0;
         }
 
@@ -721,7 +756,7 @@
             background: #dcfce7;
             border-left: 4px solid #22c55e;
             padding: 16px;
-            border-radius: 8px;
+            border-radius: 2px;
             margin: 12px 0;
         }
 
@@ -742,7 +777,7 @@
         .legend-color {
             width: 20px;
             height: 20px;
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .legend-call {
@@ -784,7 +819,7 @@
 
         footer {
             background: white;
-            border-radius: 16px;
+            border-radius: 2px;
             padding: 20px;
             text-align: center;
             color: var(--text-muted);
@@ -822,7 +857,7 @@
             header {
                 padding: 10px 12px;
                 margin-bottom: 8px;
-                border-radius: 6px;
+                border-radius: 2px;
             }
 
             header h1 {
@@ -878,7 +913,7 @@
             .section {
                 margin-bottom: 8px !important;
                 padding: 10px 8px !important;
-                border-radius: 6px !important;
+                border-radius: 2px !important;
             }
 
             .section h2 {
@@ -905,7 +940,7 @@
                 display: inline-block !important;
                 padding: 6px 10px !important;
                 font-size: 0.8rem !important;
-                border-radius: 6px 6px 0 0 !important;
+                border-radius: 2px 6px 0 0 !important;
                 min-width: auto !important;
             }
 
@@ -914,6 +949,7 @@
                 margin-top: 12px !important;
                 padding: 10px !important;
                 font-size: 0.7rem !important;
+                border-radius: 2px 4px 0 0;
             }
         }
     </style>
@@ -1158,7 +1194,7 @@
         <div class="card-container">
             <!-- OI 分布表格 (近月選擇權 OI 變化) -->
             <div class="chart-container card">
-                <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 8px 8px 0 0; margin: -24px -24px 20px -24px;">
+                <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 2px 8px 0 0; margin: -24px -24px 20px -24px;">
                     近月選擇權 OI 變化
                 </h3>
                 <div style="text-align: center; margin-bottom: 15px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;">
@@ -1258,7 +1294,7 @@
             </div>
             
             <!-- 圖例說明 -->
-            <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; font-size: 0.85rem;">
+            <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 2px; font-size: 0.85rem;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
                     <div><span style="display: inline-block; width: 15px; height: 15px; background: #fef3c7; border: 1px solid #fde047; margin-right: 5px;"></span>收盤價: {{ "{:,}".format(tx_data.close) }}</div>
                     <div><span style="display: inline-block; width: 15px; height: 15px; background: #fed7aa; border: 1px solid #fdba74; margin-right: 5px;"></span>Max Pain: {{ "{:,}".format(max_pain) }}</div>
@@ -1270,7 +1306,7 @@
 
             <!-- OI 變化表格 -->
             <div class="chart-container card">
-                <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 8px 8px 0 0; margin: -24px -24px 20px -24px;">
+                <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 2px 8px 0 0; margin: -24px -24px 20px -24px;">
                     選擇權 OI 變化
                 </h3>
             
@@ -1357,7 +1393,7 @@
             </div>
             
             <!-- 圖例說明 -->
-            <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; font-size: 0.85rem;">
+            <div style="margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 2px; font-size: 0.85rem;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
                     <div><span style="display: inline-block; width: 15px; height: 15px; background: #fca5a5; border: 1px solid #f87171; margin-right: 5px;"></span>Call 增加（淡紅）</div>
                     <div><span style="display: inline-block; width: 15px; height: 15px; background: #dc2626; border: 1px solid #b91c1c; margin-right: 5px;"></span>Call 減少（深紅）</div>
@@ -1416,13 +1452,13 @@
             {% if daily_ai_analysis %}
             
             <!-- 經驗等級 & 學習進度 -->
-            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 2px; margin-bottom: 30px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
                     <div>
                         <h2 style="margin: 0; font-size: 1.8rem;">{{ daily_ai_analysis.level_icon }} AI 交易員分析</h2>
                         <p style="margin: 8px 0 0 0; opacity: 0.9;">經驗等級: {{ daily_ai_analysis.experience_level }}</p>
                     </div>
-                    <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; backdrop-filter: blur(10px);">
+                    <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 2px; backdrop-filter: blur(10px);">
                         <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">學習進度</div>
                         <div style="font-size: 1.1rem; font-weight: 600;">{{ daily_ai_analysis.learning_summary }}</div>
                     </div>
@@ -1460,25 +1496,25 @@
             <!-- 市場觀察（第一人稱） -->
             <div class="ai-section">
                 <h2 class="analysis-title">👁️ 我今天的市場觀察</h2>
-                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid var(--primary-color); box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.market_observation }}</div>
+                <div class="section-content">{{ daily_ai_analysis.market_observation }}</div>
             </div>
 
             <!-- 部位策略（第一人稱） -->
             <div class="ai-section">
                 <h2 class="analysis-title">💼 我的部位策略</h2>
-                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #10b981; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.position_strategy }}</div>
+                <div class="section-content success">{{ daily_ai_analysis.position_strategy }}</div>
             </div>
 
             <!-- 風險評估（第一人稱） -->
             <div class="ai-section">
                 <h2 class="analysis-title">⚠️ 我的風險評估</h2>
-                <div style="background: #fef2f2; padding: 25px; border-radius: 12px; border-left: 4px solid #ef4444; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.risk_assessment }}</div>
+                <div class="section-content danger">{{ daily_ai_analysis.risk_assessment }}</div>
             </div>
 
             <!-- 交易計劃（第一人稱） -->
             <div class="ai-section">
                 <h2 class="analysis-title">📋 我的交易計劃</h2>
-                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #f59e0b; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ daily_ai_analysis.trading_plan }}</div>
+                <div class="section-content warning">{{ daily_ai_analysis.trading_plan }}</div>
             </div>
 
             <!-- 歷史洞察 -->
@@ -1497,14 +1533,14 @@
 
             <!-- 相似案例參考 -->
             {% if daily_ai_analysis.similar_cases > 0 %}
-            <div style="margin-top: 20px; padding: 20px; background: #f0fdf4; border-radius: 12px; border: 1px solid #86efac;">
+            <div style="margin-top: 20px; padding: 20px; background: #f0fdf4; border-radius: 2px; border: 1px solid #86efac;">
                 <p style="margin: 0; color: #166534;">
                     📊 在我的記憶中，找到 <strong>{{ daily_ai_analysis.similar_cases }}</strong> 個類似的市場情境可供參考
                 </p>
             </div>
             {% endif %}
 
-            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 12px; text-align: center;">
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 2px; text-align: center;">
                 <p style="font-style: italic; color: var(--text-muted);">
                     🧑‍💼 以上是我作為 AI 交易員的個人觀點與計劃<br>
                     我會持續學習並改進分析能力，每一次分析都會被記錄下來
@@ -1548,7 +1584,7 @@
                         {% for support in ai_analysis.key_levels.critical_support %}
                         <div class="ai-field">
                             <span class="ai-key-level">{{ "{:,}".format(support.price) }} 點</span>
-                            <span class="badge" style="background: var(--put-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
+                            <span class="badge" style="background: var(--put-color); color: white; padding: 4px 8px; border-radius: 2px; margin-left: 8px;">
                                 {{ support.strength }}
                             </span>
                             <div style="margin-top: 8px; font-size: 0.9rem;">{{ support.reason }}</div>
@@ -1561,7 +1597,7 @@
                         {% for pivot in ai_analysis.key_levels.pivot_zones %}
                         <div class="ai-field">
                             <span class="ai-key-level">{{ "{:,}".format(pivot.price) }} 點</span>
-                            <span class="badge" style="background: var(--primary-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
+                            <span class="badge" style="background: var(--primary-color); color: white; padding: 4px 8px; border-radius: 2px; margin-left: 8px;">
                                 {{ pivot.role }}
                             </span>
                             <div style="margin-top: 8px; font-size: 0.9rem;">磁吸力: {{ pivot.magnet }}</div>
@@ -1574,7 +1610,7 @@
                         {% for resist in ai_analysis.key_levels.critical_resistance %}
                         <div class="ai-field">
                             <span class="ai-key-level">{{ "{:,}".format(resist.price) }} 點</span>
-                            <span class="badge" style="background: var(--call-color); color: white; padding: 4px 8px; border-radius: 4px; margin-left: 8px;">
+                            <span class="badge" style="background: var(--call-color); color: white; padding: 4px 8px; border-radius: 2px; margin-left: 8px;">
                                 {{ resist.strength }}
                             </span>
                             <div style="margin-top: 8px; font-size: 0.9rem;">{{ resist.reason }}</div>
@@ -1677,7 +1713,7 @@
                 {% endfor %}
             </div>
 
-            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 12px; text-align: center;">
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 2px; text-align: center;">
                 <p style="font-style: italic; color: var(--text-muted);">
                     ⚡ 本分析由 AI 基於 2026/01/09 盤後數據生成，僅供參考。實際交易請以盤中變化調整。
                 </p>
@@ -1695,14 +1731,14 @@
                 
                 {% if prediction %}
                 <!-- 明日預測 -->
-                <div style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+                <div style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; padding: 25px; border-radius: 2px; margin-bottom: 30px;">
                     <h2 style="margin: 0 0 10px 0; font-size: 1.8rem;">🔮 明日市場預測</h2>
                     <p style="margin: 0; opacity: 0.9;">預測日期: {{ prediction.prediction_date[:4] }}/{{ prediction.prediction_date[4:6] }}/{{ prediction.prediction_date[6:] }} → {{ prediction.next_trading_day[:4] }}/{{ prediction.next_trading_day[4:6] }}/{{ prediction.next_trading_day[6:] }}</p>
                 </div>
                 
                 <div class="ai-section">
                     <h3 class="analysis-title">💭 市場展望</h3>
-                    <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #fbbf24; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ prediction.outlook }}</div>
+                    <div class="section-content warning">{{ prediction.outlook }}</div>
                 </div>
                 
                 <div class="grid" style="margin: 30px 0;">
@@ -1733,7 +1769,7 @@
                                 {{ "{:,}".format(prediction.range_prediction.upper_bound) }}
                             </div>
                         </div>
-                        <div style="margin: 15px 0; padding: 10px; background: #f3f4f6; border-radius: 8px;">
+                        <div style="margin: 15px 0; padding: 10px; background: #f3f4f6; border-radius: 2px;">
                             <div style="font-size: 0.9rem; color: var(--text-muted);">現價</div>
                             <div style="font-size: 1.5rem; font-weight: 700;">
                                 {{ "{:,}".format(prediction.range_prediction.current) }}
@@ -1790,13 +1826,13 @@
                 
                 <div class="ai-section">
                     <h3 class="analysis-title">⚠️ 風險警告</h3>
-                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 8px; white-space: pre-wrap;">{{ prediction.risk_warning }}</div>
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 2px; white-space: pre-wrap;">{{ prediction.risk_warning }}</div>
                 </div>
                 {% endif %}
                 
                 {% if review %}
                 <!-- 盤後檢討 -->
-                <div style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; padding: 25px; border-radius: 12px; margin: 50px 0 30px 0;">
+                <div style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; padding: 25px; border-radius: 2px; margin: 50px 0 30px 0;">
                     <h2 style="margin: 0 0 10px 0; font-size: 1.8rem;">📝 盤後檢討報告</h2>
                     <p style="margin: 0; opacity: 0.9;">預測日: {{ review.prediction_date[:4] }}/{{ review.prediction_date[4:6] }}/{{ review.prediction_date[6:] }} | 實際日: {{ review.actual_date[:4] }}/{{ review.actual_date[4:6] }}/{{ review.actual_date[6:] }}</p>
                 </div>
@@ -1841,12 +1877,12 @@
                 
                 <div class="ai-section">
                     <h3 class="analysis-title">💭 自我反思</h3>
-                    <div style="background: white; padding: 25px; border-radius: 12px; border-left: 4px solid #8b5cf6; box-shadow: var(--shadow); line-height: 1.8; white-space: pre-wrap;">{{ review.self_reflection }}</div>
+                    <div class="section-content purple">{{ review.self_reflection }}</div>
                 </div>
                 
                 <div class="ai-section">
                     <h3 class="analysis-title">📚 學到的教訓</h3>
-                    <div style="background: #fef3c7; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                    <div style="background: #fef3c7; padding: 20px; border-radius: 2px; border-left: 4px solid #f59e0b;">
                         {% for lesson in review.lessons_learned %}
                         <div style="padding: 10px 0; {% if not loop.last %}border-bottom: 1px solid #fbbf24;{% endif %}">
                             <strong style="color: #f59e0b;">💡</strong> {{ lesson }}
@@ -1857,7 +1893,7 @@
                 
                 <div class="ai-section">
                     <h3 class="analysis-title">🎯 改進方向</h3>
-                    <div style="background: #dbeafe; padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                    <div style="background: #dbeafe; padding: 20px; border-radius: 2px; border-left: 4px solid #3b82f6;">
                         {% for improvement in review.improvement_areas %}
                         <div style="padding: 10px 0; {% if not loop.last %}border-bottom: 1px solid #93c5fd;{% endif %}">
                             {{ improvement }}
