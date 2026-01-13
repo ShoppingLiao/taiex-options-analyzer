@@ -83,7 +83,13 @@ class PDFParser:
                 text = page.extract_text() or ""
 
                 # 尋找包含選擇權履約價數據的頁面
-                if '履約價' in text and 'OI' in text and ('Call' in text or 'Put' in text):
+                # 注意：某些 PDF 的「履約價」可能被分隔成 "履 約 價"
+                has_strike_price = ('履約價' in text or 
+                                   ('履' in text and '約' in text and '價' in text))
+                has_oi = 'OI' in text or '未平倉' in text
+                has_options = 'Call' in text or 'Put' in text
+                
+                if has_strike_price and has_oi and has_options:
                     options_data = self._parse_options_page(text, trade_date)
                     if options_data:
                         # 將加權指數資料加入選擇權資料
