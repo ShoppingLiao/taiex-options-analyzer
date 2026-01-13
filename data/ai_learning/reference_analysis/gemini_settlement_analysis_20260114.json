@@ -1,0 +1,116 @@
+{
+  "source": "Gemini AI Analysis",
+  "source_url": "https://gemini.google.com/share/32996fae79a4",
+  "analysis_date": "20260113",
+  "target_settlement_date": "20260114",
+  "settlement_type": "W2_wednesday",
+  "data_sources": ["20260112", "20260113"],
+
+  "market_data": {
+    "weighted_index_close": 30707.22,
+    "tx_futures_close": 30874,
+    "premium_spread": 166,
+    "premium_spread_note": "正價差約 166 點"
+  },
+
+  "pc_ratio_analysis": {
+    "day1_ratio": 0.9412,
+    "day2_ratio": 0.9146,
+    "change": -0.0266,
+    "interpretation": "P/C Ratio 低於 1 且持續下降，顯示市場情緒偏向賣出 Put (看多或看跌不動) 或買入 Call (積極看多)。下降趨勢也暗示結算前的避險情緒有所提升。"
+  },
+
+  "oi_analysis": {
+    "resistance_zone": {
+      "max_oi_strike": 31800,
+      "max_oi_volume": 12534,
+      "practical_resistance": [31000, 31200],
+      "key_changes": {
+        "31000": {"previous": 2874, "current": 5332, "change": 2458},
+        "31100": {"change": 2003, "current": 4017}
+      },
+      "analysis": "賣方(大戶)正在 31,000 以上積極佈防，除非晚間美股有極大暴漲，否則明天結算站穩 31,000 之上的機率較低。"
+    },
+    "support_zone": {
+      "max_oi_strike": 30000,
+      "max_oi_volume": 5350,
+      "oi_change": -473,
+      "practical_support": 30500,
+      "key_changes": {
+        "30500": {"change": 1926, "current": 3787}
+      },
+      "analysis": "支撐位從 30,000 緩步上移至 30,500，顯示多方防守區間提高，結算守住 30,500 的意願強烈。"
+    }
+  },
+
+  "iv_analysis": {
+    "call_iv": {
+      "day1": 16.57,
+      "day2": 17.72,
+      "trend": "上升",
+      "interpretation": "市場對於「向上突破」的預期或避險需求正在增加，買盤力道（或追價意願）轉強。"
+    },
+    "put_iv": {
+      "day1": 20.54,
+      "day2": 19.34,
+      "trend": "下降",
+      "interpretation": "IV 下降通常代表市場對於「大跌」的恐慌情緒緩解，Put 權利金變便宜，空方動能減弱。"
+    },
+    "overall_interpretation": "IV 的一升一降顯示市場情緒由偏空轉為中性偏多，結算位置有機會往 OI 牆的壓力端靠近。"
+  },
+
+  "settlement_prediction": {
+    "initial_range": {
+      "lower": 30650,
+      "upper": 30850
+    },
+    "revised_range": {
+      "lower": 30750,
+      "upper": 30950,
+      "reason": "考慮到 Call IV 的推升動力，結算區間上移。但 31,000 牆體太厚，明天一次衝過的結算機率不高。"
+    },
+    "optimal_settlement_for_mm": {
+      "range": [30850, 30900],
+      "reason": "莊家最理想的收錢位置，讓兩邊的價外選擇權（OOM）價值最大程度歸零。"
+    },
+    "scenarios": {
+      "bullish": "若開高走高，挑戰 30,900 會遇到初步壓力，31,000 則是強壓牆。",
+      "bearish": "若開低，回測今日低點 30,529 附近會有強力買盤支撐 (Put OI 增加區)。"
+    }
+  },
+
+  "observation_points": [
+    {
+      "indicator": "現貨開盤位",
+      "condition": "若現貨開在 30,800 之上且站穩",
+      "implication": "則 30,900 結算的機會大幅增加"
+    },
+    {
+      "indicator": "價差收斂",
+      "condition": "今日期現貨正價差高達 160 點",
+      "implication": "盤中需防範現貨拉抬緩慢而期貨主動下殺收斂的情況"
+    }
+  ],
+
+  "analysis_methodology": {
+    "steps": [
+      "1. 分析市場現況與收盤數據（現貨、期貨、價差）",
+      "2. 分析 P/C Ratio 變化趨勢",
+      "3. 分析未平倉量（OI）分佈，找出壓力區和支撐區",
+      "4. 分析隱含波動率（IV）變化，判斷市場情緒轉向",
+      "5. 綜合以上因素預測結算區間",
+      "6. 考慮莊家最佳獲利位置",
+      "7. 設定盤中觀察重點"
+    ],
+    "key_factors": [
+      "P/C Ratio 趨勢變化",
+      "OI 大量累積的履約價位（壓力牆/支撐牆）",
+      "OI 單日增減變化",
+      "Call/Put IV 的相對變化",
+      "期現貨價差（正價差/逆價差）",
+      "莊家最佳收割區間（Max Pain 概念）"
+    ]
+  },
+
+  "created_at": "2026-01-13T16:30:00+08:00"
+}

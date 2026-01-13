@@ -37,14 +37,18 @@ class AILearningSystem:
     def __init__(self, data_dir: str = 'data/ai_learning'):
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self.records_file = self.data_dir / 'analysis_records.json'
         self.insights_file = self.data_dir / 'learned_insights.json'
-        
+        self.reference_dir = self.data_dir / 'reference_analysis'
+        self.reference_dir.mkdir(parents=True, exist_ok=True)
+
         self.records: List[AnalysisRecord] = []
         self.insights: Dict = {}
-        
+        self.reference_analyses: List[Dict] = []
+
         self._load_data()
+        self._load_reference_analyses()
     
     def _load_data(self):
         """載入歷史資料"""
@@ -58,7 +62,95 @@ class AILearningSystem:
         if self.insights_file.exists():
             with open(self.insights_file, 'r', encoding='utf-8') as f:
                 self.insights = json.load(f)
-    
+
+    def _load_reference_analyses(self):
+        """載入參考分析資料（外部專家分析）"""
+        self.reference_analyses = []
+        for json_file in self.reference_dir.glob('*.json'):
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    data['_filename'] = json_file.name
+                    self.reference_analyses.append(data)
+            except Exception as e:
+                print(f"載入參考分析失敗: {json_file.name} - {e}")
+
+        # 按日期排序
+        self.reference_analyses.sort(
+            key=lambda x: x.get('target_settlement_date', ''),
+            reverse=True
+        )
+
+    def get_reference_methodology(self) -> Dict:
+        """獲取參考分析方法論"""
+        if not self.reference_analyses:
+            return {}
+
+        # 彙整所有參考分析的方法論
+        all_steps = []
+        all_factors = []
+
+        for ref in self.reference_analyses:
+            methodology = ref.get('analysis_methodology', {})
+            steps = methodology.get('steps', [])
+            factors = methodology.get('key_factors', [])
+
+            for step in steps:
+                if step not in all_steps:
+                    all_steps.append(step)
+
+            for factor in factors:
+                if factor not in all_factors:
+                    all_factors.append(factor)
+
+        return {
+            'analysis_steps': all_steps,
+            'key_factors': all_factors,
+            'reference_count': len(self.reference_analyses)
+        }
+
+    def get_reference_for_settlement(self, settlement_type: str = None) -> List[Dict]:
+        """獲取結算日相關的參考分析"""
+        results = []
+        for ref in self.reference_analyses:
+            if settlement_type:
+                if settlement_type.lower() in ref.get('settlement_type', '').lower():
+                    results.append(ref)
+            else:
+                results.append(ref)
+        return results
+
+    def get_settlement_analysis_template(self) -> Dict:
+        """從參考分析中提取結算分析模板"""
+        if not self.reference_analyses:
+            return {}
+
+        # 使用最新的參考分析作為模板
+        latest = self.reference_analyses[0] if self.reference_analyses else {}
+
+        return {
+            'analysis_dimensions': [
+                'market_data',           # 市場現況數據
+                'pc_ratio_analysis',     # P/C Ratio 分析
+                'oi_analysis',           # 未平倉量分析
+                'iv_analysis',           # 隱含波動率分析
+                'settlement_prediction', # 結算預測
+                'observation_points'     # 觀察重點
+            ],
+            'oi_analysis_structure': {
+                'resistance_zone': '壓力區分析（Call OI 牆）',
+                'support_zone': '支撐區分析（Put OI 牆）',
+                'key_changes': '重要履約價的 OI 變化'
+            },
+            'prediction_structure': {
+                'initial_range': '初步預測區間',
+                'revised_range': '修正後區間（考慮 IV 等因素）',
+                'optimal_settlement_for_mm': '莊家最佳收割區間',
+                'scenarios': '多空情境分析'
+            },
+            'reference_source': latest.get('source', 'Unknown')
+        }
+
     def _save_data(self):
         """儲存資料"""
         # 儲存分析記錄
@@ -241,19 +333,28 @@ class AILearningSystem:
     
     def generate_learning_summary(self) -> str:
         """生成學習摘要"""
-        if len(self.records) < 5:
-            return "分析記錄不足，持續累積中..."
-        
         summary_parts = []
-        summary_parts.append(f"📚 已累積 {len(self.records)} 筆分析記錄")
-        
-        if 'success_factors' in self.insights:
-            sf = self.insights['success_factors']
-            summary_parts.append(f"🎯 預測成功率: {sf['success_rate']}% ({sf['successful_count']}/{sf['total_predictions']})")
-        
-        if 'pc_ratio_patterns' in self.insights:
-            summary_parts.append(f"📊 已建立 {len(self.insights['pc_ratio_patterns'])} 種 PC Ratio 模式分析")
-        
+
+        # 分析記錄統計
+        if len(self.records) >= 5:
+            summary_parts.append(f"📚 已累積 {len(self.records)} 筆分析記錄")
+
+            if 'success_factors' in self.insights:
+                sf = self.insights['success_factors']
+                summary_parts.append(f"🎯 預測成功率: {sf['success_rate']}% ({sf['successful_count']}/{sf['total_predictions']})")
+
+            if 'pc_ratio_patterns' in self.insights:
+                summary_parts.append(f"📊 已建立 {len(self.insights['pc_ratio_patterns'])} 種 PC Ratio 模式分析")
+        else:
+            summary_parts.append(f"📚 分析記錄: {len(self.records)} 筆（持續累積中）")
+
+        # 參考分析統計
+        if self.reference_analyses:
+            summary_parts.append(f"📖 參考分析: {len(self.reference_analyses)} 份外部專家分析")
+            methodology = self.get_reference_methodology()
+            if methodology.get('key_factors'):
+                summary_parts.append(f"🔍 已學習 {len(methodology['key_factors'])} 個關鍵分析因子")
+
         return "\n".join(summary_parts)
     
     def get_experience_level(self) -> tuple[str, str]:
