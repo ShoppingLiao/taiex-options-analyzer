@@ -142,16 +142,13 @@
         }
 
         @media (max-width: 768px) {
+            .section {
+                padding: 20px 16px;
+            }
+            
             .section-content {
                 padding: 16px;
                 font-size: 0.85rem;
-            }
-        }
-
-
-        @media (max-width: 768px) {
-            .section {
-                padding: 20px 16px;
             }
         }
 
@@ -1386,6 +1383,11 @@
                 content: ":" !important;
                 margin: 0 3px !important;
             }
+
+            /* Footer - 加上圓角 */
+            footer {
+                border-radius: 2px 4px 0 0;
+            }
         }
     </style>
 </head>
@@ -1411,7 +1413,7 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">報告生成</div>
-                    <div class="info-value">2026/01/12 23:23</div>
+                    <div class="info-value">2026/01/13 09:54</div>
                 </div>
             </div>
         </header>
@@ -1843,27 +1845,37 @@
             <div class="section">
                 <div class="trading-tips">
                     <div class="tips-title">
-                        <span>💡</span>實戰小叮嚀
+                        <span>💡</span>結算日組合單操作要點
                     </div>
 
                     <div class="tip-item">
-                        <strong>時間價值流逝加速：</strong><br>
-                        因為 IV（隱含波動率）昨天是上升的，這代表今天即便指數不動，選擇權的價格也會因為「時間價值流逝」與「波動率回落」而縮水很快。結算日的 Theta Decay（時間價值衰減）是最兇猛的。
+                        <strong>時間價值是你的朋友：</strong><br>
+                        結算日的 Theta Decay（時間價值衰減）最快，隨著時間接近 13:30，選擇權價格會快速歸零。如果你用的是價差組合單，時間站在你這一邊，只要方向對了，獲利會隨時間增加。
                     </div>
 
                     <div class="tip-item">
-                        <strong>如果您手上有 1月 近月部位：</strong><br>
-                        建議早盤若有衝高至 <strong>30,750</strong> 以上，可考慮先行平倉，不一定要賭到最後結算。因為莊家守 30,700 的決心很強，繼續持有風險報酬比不划算。
+                        <strong>組合單必須同時成交：</strong><br>
+                        使用券商的「組合單下單」功能，確保買 Call + 賣 Call（或買 Put + 賣 Put）同時成交。千萬不要分開下單，否則會有單腿風險，可能造成巨大虧損。
                     </div>
 
                     <div class="tip-item">
-                        <strong>如果您想進場：</strong><br>
-                        結算日當天當沖風險較大，建議觀察結算後的<strong>新月份（2月 全月或 3月）</strong>籌碼重新布局。新月份的 OI 分布會更清晰地反映市場對未來走勢的預期。
+                        <strong>選擇流動性好的履約價：</strong><br>
+                        建立組合單時，要選擇成交量 > 100 的履約價，確保進出場順暢。價內一檔、價平、價外一檔通常流動性最好。太價外的履約價雖然便宜，但可能賣不掉。
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>設定明確的出場點：</strong><br>
+                        建倉後立即設定「獲利 60% 平倉」和「虧損 50% 停損」的條件單。不要貪心等最大獲利，也不要期待虧損部位會反轉。紀律是組合單成功的關鍵。
+                    </div>
+
+                    <div class="tip-item">
+                        <strong>最後 30 分鐘不要調整：</strong><br>
+                        13:00-13:30 流動性變差、波動加劇，這時候調整組合單風險很大。如果要平倉，建議在 12:30 前決定。最後 30 分鐘就讓組合單自然結算。
                     </div>
 
                     <div class="tip-item">
                         <strong>留意黑天鵝事件：</strong><br>
-                        雖然籌碼面給出明確的區間預測，但若出現重大國際消息（如美股暴漲暴跌、地緣政治突發事件），一切技術分析都會失效。<strong>務必設好停損</strong>，不要過度自信。
+                        雖然組合單風險有限，但若出現重大國際消息（如美股暴漲暴跌、地緣政治突發事件），價格可能大幅偏離預測區間。<strong>必要時要果斷平倉</strong>，不要硬撐。
                     </div>
                 </div>
             </div>
@@ -1872,27 +1884,34 @@
             <div class="section">
                 <div class="analysis-section">
                     <h3 class="analysis-title">
-                        <span>📝</span>總結：我的結算日策略
+                        <span>📝</span>總結：組合單交易員的心法
                     </h3>
 
                     <div class="analysis-block">
                         <div class="block-content">
-                            <p style="font-size: 1.1rem; line-height: 1.9;">
-                                作為一個在市場打滾多年的老手，<strong>我不會在結算日冒險追高殺低</strong>。今天的策略很簡單：
+                            <p style="font-size: 0.85rem; line-height: 1.7;">
+                                作為一個專注結算日組合單的交易員，<strong>我只在週三和週五進場</strong>。每週的單日報告都是為了今天做準備：
                             </p>
 
                             <div class="highlight-box">
-                                <p><strong>1️⃣ 持倉部位：</strong>看到接近上檔壓力 30,700 就減碼，落袋為安</p>
-                                <p><strong>2️⃣ 新進場：</strong>等結算後再說，不急於一時</p>
-                                <p><strong>3️⃣ 觀察重點：</strong>最後 30 分鐘的價格行為，這會告訴我下個月的方向</p>
+                                <p style="font-size: 0.85rem;"><strong>1️⃣ 組合單策略：</strong>根據趨勢選擇 Bull/Bear Spread 或 Iron Condor</p>
+                                <p style="font-size: 0.85rem;"><strong>2️⃣ 風險控管：</strong>獲利 60% 平倉、虧損 50% 停損，嚴守紀律</p>
+                                <p style="font-size: 0.85rem;"><strong>3️⃣ 等待結算：</strong>13:30 系統自動結算，賺取價差利潤</p>
                             </div>
 
-                            <p style="font-size: 1.1rem; margin-top: 20px;">
-                                記住，<strong>市場永遠是對的，我們只是順勢而為</strong>。莊家布下的籌碼陷阱已經很明顯了，我們要做的就是不要成為被收割的韭菜。保護本金，等待更好的機會，這才是長期獲利的王道。
+                            <p style="font-size: 0.85rem; margin-top: 15px; line-height: 1.7;">
+                                組合單讓我在結算日有明確的風險收益比。<strong>最大虧損在建倉時就確定了</strong>，不會因為市場波動而無限擴大。
+                                這就是為什麼我專注於結算日操作 —— 時間價值歸零、自動結算、風險可控。
                             </p>
 
-                            <div class="conclusion-box" style="margin-top: 20px;">
-                                <p style="font-size: 1.05rem;"><strong>祝大家操作順利，結算日平安！</strong> 🍀</p>
+                            <p style="font-size: 0.85rem; margin-top: 15px; line-height: 1.7;">
+                                記住，<strong>所有的單日報告都是為了週三和週五的組合單交易做準備</strong>。
+                                我每天觀察盤勢、分析趨勢、累積經驗，就是為了在結算日做出最正確的判斷。
+                                保護本金、遵守紀律、持續學習 —— 這是我的長期獲利之道。
+                            </p>
+
+                            <div class="conclusion-box" style="margin-top: 15px;">
+                                <p style="font-size: 0.9rem;"><strong>週三/週五結算日，讓我們用組合單專業操作！</strong> �</p>
                             </div>
                         </div>
                     </div>
@@ -1954,13 +1973,26 @@
                     <span class="section-icon">👁️</span>
                     <h2 class="section-title">我對結算日的看法</h2>
                 </div>
-                <div class="section-content">這次是 2026/01/09 (週五) 的結算日，我已經仔細研究了過去幾天的盤勢。
+                <div class="section-content">又到了 週五 結算日，這是我一週中最重要的交易日！今天是 2026/01/09，我已經準備好用組合單策略來操作這次結算。
 
-說實話，這次的盤勢讓我有點拿不定主意。多空力道拉鋸，結算價可能在 29,900 到 30,800 這個範圍內震盪。
+作為一個專注於結算日組合單的交易員，我只在週三和週五進場。這兩天的選擇權會在 13:30 自動結算歸零，讓我能精準掌握進出時機，不用擔心隔夜留倉的風險。我花了整週時間研究盤勢，就是為了今天的這一刻。
 
-我特別注意到最大痛苦點在 30,400，這是莊家最想要的結算價格。根據我的經驗，實際結算價常常會往這個方向靠攏。
+說實話，這次的盤勢讓我有點難以判斷。多空力道拉鋸（趨勢強度 3 顆星），結算價可能在 29,900 到 30,800 這個範圍內震盪。
 
-從選擇權的未平倉分布來看，大戶的布局已經很明顯了。我會緊盯這些關鍵價位，看看莊家會不會有什麼動作。</div>
+方向不明時，我會改用「鐵禿鷹組合（Iron Condor）」—— 同時建立 Call 和 Put 的價差組合，收取雙邊的權利金。只要結算價落在我設定的區間內，就能獲利。這是趨勢不明時，我最喜歡用的策略。
+
+我特別注意到最大痛苦點（Max Pain）在 30,400。這是莊家最希望的結算價，因為在這個價位，選擇權買方的總虧損最大。根據我的經驗，實際結算價常常會被拉往這個方向。所以我在設計組合單時，會把這個價位納入考量。
+
+結算日的時間價值（Time Decay）對我來說是最大優勢。隨著時間接近 13:30，選擇權的時間價值會快速歸零，只剩下內含價值。這代表如果我的方向判斷正確，組合單的價值會快速朝有利方向移動。
+
+我已經做好充分準備：
+• 確認了要使用的組合單策略
+• 選擇了流動性充足的履約價
+• 計算好最大獲利和最大虧損
+• 設定了獲利 60% 和虧損 50% 的出場點
+• 準備好券商的「組合單下單」功能
+
+週五結算日，讓我們用專業的態度迎接挑戰。組合單給了我明確的風險收益比，剩下的就是耐心等待市場給我答案。</div>
             </div>
 
             <!-- 我的結算日策略（第一人稱） -->
@@ -1969,23 +2001,44 @@
                     <span class="section-icon">🎯</span>
                     <h2 class="section-title">我的結算日策略</h2>
                 </div>
-                <div class="section-content success">⚪ 這次我選擇觀望為主
+                <div class="section-content success">🎯 我的核心策略：結算日組合單當沖
 
-觀望策略：
-• 方向不明確時，我不會強行進場
-• 如果真要做，考慮賣出價差策略，收取權利金
-• 保留大部分現金，等待更好的機會
+作為一個專注於結算日操作的交易員，我只在週三和週五進行選擇權組合單交易。我的目標很明確：利用結算機制，透過組合單賺取價差利潤，當日結算自動平倉。
+
+📊 這次我會使用：鐵禿鷹組合（Iron Condor）
+
+組合單結構（收取權利金策略）：
+• 賣出 Call 30,550 + 買進 Call 30,650
+• 賣出 Put 30,150 + 買進 Put 30,050
+• 最大獲利：當結算價在 30,150 ~ 30,550 區間，收取全部權利金
+• 最大虧損：價格突破任一邊的保護腿（100點 - 淨權利金）
+
+為什麼選這個組合？
+• 趨勢不明確，我預期結算價會在區間震盪
+• 收取權利金作為利潤，時間站在我這邊
+• 雙邊保護，就算方向錯誤虧損也有限
 
 
-結算日特別注意事項：
-• 早盤不急著進場，先觀察 30 分鐘看方向
-• 中場（11:00-12:30）如果突破關鍵價位，可以跟進
-• 尾盤最後 30 分鐘，我會減少操作，避免被巨量掃到
+💡 為什麼專做結算日組合單？
+• ⏰ 時間價值歸零：結算日選擇權只剩內含價值，方向對了就賺錢
+• 🎯 自動平倉機制：13:30 系統自動結算，不用擔心忘記平倉
+• 📊 風險可控：組合單的最大虧損在建倉時就確定了
+• 💰 不需留倉：當日沖銷，晚上睡得安穩
+• 📈 高勝率策略：根據過往經驗，把握莊家結算價位的規律
 
-部位管理原則：
-• 結算日我只會用平常 50% 的部位
-• 分批進場，絕不一次 all-in
-• 隨時準備認賠出場，不跟市場硬拗</div>
+⏰ 我的進場時機規劃：
+• 09:00-09:30：觀察開盤方向，確認趨勢是否符合預期
+• 09:30-10:00：如果確認方向，開始建立組合單
+• 10:00-12:00：主要操作時段，分批建倉（避免一次進場）
+• 12:00-13:00：不再新開倉，專注管理現有部位
+• 13:00-13:30：準備迎接結算，必要時提前平倉止盈/止損
+
+💼 組合單部位管理原則：
+• 單次組合不超過總資金的 30%（避免單一方向風險過大）
+• 分 2-3 批建倉，降低進場成本
+• 設定獲利目標 60%，達到就提前平倉鎖定利潤
+• 如果虧損達 50%，果斷認賠，不跟市場硬拗
+• 12:30 前評估部位，決定是否持有到結算</div>
             </div>
 
             <!-- 我最擔心的風險（第一人稱） -->
@@ -1994,17 +2047,28 @@
                     <span class="section-icon">⚠️</span>
                     <h2 class="section-title">我最擔心的風險</h2>
                 </div>
-                <div class="section-content danger">⚠️ 風險等級：中高
-趨勢雖然有方向，但力道還不夠強。我會保持警戒，因為結算日什麼事都可能發生。
+                <div class="section-content danger">⚠️ 組合單風險等級：中
+趨勢有方向但力道不是很強，我會用價差組合（Bull/Bear Spread）。這種組合單的好處是，就算方向判斷錯誤，虧損也不會超過淨權利金。
 
-我特別擔心這些風險：
+🎯 組合單操作我特別注意這些風險：
+• 📊 價格風險：如果結算價偏離預測區間 29,900-30,800，組合單可能無法達到最大獲利，甚至虧損
+• 💧 流動性風險：結算日最後 30 分鐘，如果想提前平倉，可能會遇到買賣價差過大，無法以理想價格平倉的情況
+• ⚡ 執行風險：組合單需要同時成交多個履約價，如果沒有使用「組合單下單」功能，單腿成交會有巨大風險
+• ⏰ 時間風險：雖然時間價值歸零對我有利，但如果太早建倉，中途價格大幅波動也會影響心態
+
+📚 從過往經驗學到的教訓：
 • 結算日最後 30 分鐘波動最劇烈
 • 大額未平倉部位可能導致逼倉行情
-• 大戶可能會在最後時刻突襲，拉抬或打壓價格
-• 選擇權到期會造成 Gamma 風險暴增，價格波動加劇
-• 如果我判斷錯誤，結算價偏離預測區間，部位可能大虧
+• 不要在流動性不足的履約價建立組合單，平倉會很痛苦
+• 最後 15 分鐘不要試圖調整組合，容易造成單腿風險
+• 如果盤中部位虧損超過 50%，要果斷認賠，不要期待奇蹟
 
-結算日的流動性風險也不能忽視。如果市場突然沒量，我可能會被困在部位裡出不來，這是我最不想看到的情況。</div>
+🛡️ 我的風險控管措施：
+• 建倉前確認使用「組合單下單」，避免單腿風險
+• 設定獲利 60% 就平倉，不貪心等到最大利潤
+• 虧損達 50% 就認賠，保護剩餘本金
+• 12:30 前決定是否持有到結算，避免最後 30 分鐘的劇烈波動
+• 絕對不超過總資金 30% 的部位，留足夠現金應對突發狀況</div>
             </div>
 
             <!-- 我的執行計劃（第一人稱） -->
@@ -2013,49 +2077,97 @@
                     <span class="section-icon">📋</span>
                     <h2 class="section-title">我的執行計劃</h2>
                 </div>
-                <div class="section-content warning">📋 我的結算日時間表：
+                <div class="section-content warning">📋 我的 週五 結算日組合單操作流程：
 
-🕐 08:30 - 08:45 (開盤前)
-• 檢查國際盤面，看美股和亞洲其他市場怎麼走
-• 確認沒有重大消息公布
-• 最後確認我的進場價位和停損點
+📅 前一天晚上 (D-1)
+• 複習這週的單日報告，確認趨勢方向和強度
+• 規劃明天要使用的組合單策略（Bull Spread / Bear Spread / Iron Condor）
+• 計算預期的最大獲利和最大虧損金額
+• 設定好獲利目標（60%）和停損點（50%）
+• 準備好券商的「組合單下單」功能，確認操作流程
 
-🕘 08:45 - 09:30 (早盤)
-• 觀察開盤後的方向，不急著進場
-• 注意大單流向，看法人在做什麼
-• 如果符合我的預期，可以試單進場（小部位）
+🕐 08:00 - 08:45 (開盤前)
+• 檢查隔夜美股和亞洲盤表現，確認沒有重大變數
+• 最後確認組合單的履約價選擇
+• 檢查這些履約價的流動性（買賣價差、掛單量）
+• 準備好下單介面，避免開盤後手忙腳亂
+• 深呼吸，調整心態，提醒自己今天的策略
 
-🕚 10:00 - 12:30 (中場)
-• 這是我可能加碼的時段
-• 如果價格突破關鍵價位（30,800 或 29,900），跟進
-• 持續監控部位，該停損就停損
+🕘 08:45 - 09:30 (早盤觀察)
+• 【不進場】只觀察，看開盤方向是否符合預期
+• 注意大單流向和選擇權 Put/Call Ratio 變化
+• 觀察台指期貨的量能和波動幅度
+• 確認我規劃的組合單履約價是否在合理範圍內
+• 如果開盤方向與預期相反，重新評估是否要調整策略
 
-🕐 13:00 - 13:30 (尾盤前)
-• 評估部位狀況，決定是否提前了結
-• 如果已經獲利，我會考慮落袋為安
-• 如果還在虧損，也要準備認賠
+� 09:30 - 10:30 (第一批建倉)
+• 如果確認趨勢方向，開始建立第一批組合單（50% 部位）
+• 使用券商的「組合單下單」功能，確保同時成交
+• 建倉後立即設定「獲利 60% 平倉」和「虧損 50% 停損」的條件單
+• 記錄建倉價格和時間，方便後續檢討
+• 建倉完成後，不要一直盯盤，給組合單一些發酵時間
 
-🕜 13:15 - 13:45 (最後 30 分鐘)
-• ⚡ 關鍵時刻！波動最大的時候
-• 我會極度謹慎，避免新開倉位
-• 緊盯部位，隨時準備平倉
-• 絕對不跟市場對賭，順勢而為
+🕚 10:30 - 11:30 (觀察與加碼)
+• 評估第一批組合單的損益狀況
+• 如果獲利 20-30%，可考慮建立第二批（剩餘 50% 部位）
+• 如果虧損超過 30%，開始警戒，準備停損
+• 持續觀察價格是否朝預期方向移動
+• 如果流動性變差，不要勉強加碼
 
-🕑 13:45 之後 (結算後)
-• 檢討今天的操作，記錄心得
-• 不管賺賠，都要寫下來供日後參考
-• 放鬆心情，準備下一個交易日
+� 11:30 - 12:30 (部位管理)
+• 這是關鍵時段，決定是否要持有到結算
+• 如果已達獲利目標 60%，考慮提前平倉落袋為安
+• 如果虧損接近 50%，果斷停損，不要等到結算
+• 如果損益在 ±20% 之間，可考慮續抱到結算
+• 12:30 前必須做出決定：全部平倉 or 持有到結算
 
-🚨 緊急應變：
-• 如果盤中出現異常巨量：立即檢視部位，必要時先出場觀望
-• 如果價格急劇偏離預測區間：承認判斷錯誤，果斷停損
-• 如果系統出問題無法下單：事先準備好電話下單的方式
+🕐 12:30 - 13:15 (結算前最後決策)
+• 如果決定持有到結算，就不再調整部位
+• 評估目前價位與預測結算價的距離
+• 如果價格突然大幅偏離，考慮緊急平倉
+• 最後 30 分鐘流動性變差，不建議新的操作
+• 如果還有部位，緊盯價格但保持冷靜
 
-💭 心態提醒：
-• 結算日不是賭博，是機率遊戲
-• 保護本金比賺錢更重要
-• 如果今天沒有好機會，寧可不做
-• 市場永遠都在，不急於一時</div>
+🕜 13:15 - 13:30 (結算倒數)
+• ⚡ 【關鍵 15 分鐘】組合單即將自動結算
+• 不要在這時候試圖調整組合，風險太大
+• 如果持有到這裡，就讓系統自動結算
+• 深呼吸，接受結果，不管獲利或虧損
+• 13:30 結算完成，組合單自動平倉
+
+🕑 13:30 之後 (結算後檢討)
+• 查看最終結算價和實際損益
+• 記錄今天的操作過程和心得
+• 分析哪些判斷正確，哪些需要改進
+• 更新我的學習系統，累積結算日經驗
+• 不管賺賠，都要感謝市場給我的學習機會
+
+✅ 組合單下單檢查清單：
+□ 確認使用「組合單下單」功能（不是單腿分開下）
+□ 檢查每個履約價的流動性（成交量 > 100）
+□ 計算組合單的淨權利金收支
+□ 確認最大獲利和最大虧損金額可接受
+□ 設定好獲利 60% 和虧損 50% 的條件單
+□ 部位不超過總資金 30%
+
+🚨 緊急應變方案：
+• 【流動性消失】：如果買賣價差突然拉大超過 20 點，暫停操作
+• 【突發消息】：如果盤中出現重大利空/利多，立即評估是否平倉
+• 【系統故障】：準備好券商電話，確保能電話下單平倉
+• 【單腿成交】：如果組合單只成交一腿，立即補上另一腿或平倉
+• 【虧損擴大】：虧損超過 50% 立即止血，不要期待反轉
+
+💭 今天的操作心態：
+• 結算日組合單是我的專長，但不代表每次都會贏
+• 只要按照計劃執行，就算虧損也是好的交易
+• 獲利 60% 就夠了，不要貪心等到最大利潤
+• 虧損 50% 就認賠，保護本金才能持續交易
+• 記住：每個結算日都是學習的機會，累積經驗比單次輸贏重要
+
+🎯 週五結算日，我準備好了！
+組合單策略讓我風險有限、獲利可期。
+無論今天結果如何，我都會堅持我的交易紀律。
+讓我們用專業的態度，迎接這個結算日挑戰！</div>
             </div>
 
             <!-- 過往結算日經驗 -->
@@ -2067,8 +2179,8 @@
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                     
-                    <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 25px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-                        <p style="margin: 0; font-style: italic; font-size: 1.05rem; line-height: 1.7;">💡 趨勢不明的結算日最難操作，觀望往往是最好的選擇</p>
+                    <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 20px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                        <p style="margin: 0; font-style: italic; font-size: 0.85rem; line-height: 1.7; color: #78350f;">💡 趨勢不明的結算日最難操作，觀望往往是最好的選擇</p>
                     </div>
                     
                 </div>
@@ -2079,8 +2191,8 @@
             
 
             <!-- 總結與提醒 -->
-            <div style="margin-top: 30px; padding: 30px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 2px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-                <p style="font-style: italic; color: var(--text-muted); font-size: 1.05rem; line-height: 1.8;">
+            <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 2px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                <p style="font-style: italic; color: var(--text-muted); font-size: 0.85rem; line-height: 1.7;">
                     🧑‍💼 以上是我作為 AI 交易員對這次結算日的個人看法與計劃<br>
                     結算日往往充滿變數，我會持續觀察市場並靈活調整策略<br>
                     <strong style="color: var(--danger-color);">記住：保護本金永遠是第一優先！</strong>
@@ -2177,15 +2289,15 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
                         <div style="background: white; padding: 15px; border-radius: 2px; border-left: 4px solid #f59e0b;">
                             <div style="font-size: 0.85rem; color: #78350f; margin-bottom: 5px;">趨勢方向</div>
-                            <div style="font-size: 1.3rem; font-weight: 700; color: #92400e;">上漲</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #92400e;">上漲</div>
                         </div>
                         <div style="background: white; padding: 15px; border-radius: 2px; border-left: 4px solid #f59e0b;">
                             <div style="font-size: 0.85rem; color: #78350f; margin-bottom: 5px;">價格變化</div>
-                            <div style="font-size: 1.3rem; font-weight: 700; color: #92400e;">157</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #92400e;">157</div>
                         </div>
                         <div style="background: white; padding: 15px; border-radius: 2px; border-left: 4px solid #f59e0b;">
                             <div style="font-size: 0.85rem; color: #78350f; margin-bottom: 5px;">動能評分</div>
-                            <div style="font-size: 1.3rem; font-weight: 700; color: #92400e;">moderate/10</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #92400e;">moderate/10</div>
                         </div>
                     </div>
                 </div>
@@ -2193,14 +2305,14 @@
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
                     <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">🎯 結算價預測</h3>
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="font-size: 2.5rem; font-weight: 700; color: #92400e; margin-bottom: 10px;">
+                        <div style="font-size: 2rem; font-weight: 700; color: #92400e; margin-bottom: 10px;">
                             30,450 點
                         </div>
-                        <div style="font-size: 1.1rem; color: #78350f;">
+                        <div style="font-size: 0.9rem; color: #78350f;">
                             預測區間: 29,993 - 
                             30,907
                         </div>
-                        <div style="font-size: 0.95rem; color: #a16207; margin-top: 10px;">
+                        <div style="font-size: 0.85rem; color: #a16207; margin-top: 8px;">
                             預期變化: 78
                         </div>
                     </div>
@@ -2211,39 +2323,39 @@
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 1.1rem;">✅ 符合預期情境</span>
-                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f;">
+                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">✅ 符合預期情境</span>
+                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
                                 60%
                             </span>
                         </div>
-                        <p style="color: #78350f; margin: 0;">結算價落在預測區間 29,993 - 30,907</p>
+                        <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價落在預測區間 29,993 - 30,907</p>
                     </div>
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 1.1rem;">📈 超預期上漲</span>
-                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f;">
+                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">📈 超預期上漲</span>
+                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
                                 20%
                             </span>
                         </div>
-                        <p style="color: #78350f; margin: 0;">結算價突破 30,907</p>
+                        <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價突破 30,907</p>
                     </div>
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 1.1rem;">📉 超預期下跌</span>
-                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f;">
+                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">📉 超預期下跌</span>
+                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
                                 20%
                             </span>
                         </div>
-                        <p style="color: #78350f; margin: 0;">結算價跌破 29,993</p>
+                        <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價跌破 29,993</p>
                     </div>
                     
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
                     <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">💡 我的結算展望</h3>
-                    <div style="background: white; padding: 20px; border-radius: 2px; border: 2px solid #fbbf24; white-space: pre-line; color: #78350f; line-height: 1.8;">🔮 **週五結算日展望**
+                    <div style="background: white; padding: 20px; border-radius: 2px; border: 2px solid #fbbf24; white-space: pre-line; color: #78350f; line-height: 1.8; font-size: 0.85rem;">🔮 **週五結算日展望**
 
 經過這兩天的盤勢觀察，我看到市場呈現上漲的態勢，價格上漲 157 點。
 
@@ -2261,56 +2373,56 @@
                     <div style="display: grid; gap: 15px;">
                         <!-- 結算前準備 -->
                         <div style="background: white; padding: 15px; border-radius: 2px; border-left: 4px solid #fbbf24;">
-                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">🕐 結算前準備</div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 0.95rem;">🕐 結算前準備</div>
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">時機：</span>結算日09:00前
                             </div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">動作：</span>觀察開盤價格，決定是否提前調整
                             </div>
-                            <div style="color: #dc2626;">
+                            <div style="color: #dc2626; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">⚠️ 注意：</span>避免追高殺低
                             </div>
                         </div>
                         
                         <!-- 結算當下 -->
                         <div style="background: white; padding: 15px; border-radius: 2px; border-left: 4px solid #f59e0b;">
-                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">⚡ 結算當下</div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 0.95rem;">⚡ 結算當下</div>
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">時機：</span>13:30-13:45 (結算區間)
                             </div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">動作：</span>密切關注結算價形成過程
                             </div>
-                            <div style="color: #dc2626;">
+                            <div style="color: #dc2626; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">⚠️ 注意：</span>注意最後五分鐘的劇烈波動
                             </div>
                         </div>
                         
                         <!-- 倉位管理 -->
                         <div style="background: white; padding: 15px; border-radius: 2px; border-left: 4px solid #10b981;">
-                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">📊 倉位管理</div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 0.95rem;">📊 倉位管理</div>
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">🔼 看多時：</span>持有 Call 至結算，Put 考慮提前平倉
                             </div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">🔽 看空時：</span>持有 Put 至結算，Call 考慮提前平倉
                             </div>
-                            <div style="color: #78350f;">
+                            <div style="color: #78350f; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">⚖️ 中性時：</span>採取 Straddle 或 Strangle，兩邊對沖
                             </div>
                         </div>
                         
                         <!-- 風險控制 -->
                         <div style="background: white; padding: 15px; border-radius: 2px; border-left: 4px solid #ef4444;">
-                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 1.05rem;">🛡️ 風險控制</div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="font-weight: 600; color: #92400e; margin-bottom: 10px; font-size: 0.95rem;">🛡️ 風險控制</div>
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">⛔ 停損：</span>當走勢明顯偏離預測時，立即止損
                             </div>
-                            <div style="color: #78350f; margin-bottom: 8px;">
+                            <div style="color: #78350f; margin-bottom: 8px; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">📏 部位大小：</span>結算日部位不超過平時的50%
                             </div>
-                            <div style="color: #dc2626;">
+                            <div style="color: #dc2626; font-size: 0.85rem;">
                                 <span style="font-weight: 500;">⏰ 時間價值：</span>週五結算時間價值歸零，需特別注意
                             </div>
                         </div>
@@ -2355,7 +2467,7 @@
 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
                     <h3 style="color: #5b21b6; margin-bottom: 15px; font-size: 1.3rem;">💭 自我反思</h3>
-                    <div style="background: white; padding: 20px; border-radius: 2px; border: 2px solid #8b5cf6; white-space: pre-line; color: #3b0764; line-height: 1.8;">📝 **週五結算檢討**
+                    <div style="background: white; padding: 20px; border-radius: 2px; border: 2px solid #8b5cf6; white-space: pre-line; color: #3b0764; line-height: 1.8; font-size: 0.85rem;">📝 **週五結算檢討**
 
 這次結算預測相當準確，我很滿意！（準確度：100%）
 
@@ -2375,7 +2487,7 @@
                     <h3 style="color: #5b21b6; margin-bottom: 15px; font-size: 1.3rem;">📚 學到的教訓</h3>
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 10px; border-left: 4px solid #8b5cf6;">
-                        <p style="color: #3b0764; margin: 0;">這次週五結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。</p>
+                        <p style="color: #3b0764; margin: 0; font-size: 0.85rem; line-height: 1.7;">這次週五結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。</p>
                     </div>
                     
                 </div>
@@ -2384,7 +2496,7 @@
                     <h3 style="color: #5b21b6; margin-bottom: 15px; font-size: 1.3rem;">🎯 改進方向</h3>
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 10px; border-left: 4px solid #8b5cf6;">
-                        <p style="color: #3b0764; margin: 0;">✨ 繼續保持這個水準，累積更多結算日預測經驗</p>
+                        <p style="color: #3b0764; margin: 0; font-size: 0.85rem; line-height: 1.7;">✨ 繼續保持這個水準，累積更多結算日預測經驗</p>
                     </div>
                     
                 </div>
