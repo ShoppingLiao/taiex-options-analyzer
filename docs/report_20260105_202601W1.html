@@ -235,7 +235,9 @@
             color: var(--warning-color);
         }
 
-        .chart-container {
+        /* 統一區塊容器樣式 */
+        .chart-container,
+        .section {
             background: var(--card-bg);
             border-radius: 2px;
             padding: 24px;
@@ -244,9 +246,10 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 手機版減少 chart-container padding */
+        /* 手機版減少 padding */
         @media (max-width: 767px) {
-            .chart-container {
+            .chart-container,
+            .section {
                 padding: 12px;
             }
         }

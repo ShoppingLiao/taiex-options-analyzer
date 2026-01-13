@@ -7,9 +7,9 @@
     <style>
         :root {
             --primary-color: #2563eb;
-            --success-color: #22c55e;
+            --call-color: #ef4444;
+            --put-color: #22c55e;
             --warning-color: #f59e0b;
-            --danger-color: #ef4444;
             --purple-color: #8b5cf6;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
@@ -25,23 +25,21 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px 0;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 12px;
+                padding: 12px;
             }
         }
 
@@ -55,12 +53,12 @@
             position: relative;
         }
 
-        h1 {
+        header h1 {
             font-size: 2rem;
             margin-bottom: 10px;
         }
 
-        .subtitle {
+        header .subtitle {
             font-size: 1.1rem;
             opacity: 0.9;
         }
@@ -92,23 +90,26 @@
             header {
                 text-align: center;
             }
-            
-            h1 {
+
+            header h1 {
                 font-size: 1.5rem;
             }
+
             .settlement-info {
                 flex-direction: column;
                 gap: 15px;
             }
         }
 
-        /* Section */
-        .section {
-            background: white;
+        /* Section - 與每日報告 chart-container 統一 */
+        .section,
+        .chart-container {
+            background: var(--card-bg);
             border-radius: 2px;
-            padding: 30px;
+            padding: 24px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
         }
 
         /* Section Content */
@@ -125,11 +126,11 @@
         }
 
         .section-content.success {
-            border-left-color: var(--success-color);
+            border-left-color: var(--put-color);
         }
 
         .section-content.danger {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--call-color);
             background: #fef2f2;
         }
 
@@ -142,10 +143,11 @@
         }
 
         @media (max-width: 768px) {
-            .section {
-                padding: 20px 16px;
+            .section,
+            .chart-container {
+                padding: 12px;
             }
-            
+
             .section-content {
                 padding: 16px;
                 font-size: 0.85rem;
@@ -195,11 +197,11 @@
         }
 
         .trend-indicator.bullish {
-            background: linear-gradient(135deg, var(--success-color), #16a34a);
+            background: linear-gradient(135deg, var(--put-color), #16a34a);
         }
 
         .trend-indicator.bearish {
-            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            background: linear-gradient(135deg, var(--call-color), #dc2626);
         }
 
         .trend-indicator.neutral {
@@ -291,11 +293,11 @@
         }
 
         .signal-card.bullish {
-            border-left-color: var(--success-color);
+            border-left-color: var(--put-color);
         }
 
         .signal-card.bearish {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--call-color);
         }
 
         .signal-card.neutral {
@@ -493,11 +495,11 @@
         }
 
         .metric-change.positive {
-            color: var(--success-color);
+            color: var(--put-color);
         }
 
         .metric-change.negative {
-            color: var(--danger-color);
+            color: var(--call-color);
         }
 
         /* Risks */
@@ -508,7 +510,7 @@
 
         .risk-item {
             background: #fef2f2;
-            border-left: 4px solid var(--danger-color);
+            border-left: 4px solid var(--call-color);
             border-radius: 2px;
             padding: 15px 20px;
             font-size: 0.95rem;
@@ -575,57 +577,33 @@
             text-decoration: underline;
         }
 
-        /* Tabs */
-        .tabs-container {
-            background: white;
-            border-radius: 2px;
-            padding: 0;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .tabs-header {
+        /* Tab 導航樣式 - 與每日報告統一 */
+        .tabs {
             display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
             border-bottom: 2px solid var(--border-color);
-            background: var(--bg-color);
         }
 
         .tab-button {
-            flex: 1;
-            padding: 18px 24px;
-            background: transparent;
+            padding: 12px 24px;
+            background: none;
             border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
             cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
         }
 
         .tab-button:hover {
-            background: rgba(37, 99, 235, 0.05);
             color: var(--primary-color);
         }
 
         .tab-button.active {
             color: var(--primary-color);
-            background: white;
-        }
-
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-color);
-        }
-
-        .tab-icon {
-            margin-right: 8px;
+            border-bottom-color: var(--primary-color);
         }
 
         .tab-content {
@@ -634,16 +612,6 @@
 
         .tab-content.active {
             display: block;
-        }
-
-        @media (max-width: 768px) {
-            .tabs-header {
-                flex-direction: column;
-            }
-            .tab-button {
-                padding: 14px 20px;
-                font-size: 1rem;
-            }
         }
 
         /* AI Analysis Styles */
@@ -773,11 +741,11 @@
         }
 
         .price-level.resistance {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--call-color);
         }
 
         .price-level.support {
-            border-left-color: var(--success-color);
+            border-left-color: var(--put-color);
         }
 
         .level-label {
@@ -991,46 +959,35 @@
                 font-size: 1rem !important;
             }
 
-            /* Tab 改為 1x4 + 橫向滾動 */
-            .tabs-container {
-                margin-bottom: 8px;
+            /* Tab 橫向滾動 */
+            .tabs {
+                display: flex;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                gap: 4px;
+                margin-bottom: 12px;
             }
 
-            .tabs-header {
-                display: flex !important;
-                flex-direction: row !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                -webkit-overflow-scrolling: touch !important;
-                scrollbar-width: thin !important;
-                gap: 4px !important;
-                padding: 4px !important;
+            .tabs::-webkit-scrollbar {
+                height: 3px;
             }
 
-            .tabs-header::-webkit-scrollbar {
-                height: 3px !important;
+            .tabs::-webkit-scrollbar-track {
+                background: #f1f1f1;
             }
 
-            .tabs-header::-webkit-scrollbar-track {
-                background: #f1f1f1 !important;
-            }
-
-            .tabs-header::-webkit-scrollbar-thumb {
-                background: var(--primary-color) !important;
-                border-radius: 2px !important;
+            .tabs::-webkit-scrollbar-thumb {
+                background: var(--primary-color);
+                border-radius: 2px;
             }
 
             .tab-button {
-                flex: 0 0 auto !important;
-                min-width: 100px !important;
-                padding: 8px 12px !important;
-                font-size: 0.85rem !important;
-                border-radius: 2px 6px 0 0 !important;
-            }
-
-            .tab-icon {
-                margin-right: 4px !important;
-                font-size: 0.9rem !important;
+                flex: 0 0 auto;
+                min-width: 100px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                white-space: nowrap;
             }
 
             /* 趨勢指標 - 緊湊版 */
@@ -1419,21 +1376,19 @@
         </header>
 
         <!-- Tabs -->
-        <div class="tabs-container">
-            <div class="tabs-header">
-                <button class="tab-button active" onclick="switchTab('technical')">
-                    <span class="tab-icon">📊</span>技術分析
-                </button>
-                <button class="tab-button" onclick="switchTab('ai-analysis')">
-                    <span class="tab-icon">🤖</span>AI 操盤分析
-                </button>
-                <button class="tab-button" onclick="switchTab('trader-view')">
-                    <span class="tab-icon">🧑‍💼</span>交易員視角
-                </button>
-                <button class="tab-button" onclick="switchTab('settlement-review')">
-                    <span class="tab-icon">📝</span>盤後檢討
-                </button>
-            </div>
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('technical')">
+                📊 技術分析
+            </button>
+            <button class="tab-button" onclick="switchTab('ai-analysis')">
+                🤖 AI 操盤分析
+            </button>
+            <button class="tab-button" onclick="switchTab('trader-view')">
+                🧑‍💼 交易員視角
+            </button>
+            <button class="tab-button" onclick="switchTab('settlement-review')">
+                📝 盤後檢討
+            </button>
         </div>
 
         <!-- Technical Analysis Tab -->
@@ -1616,7 +1571,7 @@
 
                     <div class="price-levels">
                         <div class="price-level resistance">
-                            <div class="level-label" style="color: var(--danger-color);">🔴 上檔天花板</div>
+                            <div class="level-label" style="color: var(--call-color);">🔴 上檔天花板</div>
                             <div class="level-range">{{ ai_resistance_range }}</div>
                             <div class="level-desc">
                                 夜盤高點 {{ night_high }} 接近壓力區便拉回，這印證了 Call OI 大增的壓制力。<strong>除非早盤有極大利多，否則要結算在此之上的機率較低</strong>，因為莊家會全力守住這道防線以賺取 Call 的權利金。
@@ -1624,7 +1579,7 @@
                         </div>
 
                         <div class="price-level support">
-                            <div class="level-label" style="color: var(--success-color);">🟢 下檔地板</div>
+                            <div class="level-label" style="color: var(--put-color);">🟢 下檔地板</div>
                             <div class="level-range">{{ ai_support_range }}</div>
                             <div class="level-desc">
                                 夜盤低點 {{ night_low }} 守在此關卡之上，距離 Put OI 重兵區尚有空間。<strong>此位附近有支撐</strong>，若今日回測此位，通常會有買盤或莊家護盤。
@@ -1898,7 +1853,7 @@
                 <p style="font-style: italic; color: var(--text-muted); font-size: 0.85rem; line-height: 1.7;">
                     🧑‍💼 以上是我作為 AI 交易員對這次結算日的個人看法與計劃<br>
                     結算日往往充滿變數，我會持續觀察市場並靈活調整策略<br>
-                    <strong style="color: var(--danger-color);">記住：保護本金永遠是第一優先！</strong>
+                    <strong style="color: var(--call-color);">記住：保護本金永遠是第一優先！</strong>
                 </p>
             </div>
 

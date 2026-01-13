@@ -37,12 +37,20 @@
             padding: 20px;
         }
 
+        /* 手機版減少 padding */
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+        }
+
         header {
             background: linear-gradient(135deg, var(--primary-color), #1d4ed8);
             color: white;
             padding: 30px 20px;
             margin-bottom: 30px;
             border-radius: 2px;
+            position: relative;
         }
 
         header h1 {
@@ -55,19 +63,145 @@
             opacity: 0.9;
         }
 
+        /* 回首頁按鈕 */
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 手機版調整 */
+        @media (max-width: 768px) {
+            .home-button {
+                position: static;
+                display: inline-flex;
+                margin-top: 15px;
+            }
+            
+            header {
+                text-align: center;
+            }
+        }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
             margin-bottom: 30px;
+        }
+
+        /* 電腦版：4 欄布局 */
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* 平板版：3 欄布局 */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 手機版：3 欄布局 */
+        @media (max-width: 767px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
         }
 
         .card {
             background: var(--card-bg);
             border-radius: 2px;
-            padding: 24px;
+            padding: 16px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
+        }
+
+        /* Section Content */
+        .section-content {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 2px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            line-height: 1.9;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            color: #3c3c3c;
+        }
+
+        .section-content.success {
+            border-left-color: var(--success-color);
+        }
+
+        .section-content.danger {
+            border-left-color: var(--danger-color);
+            background: #fef2f2;
+        }
+
+        .section-content.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .section-content.purple {
+            border-left-color: var(--purple-color);
+        }
+
+        /* 手機版減少 card padding */
+        @media (max-width: 767px) {
+            .card {
+                padding: 12px;
+            }
+            
+            .section-content {
+                padding: 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* RWD Card 容器 */
+        .card-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        /* 電腦版：兩欄布局 */
+        @media (min-width: 768px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 手機版：gap 更小 */
+        @media (max-width: 767px) {
+            .card-container {
+                max-width: 600px;
+                margin: 0 auto 30px auto;
+                gap: 8px;
+            }
         }
 
         .card-title {
@@ -101,7 +235,9 @@
             color: var(--warning-color);
         }
 
-        .chart-container {
+        /* 統一區塊容器樣式 */
+        .chart-container,
+        .section {
             background: var(--card-bg);
             border-radius: 2px;
             padding: 24px;
@@ -110,12 +246,111 @@
             border: 1px solid var(--border-color);
         }
 
+        /* 手機版減少 padding */
+        @media (max-width: 767px) {
+            .chart-container,
+            .section {
+                padding: 12px;
+            }
+        }
+
         .chart-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--border-color);
+        }
+
+        /* 日內價格走勢樣式 */
+        .price-info-wrapper {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .close-price-display {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .close-price-label {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .price-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .price-item {
+            padding: 15px;
+            border-radius: 2px;
+        }
+
+        .price-item-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .price-item-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* 手機版調整價格走勢 */
+        @media (max-width: 767px) {
+            .price-info-wrapper {
+                padding: 20px 12px;
+            }
+
+            .close-price-display {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            .close-price-label {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            .price-grid {
+                max-width: 100%;
+            }
+
+            .price-item {
+                padding: 10px 8px;
+            }
+
+            .price-item-label {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .price-item-value {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* 表格樣式 - 設定行高 */
+        table tbody tr {
+            height: 20px;
+        }
+
+        table tbody td {
+            padding: 4px 8px !important;
+            line-height: 1.2;
+        }
+
+        table thead th {
+            padding: 8px !important;
+        }
+
+        table tfoot td {
+            padding: 8px !important;
         }
 
         .chart {
@@ -254,8 +489,31 @@
         }
 
         .scenarios-container {
-            display: grid;
+            display: flex;
             gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 手機版滾動條樣式 */
+        .scenarios-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 2px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 2px;
+        }
+
+        .scenarios-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .scenario-card {
@@ -264,6 +522,9 @@
             border-radius: 2px;
             padding: 20px;
             transition: all 0.3s ease;
+            min-width: 350px;
+            max-width: 400px;
+            flex-shrink: 0;
         }
 
         .scenario-card:hover {
@@ -560,29 +821,138 @@
         }
 
         footer {
-            text-align: center;
+            background: white;
+            border-radius: 2px;
             padding: 20px;
+            text-align: center;
             color: var(--text-muted);
-            font-size: 0.875rem;
-            border-top: 1px solid var(--border-color);
-            margin-top: 40px;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
-            .key-levels {
-                grid-template-columns: 1fr;
+            /* 全域緊湊 */
+            body {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .container {
+                padding: 6px;
+            }
+
+            /* Header 縮減到 40% */
+            header {
+                padding: 10px 12px;
+                margin-bottom: 8px;
+                border-radius: 2px;
             }
 
             header h1 {
-                font-size: 1.5rem;
+                font-size: 1.1rem;
+                margin-bottom: 3px;
             }
 
+            header .subtitle {
+                font-size: 0.75rem;
+            }
+
+            .home-button {
+                position: static;
+                display: inline-flex;
+                margin-top: 6px;
+                padding: 5px 10px;
+                font-size: 0.75rem;
+                gap: 4px;
+            }
+
+            /* 卡片緊湊化 */
             .card-value {
-                font-size: 1.5rem;
+                font-size: 1.1rem !important;
             }
 
+            .card-label {
+                font-size: 0.7rem !important;
+            }
+
+            .card {
+                padding: 8px 10px !important;
+            }
+
+            /* Grid 優化 */
+            .grid {
+                gap: 6px;
+                margin-bottom: 12px;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            /* 關鍵價位 */
+            .key-levels {
+                grid-template-columns: 1fr !important;
+                gap: 6px !important;
+            }
+
+            /* 圖表高度 */
             .chart {
-                height: 500px;
+                height: 300px !important;
+            }
+
+            /* Section */
+            .section {
+                margin-bottom: 8px !important;
+                padding: 10px 8px !important;
+                border-radius: 2px !important;
+            }
+
+            .section h2 {
+                font-size: 1rem !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Tab 按鈕 - 橫向滾動 */
+            .tabs {
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                -webkit-overflow-scrolling: touch !important;
+                white-space: nowrap !important;
+                gap: 4px !important;
+                padding: 4px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .tabs::-webkit-scrollbar {
+                height: 3px !important;
+            }
+
+            .tab-button {
+                display: inline-block !important;
+                padding: 6px 10px !important;
+                font-size: 0.8rem !important;
+                border-radius: 2px 6px 0 0 !important;
+                min-width: auto !important;
+            }
+
+            /* Footer */
+            footer {
+                margin-top: 12px !important;
+                padding: 10px !important;
+                font-size: 0.7rem !important;
+                border-radius: 2px 4px 0 0;
             }
         }
     </style>
