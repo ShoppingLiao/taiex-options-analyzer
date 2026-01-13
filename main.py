@@ -145,25 +145,42 @@ def run_analysis(args):
     )
 
     reports = []
-    for options_data in options_list:
-        result = analyzer.analyze(options_data)
-
-        # 顯示摘要
-        print(f"\n--- {options_data.contract_month} 月份 ---")
-        print(f"  Max Pain: {result.max_pain:,}")
-        print(f"  P/C Ratio (OI): {result.pc_ratio_oi:.4f}")
-        print(f"  買權 OI 壓力: {result.max_call_oi_strike:,} ({result.max_call_oi:,} 口)")
-        print(f"  賣權 OI 支撐: {result.max_put_oi_strike:,} ({result.max_put_oi:,} 口)")
-
-        # 產生報告
-        report_path = reporter.generate(result, options_data)
-        reports.append(report_path)
-
-    # 產生摘要報告
+    
+    # 如果有多個契約類型（週選+月選），生成綜合報告
     if len(options_list) > 1:
-        results_with_data = [(analyzer.analyze(od), od) for od in options_list]
-        summary_path = reporter.generate_summary_report(results_with_data)
-        reports.append(summary_path)
+        print(f"\n發現 {len(options_list)} 種契約類型:")
+        for opt in options_list:
+            type_name = opt.page_title or opt.contract_type or "未知"
+            print(f"  - {type_name} ({opt.contract_code}), 結算日: {opt.settlement_date}")
+        
+        # 使用第一個契約的日期作為主報告
+        main_options = options_list[0]
+        main_result = analyzer.analyze(main_options)
+        
+        # 顯示主要契約的摘要
+        print(f"\n--- 主要契約: {main_options.contract_code} ---")
+        print(f"  Max Pain: {main_result.max_pain:,}")
+        print(f"  P/C Ratio (OI): {main_result.pc_ratio_oi:.4f}")
+        
+        # 產生包含所有契約的綜合報告
+        report_path = reporter.generate_multi_contract_report(options_list, analyzer)
+        reports.append(report_path)
+        
+    else:
+        # 單一契約，使用原有流程
+        for options_data in options_list:
+            result = analyzer.analyze(options_data)
+
+            # 顯示摘要
+            print(f"\n--- {options_data.contract_month} 月份 ---")
+            print(f"  Max Pain: {result.max_pain:,}")
+            print(f"  P/C Ratio (OI): {result.pc_ratio_oi:.4f}")
+            print(f"  買權 OI 壓力: {result.max_call_oi_strike:,} ({result.max_call_oi:,} 口)")
+            print(f"  賣權 OI 支撐: {result.max_put_oi_strike:,} ({result.max_put_oi:,} 口)")
+
+            # 產生報告
+            report_path = reporter.generate(result, options_data)
+            reports.append(report_path)
 
     print("\n" + "=" * 50)
     print("分析完成!")

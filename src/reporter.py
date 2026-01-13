@@ -363,6 +363,110 @@ class ReportGenerator:
 
         return items
 
+    def generate_multi_contract_report(
+        self,
+        options_list: List[OptionsData],
+        analyzer
+    ) -> str:
+        """
+        產生包含多個契約類型的綜合報告
+        
+        Args:
+            options_list: 所有契約的資料列表 (週選+月選)
+            analyzer: 分析器實例
+            
+        Returns:
+            報告檔案路徑
+        """
+        if not options_list:
+            raise ValueError("options_list 不能為空")
+        
+        # 使用第一個契約作為主契約（通常是週三選擇權）
+        main_options = options_list[0]
+        main_result = analyzer.analyze(main_options)
+        
+        # 準備所有契約的資料
+        all_contracts_data = []
+        for options_data in options_list:
+            result = analyzer.analyze(options_data)
+            
+            # 準備每個契約的表格數據
+            data_rows = []
+            for i in range(len(options_data.strike_prices)):
+                data_rows.append({
+                    'strike': options_data.strike_prices[i],
+                    'call_oi': options_data.call_oi[i],
+                    'call_oi_change': options_data.call_oi_change[i],
+                    'put_oi': options_data.put_oi[i],
+                    'put_oi_change': options_data.put_oi_change[i],
+                })
+            
+            # 找到最接近收盤價的履約價（用於反黃標示）
+            close_price = options_data.tx_close
+            closest_strike = min(options_data.strike_prices, 
+                               key=lambda x: abs(x - close_price))
+            
+            all_contracts_data.append({
+                'contract_code': options_data.contract_code or options_data.contract_month,
+                'contract_type': options_data.contract_type or 'unknown',
+                'page_title': options_data.page_title or '選擇權OI變化',
+                'settlement_date': options_data.settlement_date or '',
+                'data_rows': data_rows,
+                'max_pain': result.max_pain,
+                'pc_ratio_oi': result.pc_ratio_oi,
+                'max_call_oi_strike': result.max_call_oi_strike,
+                'max_put_oi_strike': result.max_put_oi_strike,
+                'close_price': close_price,
+                'closest_strike': closest_strike,
+            })
+        
+        # 檔案名使用主契約的日期
+        filename = f"report_{main_result.date}_{main_options.contract_code}"
+        
+        # 進行結算情境分析（使用主契約）
+        settlement_analysis = self.settlement_analyzer.analyze_settlement_scenarios(main_options)
+        
+        # 進行 AI 深度分析（使用主契約）
+        ai_analysis = self.ai_analyzer.analyze_20260109_data(main_options)
+        
+        # 計算市場情緒
+        sentiment = self._calculate_sentiment(main_result.pc_ratio_oi)
+        
+        # 進行每日 AI 交易員分析（使用主契約）
+        daily_ai_analysis = self.daily_ai_analyzer.analyze(main_result, main_options, sentiment)
+        
+        # 載入預測和檢討數據
+        current_date = main_result.date
+        prediction = self.prediction_generator.load_prediction(current_date)
+        review = self.review_analyzer.load_review(current_date)
+        
+        # 準備模板資料（基於主契約）
+        template_data = self._prepare_template_data(
+            main_result, main_options, settlement_analysis, ai_analysis,
+            daily_ai_analysis, prediction, review
+        )
+        
+        # 添加多契約資料
+        template_data['all_contracts'] = all_contracts_data
+        template_data['is_multi_contract'] = True
+        
+        # 載入並渲染模板
+        template = self.env.get_template("report.html")
+        html_content = template.render(**template_data)
+        
+        # 寫入檔案
+        output_path = self.output_dir / f"{filename}.html"
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+        
+        # 複製到 docs 目錄
+        docs_path = self.output_dir.parent / "docs" / f"{filename}.html"
+        with open(docs_path, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+        
+        print(f"綜合報告已產生: {output_path}")
+        return str(output_path)
+
     def generate_summary_report(
         self,
         results: List[Tuple[AnalysisResult, OptionsData]],

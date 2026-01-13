@@ -1406,6 +1406,84 @@
         <!-- 結束 card-container -->
 
         <!-- 詳細資料表 -->
+        {% if is_multi_contract %}
+        <!-- 多契約模式：顯示三個分開的表格 -->
+        <h2 class="section-title">選擇權 OI 變化</h2>
+        
+        {% for contract in all_contracts %}
+        <div class="card" style="margin-bottom: 30px;">
+            <!-- 契約標題區 -->
+            <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; margin: -20px -20px 20px -20px; border-radius: 2px 2px 0 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.5rem;">{{ contract.page_title }}</h3>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9;">契約代號: {{ contract.contract_code }} | 結算日: {{ contract.settlement_date }}</p>
+                    </div>
+                    <div style="text-align: right; background: rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 2px; backdrop-filter: blur(10px);">
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">收盤價</div>
+                        <div style="font-size: 1.3rem; font-weight: 600;">{{ "{:,.2f}".format(contract.close_price) }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 契約關鍵指標 -->
+            <div class="grid" style="margin-bottom: 20px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div style="background: #f8fafc; padding: 15px; border-radius: 2px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 5px;">Max Pain</div>
+                    <div style="font-size: 1.3rem; font-weight: 600; color: #2563eb;">{{ "{:,}".format(contract.max_pain) }}</div>
+                </div>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 2px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 5px;">P/C Ratio</div>
+                    <div style="font-size: 1.3rem; font-weight: 600; color: #2563eb;">{{ "{:.4f}".format(contract.pc_ratio_oi) }}</div>
+                </div>
+                <div style="background: #fef2f2; padding: 15px; border-radius: 2px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #991b1b; margin-bottom: 5px;">Call OI 壓力</div>
+                    <div style="font-size: 1.3rem; font-weight: 600; color: #dc2626;">{{ "{:,}".format(contract.max_call_oi_strike) }}</div>
+                </div>
+                <div style="background: #f0fdf4; padding: 15px; border-radius: 2px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #166534; margin-bottom: 5px;">Put OI 支撐</div>
+                    <div style="font-size: 1.3rem; font-weight: 600; color: #16a34a;">{{ "{:,}".format(contract.max_put_oi_strike) }}</div>
+                </div>
+            </div>
+            
+            <!-- OI 變化表格 -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>履約價</th>
+                        <th style="color: var(--call-color);">買權未平倉</th>
+                        <th style="color: var(--call-color);">買權OI變化</th>
+                        <th style="color: var(--put-color);">賣權未平倉</th>
+                        <th style="color: var(--put-color);">賣權OI變化</th>
+                        <th>總OI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in contract.data_rows %}
+                    <tr {% if row.strike == contract.closest_strike %}style="background: linear-gradient(90deg, rgba(255,193,7,0.15), rgba(255,193,7,0.05));"{% endif %}>
+                        <td><strong>{{ "{:,}".format(row.strike) }}</strong>
+                            {% if row.strike == contract.closest_strike %}
+                            <span style="color: #f59e0b; margin-left: 5px;">▼</span>
+                            {% endif %}
+                        </td>
+                        <td style="color: var(--call-color);">{{ "{:,}".format(row.call_oi) }}</td>
+                        <td class="{{ 'positive' if row.call_oi_change > 0 else ('negative' if row.call_oi_change < 0 else '') }}">
+                            {{ "{:+,}".format(row.call_oi_change) }}
+                        </td>
+                        <td style="color: var(--put-color);">{{ "{:,}".format(row.put_oi) }}</td>
+                        <td class="{{ 'positive' if row.put_oi_change > 0 else ('negative' if row.put_oi_change < 0 else '') }}">
+                            {{ "{:+,}".format(row.put_oi_change) }}
+                        </td>
+                        <td>{{ "{:,}".format(row.call_oi + row.put_oi) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+        
+        {% else %}
+        <!-- 單一契約模式：顯示原有的單一表格 -->
         <h2 class="section-title">詳細資料</h2>
         <div class="card">
             <table>
@@ -1437,6 +1515,7 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
 
         <footer>
             <p>報告產生時間: {{ generated_at }} | TAIEX Options Analyzer</p>

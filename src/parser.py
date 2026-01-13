@@ -34,6 +34,12 @@ class OptionsData:
     tx_close: Optional[float] = None  # 收盤價
     tx_volume: Optional[int] = None  # 成交量
     tx_settlement: Optional[float] = None  # 結算價
+    
+    # 契約類型相關資訊
+    contract_type: Optional[str] = None  # 契約類型: 'weekly_wed', 'weekly_fri', 'monthly'
+    contract_code: Optional[str] = None  # 契約代號: '202601W2', '202601F3', '202601'
+    settlement_date: Optional[str] = None  # 結算日期: '2026/01/14'
+    page_title: Optional[str] = None  # 頁面標題: '週三選擇權OI變化'
 
     def to_dataframe(self) -> pd.DataFrame:
         """轉換為 DataFrame"""
@@ -131,6 +137,114 @@ class PDFParser:
         except Exception as e:
             print(f"⚠️  證交所 API 錯誤: {e}")
             return None
+    
+    def _extract_settlement_date(self, text: str) -> Optional[str]:
+        """
+        從頁面文字中提取結算日期
+        
+        Returns:
+            結算日期字串 '2026/01/14' 或 None
+        """
+        lines = text.split('\n')
+        for line in lines[:30]:  # 只看前30行
+            if '結算日' in line:
+                # 找 YYYY/MM/DD 格式的日期
+                date_match = re.search(r'(\d{4})/(\d{2})/(\d{2})', line)
+                if date_match:
+                    return f"{date_match.group(1)}/{date_match.group(2)}/{date_match.group(3)}"
+        return None
+    
+    def _extract_page_title(self, text: str) -> str:
+        """
+        從頁面文字中提取標題
+        
+        Returns:
+            頁面標題，如 '週三選擇權OI變化'
+        """
+        lines = text.split('\n')
+        for line in lines[:15]:  # 只看前15行
+            if 'OI變化' in line:
+                return line.strip()
+        return ""
+    
+    def _get_week_number(self, date) -> int:
+        """
+        獲取日期在當月的第幾週
+        
+        Returns:
+            週數 (1-5)
+        """
+        from datetime import datetime, timedelta
+        # 計算是當月第幾個該weekday
+        first_day = date.replace(day=1)
+        same_weekday_count = 0
+        current = first_day
+        while current <= date:
+            if current.weekday() == date.weekday():
+                same_weekday_count += 1
+            current = current + timedelta(days=1)
+        return same_weekday_count
+    
+    def _determine_contract_type(self, settlement_date_str: Optional[str], 
+                                  page_title: str, trade_date: str) -> Dict:
+        """
+        根據結算日期和標題判斷契約類型
+        
+        Args:
+            settlement_date_str: 結算日期字串 '2026/01/14'
+            page_title: 頁面標題
+            trade_date: 交易日期 'YYYYMMDD'
+        
+        Returns:
+            契約資訊字典 {'type', 'code', 'name'}
+        """
+        from datetime import datetime
+        
+        if not settlement_date_str:
+            # 無法判斷，使用預設值
+            year_month = trade_date[:6]  # YYYYMM
+            return {
+                'type': 'unknown',
+                'code': year_month,
+                'name': '選擇權'
+            }
+        
+        try:
+            settlement_date = datetime.strptime(settlement_date_str, '%Y/%m/%d')
+            weekday = settlement_date.weekday()  # 0=Monday, 2=Wednesday, 4=Friday
+            year_month = settlement_date.strftime("%Y%m")
+            
+            # 計算週數
+            week_num = self._get_week_number(settlement_date)
+            
+            # 從標題判斷
+            if '週三' in page_title and weekday == 2:
+                return {
+                    'type': 'weekly_wed',
+                    'code': f'{year_month}W{week_num}',
+                    'name': '週三選擇權'
+                }
+            elif '週五' in page_title and weekday == 4:
+                return {
+                    'type': 'weekly_fri',
+                    'code': f'{year_month}F{week_num}',
+                    'name': '週五選擇權'
+                }
+            else:
+                # 近月選擇權（月選）
+                return {
+                    'type': 'monthly',
+                    'code': year_month,
+                    'name': '近月選擇權'
+                }
+        except Exception as e:
+            print(f"⚠️  契約類型判斷錯誤: {e}")
+            year_month = trade_date[:6]
+            return {
+                'type': 'unknown',
+                'code': year_month,
+                'name': '選擇權'
+            }
 
     def _parse_options_page(self, text: str, trade_date: str) -> Optional[OptionsData]:
         """
@@ -144,13 +258,15 @@ class PDFParser:
         try:
             lines = text.split('\n')
 
-            # 提取契約月份
-            contract_month = "unknown"
-            for line in lines[:10]:
-                month_match = re.search(r'(\d{6})', line)
-                if month_match:
-                    contract_month = month_match.group(1)
-                    break
+            # 提取結算日期和頁面標題
+            settlement_date_str = self._extract_settlement_date(text)
+            page_title = self._extract_page_title(text)
+            
+            # 判斷契約類型
+            contract_info = self._determine_contract_type(settlement_date_str, page_title, trade_date)
+            
+            # 向下相容：保留舊的 contract_month 欄位
+            contract_month = contract_info['code']
 
             strike_prices = []
             call_oi = []
@@ -222,6 +338,11 @@ class PDFParser:
                 put_volume=[0] * len(strike_prices),
                 put_oi=list(put_oi),
                 put_oi_change=list(put_oi_change),
+                # 新增契約類型相關資訊
+                contract_type=contract_info['type'],
+                contract_code=contract_info['code'],
+                settlement_date=settlement_date_str,
+                page_title=contract_info['name']
             )
 
         except Exception as e:
