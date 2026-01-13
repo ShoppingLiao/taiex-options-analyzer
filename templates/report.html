@@ -1005,16 +1005,6 @@
                     <div class="card-value {% if tx_data.close > tx_data.open %}negative{% elif tx_data.close < tx_data.open %}positive{% endif %}">{{ "{:,.0f}".format(tx_data.close) }}</div>
                     <div class="card-subtitle">Closing Price</div>
                 </div>
-                <div class="card">
-                    <div class="card-title">成交量</div>
-                    <div class="card-value">{% if tx_data.volume is not none %}{{ "{:,}".format(tx_data.volume) }}{% else %}<span style="color: #94a3b8; font-size: 0.9em;">數據獲取中</span>{% endif %}</div>
-                    <div class="card-subtitle">口 (Contracts)</div>
-                </div>
-                <div class="card">
-                    <div class="card-title">結算價</div>
-                    <div class="card-value">{% if tx_data.settlement is not none %}{{ "{:,.0f}".format(tx_data.settlement) }}{% else %}<span style="color: #94a3b8; font-size: 0.9em;">數據獲取中</span>{% endif %}</div>
-                    <div class="card-subtitle">Settlement Price</div>
-                </div>
             </div>
 
             <div class="chart-container">
@@ -1057,13 +1047,9 @@
                             <div style="font-weight: 600; margin-bottom: 5px;">📊 收盤價 {{ "{:,.0f}".format(tx_data.close) }}</div>
                             <div style="color: var(--text-muted); font-size: 0.875rem;">當日最後成交價格，作為選擇權結算分析的重要參考</div>
                         </li>
-                        <li style="padding: 15px; border-bottom: 1px solid var(--border-color);">
+                        <li style="padding: 15px;">
                             <div style="font-weight: 600; margin-bottom: 5px;">📈 日內震盪 {{ "{:,.0f}".format(tx_data.high - tx_data.low) }} 點</div>
                             <div style="color: var(--text-muted); font-size: 0.875rem;">最高價 {{ "{:,.0f}".format(tx_data.high) }} - 最低價 {{ "{:,.0f}".format(tx_data.low) }}</div>
-                        </li>
-                        <li style="padding: 15px;">
-                            <div style="font-weight: 600; margin-bottom: 5px;">📉 成交量 {% if tx_data.volume is not none %}{{ "{:,}".format(tx_data.volume) }} 口{% else %}<span style="color: #94a3b8;">數據獲取中</span>{% endif %}</div>
-                            <div style="color: var(--text-muted); font-size: 0.875rem;">當日台指期貨總成交量，反映市場參與度</div>
                         </li>
                     </ul>
                 </div>
