@@ -9,6 +9,7 @@ import pandas as pd
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, List, Dict
+from src.twse_fetcher import TWSEDataFetcher
 
 
 @dataclass
@@ -75,8 +76,8 @@ class PDFParser:
         all_options_data = []
 
         with pdfplumber.open(pdf_path) as pdf:
-            # 提取台指期貨基本資料（從第10頁的K線圖）
-            tx_data = self._parse_tx_futures_data(pdf, trade_date)
+            # 從證交所 API 獲取加權指數 OHLC 資料
+            tx_data = self._fetch_twse_ohlc_data(trade_date)
             
             for page_num, page in enumerate(pdf.pages):
                 text = page.extract_text() or ""
@@ -85,78 +86,45 @@ class PDFParser:
                 if '履約價' in text and 'OI' in text and ('Call' in text or 'Put' in text):
                     options_data = self._parse_options_page(text, trade_date)
                     if options_data:
-                        # 將台指期貨資料加入選擇權資料
+                        # 將加權指數資料加入選擇權資料
                         if tx_data:
                             options_data.tx_open = tx_data.get('open')
                             options_data.tx_high = tx_data.get('high')
                             options_data.tx_low = tx_data.get('low')
                             options_data.tx_close = tx_data.get('close')
-                            options_data.tx_volume = tx_data.get('volume')
-                            options_data.tx_settlement = tx_data.get('settlement')
+                            # volume 和 settlement 從 PDF 解析（如果需要）
                         all_options_data.append(options_data)
 
         return all_options_data
     
-    def _parse_tx_futures_data(self, pdf, trade_date: str) -> Optional[Dict]:
+    def _fetch_twse_ohlc_data(self, trade_date: str) -> Optional[Dict]:
         """
-        從 PDF 第 10 頁提取台指期貨基本資料
-        
-        注意：第10頁的K線圖資料是以圖片形式呈現，無法直接提取
-        因此根據日期提供對應的資料
+        從台灣證券交易所 API 獲取加權指數 OHLC 資料
         
         Args:
-            pdf: PDF 物件
-            trade_date: 交易日期
+            trade_date: 交易日期 (格式: YYYYMMDD)
             
         Returns:
-            包含 open, high, low, close, volume, settlement 的字典
+            包含 open, high, low, close 的字典，失敗則返回 None
         """
-        # 根據日期提供對應的台指期貨資料
-        # 資料來源：PDF 第10頁的K線圖（盤後重點觀察）
-        tx_data_map = {
-            '20260105': {
-                'open': 30020,
-                'high': 30127,
-                'low': 29815,
-                'close': 29869,
-                'volume': 103526,
-                'settlement': 29869,
-            },
-            '20260106': {
-                'open': 29963,
-                'high': 30143,
-                'low': 29810,
-                'close': 30120,
-                'volume': 98234,
-                'settlement': 30120,
-            },
-            '20260107': {
-                'open': 30065,
-                'high': 30275,
-                'low': 30011,
-                'close': 30215,
-                'volume': 87456,
-                'settlement': 30215,
-            },
-            '20260108': {
-                'open': 30189,
-                'high': 30456,
-                'low': 30125,
-                'close': 30372,
-                'volume': 102341,
-                'settlement': 30372,
-            },
-            '20260109': {
-                'open': 30433,
-                'high': 30583,
-                'low': 30005,
-                'close': 30456,
-                'volume': 121322,
-                'settlement': 30456,
-            }
-        }
-        
-        return tx_data_map.get(trade_date)
+        try:
+            fetcher = TWSEDataFetcher()
+            ohlc = fetcher.fetch_ohlc(trade_date)
+            
+            if ohlc:
+                print(f"✅ 從證交所獲取 {trade_date} 加權指數: "
+                      f"開 {ohlc['open']:.2f}, "
+                      f"高 {ohlc['high']:.2f}, "
+                      f"低 {ohlc['low']:.2f}, "
+                      f"收 {ohlc['close']:.2f}")
+                return ohlc
+            else:
+                print(f"⚠️  無法從證交所獲取 {trade_date} 的資料")
+                return None
+                
+        except Exception as e:
+            print(f"⚠️  證交所 API 錯誤: {e}")
+            return None
 
     def _parse_options_page(self, text: str, trade_date: str) -> Optional[OptionsData]:
         """
