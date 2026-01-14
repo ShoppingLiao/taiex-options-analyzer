@@ -5,6 +5,7 @@
 - 週二/四自動產生結算預報（預測週三/五結算）
 - 自動更新首頁並推送到 Git
 - 完整日誌記錄
+- 支援交易日判斷（排除國定假日和週末）
 """
 
 import os
@@ -15,6 +16,80 @@ import argparse
 from datetime import datetime, timedelta
 from pathlib import Path
 import json
+
+
+# 台灣股市國定假日（需每年更新）
+# 格式: 'MMDD': '假日名稱'
+TAIWAN_HOLIDAYS_2026 = {
+    '0101': '元旦',
+    '0102': '元旦補假',
+    '0126': '農曆除夕前一日',
+    '0127': '農曆除夕',
+    '0128': '春節',
+    '0129': '春節',
+    '0130': '春節',
+    '0202': '補假',
+    '0228': '和平紀念日',
+    '0403': '兒童節補假',
+    '0404': '兒童節/清明節',
+    '0405': '清明節',
+    '0406': '清明節補假',
+    '0501': '勞動節',
+    '0531': '端午節',
+    '0601': '端午節補假',
+    '1009': '國慶日補假',
+    '1010': '國慶日',
+    '1025': '重陽節',
+    '1026': '重陽節補假',
+}
+
+# 可擴展其他年份
+TAIWAN_HOLIDAYS = {
+    '2026': TAIWAN_HOLIDAYS_2026,
+}
+
+
+def is_trading_day(date_obj: datetime) -> tuple[bool, str]:
+    """
+    判斷是否為台灣股市交易日
+
+    Args:
+        date_obj: datetime 物件
+
+    Returns:
+        tuple: (是否為交易日, 原因說明)
+    """
+    # 檢查是否為週末
+    if date_obj.weekday() >= 5:  # 5=週六, 6=週日
+        weekday_name = '週六' if date_obj.weekday() == 5 else '週日'
+        return False, f'{weekday_name}休市'
+
+    # 檢查是否為國定假日
+    year = date_obj.strftime('%Y')
+    mmdd = date_obj.strftime('%m%d')
+
+    if year in TAIWAN_HOLIDAYS:
+        holidays = TAIWAN_HOLIDAYS[year]
+        if mmdd in holidays:
+            return False, f'{holidays[mmdd]}休市'
+
+    return True, '交易日'
+
+
+def get_next_trading_day(date_obj: datetime) -> datetime:
+    """取得下一個交易日"""
+    next_day = date_obj + timedelta(days=1)
+    while not is_trading_day(next_day)[0]:
+        next_day += timedelta(days=1)
+    return next_day
+
+
+def get_previous_trading_day(date_obj: datetime) -> datetime:
+    """取得上一個交易日"""
+    prev_day = date_obj - timedelta(days=1)
+    while not is_trading_day(prev_day)[0]:
+        prev_day -= timedelta(days=1)
+    return prev_day
 
 
 class WorkflowLogger:
@@ -116,14 +191,44 @@ class DailyWorkflow:
         self.weekday = self.date_obj.weekday()  # 0=週一, 4=週五
         self.weekday_names = ['一', '二', '三', '四', '五', '六', '日']
 
+        # 交易日判斷
+        self.is_trading, self.trading_reason = is_trading_day(self.date_obj)
+
     def run(self, skip_git: bool = False, force: bool = False):
         """執行完整工作流"""
         self.logger.info("=" * 60)
         self.logger.info(f"開始執行每日工作流")
         self.logger.info(f"目標日期: {self.date} (週{self.weekday_names[self.weekday]})")
+        self.logger.info(f"交易日狀態: {self.trading_reason}")
         self.logger.info("=" * 60)
 
         try:
+            # 非交易日處理流程
+            if not self.is_trading:
+                self.logger.warning(f"今天 ({self.date}) 非交易日: {self.trading_reason}")
+                self.logger.info("跳過新報告生成，僅執行結算檢討")
+
+                # 執行結算檢討（如果有需要）
+                self._check_and_review_settlement()
+
+                # 同步和更新首頁（保持網站最新狀態）
+                if not self._sync_to_docs():
+                    self.logger.warning("同步到 docs 失敗，繼續執行")
+                if not self._update_index():
+                    self.logger.warning("更新首頁失敗，繼續執行")
+
+                # Git 推送
+                if not skip_git:
+                    if not self._git_push():
+                        self.logger.warning("Git 推送失敗")
+
+                self.logger.success("=" * 60)
+                self.logger.success("非交易日工作流執行完成！")
+                self.logger.success("=" * 60)
+                self.logger.save_run('completed')
+                return True
+
+            # 交易日正常處理流程
             # 步驟 1: 確認/下載 PDF
             if not self._ensure_pdf(force):
                 self.logger.error("無法取得 PDF，工作流終止")
@@ -254,21 +359,45 @@ class DailyWorkflow:
             return False
 
     def _check_and_generate_settlement_report(self):
-        """檢查並產生結算預報"""
+        """檢查並產生結算預報或執行結算檢討"""
         self.logger.info("-" * 40)
-        self.logger.info("步驟 3: 檢查結算預報需求")
+        self.logger.info("步驟 3: 檢查結算預報/檢討需求")
+
+        current_weekday_name = self.weekday_names[self.weekday]
+        self.logger.info(f"今天是週{current_weekday_name} (weekday={self.weekday})")
 
         # 週二 (1) -> 產生週三結算預報
+        # 週三 (2) -> 執行週三結算檢討
         # 週四 (3) -> 產生週五結算預報
+        # 週五 (4) -> 執行週五結算檢討
 
         if self.weekday == 1:  # 週二
-            self.logger.info("今天是週二，產生週三結算預報")
+            self.logger.info(f"週{current_weekday_name}：產生週三結算預報")
             self._generate_settlement_report('wednesday')
+        elif self.weekday == 2:  # 週三
+            self.logger.info(f"週{current_weekday_name}：執行週三結算檢討")
+            self._run_settlement_review('wednesday')
         elif self.weekday == 3:  # 週四
-            self.logger.info("今天是週四，產生週五結算預報")
+            self.logger.info(f"週{current_weekday_name}：產生週五結算預報")
             self._generate_settlement_report('friday')
+        elif self.weekday == 4:  # 週五
+            self.logger.info(f"週{current_weekday_name}：執行週五結算檢討")
+            self._run_settlement_review('friday')
         else:
-            self.logger.info(f"今天是週{self.weekday_names[self.weekday]}，不需要產生結算預報")
+            self.logger.info(f"週{current_weekday_name}不需要產生結算預報或檢討")
+
+    def _check_and_review_settlement(self):
+        """非交易日執行結算檢討"""
+        self.logger.info("-" * 40)
+        self.logger.info("檢查是否有結算報告需要檢討")
+
+        # 取得最近的交易日
+        last_trading_day = get_previous_trading_day(self.date_obj)
+        self.logger.info(f"最近交易日: {last_trading_day.strftime('%Y%m%d')}")
+
+        # 這裡可以加入結算檢討的邏輯
+        # 例如：檢查上一個結算日的預報準確度
+        self.logger.info("結算檢討功能（待實作）")
 
     def _generate_settlement_report(self, weekday: str):
         """產生結算預報"""
@@ -311,14 +440,113 @@ class DailyWorkflow:
         except Exception as e:
             self.logger.warning(f"產生結算預報失敗: {str(e)}")
 
+    def _run_settlement_review(self, weekday: str):
+        """執行結算日檢討並更新報告"""
+        try:
+            # 結算日就是今天
+            settlement_date = self.date
+            settlement_str = self.date_obj.strftime('%Y/%m/%d')
+            pdf_path = f"data/pdf/期貨選擇權盤後日報_{settlement_date}.pdf"
+
+            self.logger.info(f"結算日: {settlement_str}")
+            self.logger.info(f"PDF 路徑: {pdf_path}")
+
+            # 步驟 1: 執行結算檢討腳本
+            self.logger.info("執行結算檢討...")
+            result = subprocess.run(
+                [
+                    'python3', 'generate_settlement_review.py',
+                    '--settlement-date', settlement_date,
+                    '--pdf-path', pdf_path
+                ],
+                capture_output=True,
+                text=True,
+                cwd=self.project_dir,
+                timeout=180
+            )
+
+            if result.returncode == 0:
+                self.logger.success("結算檢討完成")
+            else:
+                self.logger.warning(f"結算檢討可能有問題: {result.stderr}")
+                # 如果找不到預測記錄，先重新生成結算預報
+                if '找不到' in result.stderr or '找不到' in result.stdout:
+                    self.logger.info("嘗試重新生成結算預報後再執行檢討...")
+                    self._regenerate_settlement_report_with_prediction(weekday)
+                    # 再次執行檢討
+                    result = subprocess.run(
+                        [
+                            'python3', 'generate_settlement_review.py',
+                            '--settlement-date', settlement_date,
+                            '--pdf-path', pdf_path
+                        ],
+                        capture_output=True,
+                        text=True,
+                        cwd=self.project_dir,
+                        timeout=180
+                    )
+                    if result.returncode == 0:
+                        self.logger.success("結算檢討完成（重試後）")
+
+            # 步驟 2: 重新生成結算報告（讓檢討內容更新到 HTML）
+            self.logger.info("更新結算報告...")
+            self._regenerate_settlement_report_with_prediction(weekday)
+
+        except Exception as e:
+            self.logger.warning(f"執行結算檢討失敗: {str(e)}")
+
+    def _regenerate_settlement_report_with_prediction(self, weekday: str):
+        """重新生成結算報告（包含 AI 預測記錄）"""
+        try:
+            settlement_str = self.date_obj.strftime('%Y/%m/%d')
+            # 取得前兩個交易日
+            analysis_dates = self._get_previous_trading_days_before_today(2)
+            dates_str = ','.join(analysis_dates)
+
+            self.logger.info(f"分析日期: {dates_str}")
+
+            result = subprocess.run(
+                [
+                    'python3', 'generate_settlement_report.py',
+                    '--dates', dates_str,
+                    '--settlement', settlement_str,
+                    '--weekday', weekday
+                ],
+                capture_output=True,
+                text=True,
+                cwd=self.project_dir,
+                timeout=180
+            )
+
+            if result.returncode == 0:
+                self.logger.success(f"結算報告更新成功")
+            else:
+                self.logger.warning(f"結算報告更新可能有問題: {result.stderr}")
+
+        except Exception as e:
+            self.logger.warning(f"重新生成結算報告失敗: {str(e)}")
+
+    def _get_previous_trading_days_before_today(self, count: int) -> list:
+        """取得今天之前的 N 個交易日"""
+        trading_days = []
+        current = self.date_obj - timedelta(days=1)  # 從昨天開始
+
+        while len(trading_days) < count:
+            if is_trading_day(current)[0]:
+                trading_days.append(current.strftime('%Y%m%d'))
+            current -= timedelta(days=1)
+
+        # 反轉順序（從舊到新）
+        return list(reversed(trading_days))
+
     def _get_previous_trading_days(self, count: int) -> list:
-        """取得前 N 個交易日"""
+        """取得前 N 個交易日（包含今天，如果今天是交易日）"""
         trading_days = []
         current = self.date_obj
 
         while len(trading_days) < count:
-            # 週六日不是交易日
-            if current.weekday() < 5:
+            # 使用 is_trading_day 函數判斷（包含國定假日）
+            if is_trading_day(current)[0]:
                 trading_days.append(current.strftime('%Y%m%d'))
             current -= timedelta(days=1)
 

@@ -126,9 +126,21 @@ class SettlementReportGenerator:
         # AI 結算日交易員分析
         settlement_trader_analysis = self.settlement_trader.analyze_settlement(prediction)
         
-        # 載入 AI 結算預測和檢討（如果有）
+        # 載入或生成 AI 結算預測
         settlement_date_str = prediction.settlement_date.replace('/', '')
         ai_settlement_prediction = self.settlement_prediction.load_prediction(settlement_date_str)
+
+        # 如果沒有預測記錄，生成一個新的
+        if not ai_settlement_prediction:
+            historical_data = self._prepare_historical_data_for_ai(prediction)
+            if historical_data:
+                ai_settlement_prediction = self.settlement_prediction.generate_settlement_prediction(
+                    historical_data=historical_data,
+                    settlement_date=settlement_date_str,
+                    weekday=prediction.settlement_weekday
+                )
+
+        # 載入檢討（如果有）
         ai_settlement_review = self.settlement_review.load_review(settlement_date_str)
         
         # 取得學習系統等級圖示
@@ -182,9 +194,52 @@ class SettlementReportGenerator:
         
         # 合併 AI 分析數據
         data.update(ai_data)
-        
+
         return data
-    
+
+    def _prepare_historical_data_for_ai(self, prediction: SettlementPrediction) -> list:
+        """
+        從 prediction 中提取歷史數據，用於 AI 預測生成
+
+        Args:
+            prediction: SettlementPrediction 物件
+
+        Returns:
+            歷史數據列表，格式為 [{day1}, {day2}]
+        """
+        key_metrics = prediction.key_metrics
+
+        # 嘗試從 key_metrics 提取數據
+        historical_data = []
+
+        # 取得當前價格和 PC Ratio
+        current_price = prediction.current_price
+        pc_ratio = key_metrics.get('latest_pc_ratio', key_metrics.get('pc_ratio', 1.0))
+        max_pain = key_metrics.get('max_pain', current_price)
+
+        # 構建模擬的兩天數據（基於可用資訊）
+        # Day 1 (較早的數據，估算)
+        day1 = {
+            'tx_close': current_price - 50,  # 估算前一天收盤價
+            'pc_ratio': pc_ratio + 0.05,
+            'max_pain': max_pain,
+            'call_oi': key_metrics.get('call_oi', 100000),
+            'put_oi': key_metrics.get('put_oi', 100000),
+        }
+
+        # Day 2 (最新數據)
+        day2 = {
+            'tx_close': current_price,
+            'pc_ratio': pc_ratio,
+            'max_pain': max_pain,
+            'call_oi': key_metrics.get('call_oi', 100000),
+            'put_oi': key_metrics.get('put_oi', 100000),
+        }
+
+        historical_data = [day1, day2]
+
+        return historical_data
+
     def _prepare_ai_analysis_data(self, prediction: SettlementPrediction) -> dict:
         """準備 AI 操盤分析數據"""
         
