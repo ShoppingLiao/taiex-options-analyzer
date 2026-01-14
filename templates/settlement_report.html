@@ -1369,9 +1369,20 @@
                     <div class="info-value">{{ analysis_dates_text }}</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">報告生成</div>
-                    <div class="info-value">{{ generated_time }}</div>
+                    <div class="info-label">預測區間</div>
+                    <div class="info-value">{{ predicted_lower }} - {{ predicted_upper }}</div>
                 </div>
+                {% if ai_settlement_review and ai_settlement_review.actual_result %}
+                <div class="info-item" style="background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 4px;">
+                    <div class="info-label">實際結算價</div>
+                    <div class="info-value" style="color: #fbbf24;">{{ ai_settlement_review.actual_result.settlement_price | format_number }}</div>
+                </div>
+                {% else %}
+                <div class="info-item">
+                    <div class="info-label">結算狀態</div>
+                    <div class="info-value">⏳ 待結算</div>
+                </div>
+                {% endif %}
             </div>
         </header>
 
