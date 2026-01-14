@@ -34,18 +34,21 @@ def scan_daily_reports() -> list:
     docs_dir = Path('docs')
     daily_reports = []
 
-    # 查找 report_*.html 檔案（排除 _old 和週選 W 開頭的契約）
+    # 查找 report_*.html 檔案（排除 _old）
     for html_file in docs_dir.glob('report_*.html'):
         # 跳過 old 檔案
         if '_old' in html_file.name:
             continue
 
-        # 解析檔名: report_20260109_202601.html 或 report_20260109_202601W2.html
-        match = re.match(r'report_(\d{8})_(\d{6})(W\d)?\.html', html_file.name)
+        # 解析檔名:
+        # - report_20260109_202601.html (月選)
+        # - report_20260109_202601W2.html (週選 W 格式)
+        # - report_20260113_202601F3.html (週選 F 格式)
+        match = re.match(r'report_(\d{8})_(\d{6})([WF]\d)?\.html', html_file.name)
         if match:
             date_str = match.group(1)
             contract = match.group(2)
-            week_contract = match.group(3)  # 可能是 None 或 W1, W2 等
+            week_contract = match.group(3)  # 可能是 None 或 W1, W2, F3 等
 
             # 優先顯示月契約，週契約作為次要
             is_weekly = week_contract is not None
@@ -304,35 +307,6 @@ def generate_index_html():
             <p class="subtitle">Taiwan Stock Index Options Analysis</p>
         </header>
 
-        <!-- 每日報告區塊 -->
-        <div class="report-section">
-            <div class="section-header">
-                <span class="section-icon">📊</span>
-                <h2 class="section-title">每日報告</h2>
-                <span class="section-count">{len(daily_reports)} 份報告</span>
-            </div>
-            <p class="section-description">每日選擇權市場分析，包含 OI 分佈、Max Pain、結算情境預測等</p>
-            <div class="reports-grid">
-'''
-
-    # 每日報告卡片
-    for i, report in enumerate(daily_reports):
-        badge_class = 'latest-badge' if i == 0 else ''
-        badge_text = '最新' if i == 0 else '歷史'
-        contract_display = report['contract'][:6] + ' 月份'
-        if 'W' in report['contract']:
-            contract_display = report['contract'] + ' 週選'
-
-        html_content += f'''                <a href="{report['filename']}" class="report-card">
-                    <div class="report-date">{report['display_date']}</div>
-                    <div class="report-month">{contract_display}</div>
-                    <span class="report-badge {badge_class}">{badge_text}</span>
-                </a>
-'''
-
-    html_content += '''            </div>
-        </div>
-
         <!-- 結算日報告區塊 -->
         <div class="report-section">
             <div class="section-header">
@@ -365,7 +339,36 @@ def generate_index_html():
             </div>
 '''
 
-    html_content += f'''        </div>
+    html_content += '''        </div>
+
+        <!-- 每日報告區塊 -->
+        <div class="report-section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2 class="section-title">每日報告</h2>
+                <span class="section-count">''' + f'{len(daily_reports)} 份報告' + '''</span>
+            </div>
+            <p class="section-description">每日選擇權市場分析，包含 OI 分佈、Max Pain、結算情境預測等</p>
+            <div class="reports-grid">
+'''
+
+    # 每日報告卡片
+    for i, report in enumerate(daily_reports):
+        badge_class = 'latest-badge' if i == 0 else ''
+        badge_text = '最新' if i == 0 else '歷史'
+        contract_display = report['contract'][:6] + ' 月份'
+        if 'W' in report['contract']:
+            contract_display = report['contract'] + ' 週選'
+
+        html_content += f'''                <a href="{report['filename']}" class="report-card">
+                    <div class="report-date">{report['display_date']}</div>
+                    <div class="report-month">{contract_display}</div>
+                    <span class="report-badge {badge_class}">{badge_text}</span>
+                </a>
+'''
+
+    html_content += '''            </div>
+        </div>
 
         <footer>
             <p>自動生成於 {now}</p>
