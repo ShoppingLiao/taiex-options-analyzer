@@ -137,15 +137,16 @@ class AISettlementPrediction:
             predicted_change = 0
         
         predicted_settlement = round(base_price + predicted_change)
-        
-        # 計算可能區間（±1.5%）
-        range_pct = 0.015
-        upper_bound = round(predicted_settlement * (1 + range_pct))
-        lower_bound = round(predicted_settlement * (1 - range_pct))
-        
+
+        # 計算可能區間（固定 200 點，與交易員視角一致）
+        # 上下各 100 點，取整到 50 點
+        half_range = 100
+        lower_bound = (predicted_settlement - half_range) // 50 * 50
+        upper_bound = (predicted_settlement + half_range) // 50 * 50
+
         # 關鍵整數關卡
         round_100 = round(predicted_settlement / 100) * 100
-        
+
         return {
             "predicted_price": predicted_settlement,
             "upper_bound": upper_bound,
@@ -153,7 +154,7 @@ class AISettlementPrediction:
             "base_price": base_price,
             "expected_change": round(predicted_change),
             "nearest_100": round_100,
-            "confidence_range": "±1.5%"
+            "confidence_range": "±100點"
         }
     
     def _generate_scenarios(

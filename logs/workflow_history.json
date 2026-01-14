@@ -186,5 +186,193 @@
     ],
     "status": "completed",
     "end_time": "2026-01-14T16:25:31.635004"
+  },
+  {
+    "start_time": "2026-01-14T16:38:57.777246",
+    "date": "20260114",
+    "steps": [
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "============================================================"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "開始執行每日工作流"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "目標日期: 20260114 (週三)"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "交易日狀態: 交易日"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "============================================================"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "----------------------------------------"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "步驟 1: 確認 PDF 檔案"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "SUCCESS",
+        "message": "PDF 已存在: 期貨選擇權盤後日報_20260114.pdf"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "----------------------------------------"
+      },
+      {
+        "time": "2026-01-14 16:38:57",
+        "level": "INFO",
+        "message": "步驟 2: 產生每日報告"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "SUCCESS",
+        "message": "每日報告產生成功"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "INFO",
+        "message": "----------------------------------------"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "INFO",
+        "message": "步驟 3: 檢查結算預報/檢討需求"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "INFO",
+        "message": "今天是週三 (weekday=2)"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "INFO",
+        "message": "週三：執行週三結算檢討"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "INFO",
+        "message": "結算日: 2026/01/14"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "INFO",
+        "message": "PDF 路徑: data/pdf/期貨選擇權盤後日報_20260114.pdf"
+      },
+      {
+        "time": "2026-01-14 16:39:04",
+        "level": "INFO",
+        "message": "執行結算檢討..."
+      },
+      {
+        "time": "2026-01-14 16:39:08",
+        "level": "WARNING",
+        "message": "結算檢討可能有問題: /Users/shopping.liao/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nCannot set gray non-stroke color because /'P48' is an invalid float value\nCannot set gray non-stroke color because /'P50' is an invalid float value\nCannot set gray non-stroke color because /'P52' is an invalid float value\nCannot set gray non-stroke color because /'P54' is an invalid float value\nCannot set gray non-stroke color because /'P56' is an invalid float value\nCannot set gray non-stroke color because /'P58' is an invalid float value\nCannot set gray non-stroke color because /'P60' is an invalid float value\nCannot set gray non-stroke color because /'P62' is an invalid float value\nCannot set gray non-stroke color because /'P64' is an invalid float value\nCannot set gray non-stroke color because /'P66' is an invalid float value\nCannot set gray non-stroke color because /'P68' is an invalid float value\nCannot set gray non-stroke color because /'P70' is an invalid float value\nCannot set gray non-stroke color because /'P72' is an invalid float value\nCannot set gray non-stroke color because /'P74' is an invalid float value\nCannot set gray non-stroke color because /'P76' is an invalid float value\nCannot set gray non-stroke color because /'P78' is an invalid float value\nCannot set gray non-stroke color because /'P80' is an invalid float value\nCannot set gray non-stroke color because /'P82' is an invalid float value\nCannot set gray non-stroke color because /'P84' is an invalid float value\nCannot set gray non-stroke color because /'P86' is an invalid float value\nCannot set gray non-stroke color because /'P88' is an invalid float value\nCannot set gray non-stroke color because /'P90' is an invalid float value\nCannot set gray non-stroke color because /'P92' is an invalid float value\nCannot set gray non-stroke color because /'P94' is an invalid float value\nCannot set gray non-stroke color because /'P96' is an invalid float value\nCannot set gray non-stroke color because /'P98' is an invalid float value\nCannot set gray non-stroke color because /'P100' is an invalid float value\nCannot set gray non-stroke color because /'P102' is an invalid float value\nCannot set gray non-stroke color because /'P104' is an invalid float value\nCannot set gray non-stroke color because /'P106' is an invalid float value\nCannot set gray non-stroke color because /'P108' is an invalid float value\nCannot set gray non-stroke color because /'P110' is an invalid float value\nCannot set gray non-stroke color because /'P112' is an invalid float value\nCannot set gray non-stroke color because /'P114' is an invalid float value\nCannot set gray non-stroke color because /'P116' is an invalid float value\nCannot set gray non-stroke color because /'P118' is an invalid float value\nCannot set gray non-stroke color because /'P120' is an invalid float value\nCannot set gray non-stroke color because /'P122' is an invalid float value\nCannot set gray non-stroke color because /'P124' is an invalid float value\nCannot set gray non-stroke color because /'P126' is an invalid float value\nCannot set gray non-stroke color because /'P128' is an invalid float value\nCannot set gray non-stroke color because /'P130' is an invalid float value\nCannot set gray non-stroke color because /'P132' is an invalid float value\nCannot set gray non-stroke color because /'P134' is an invalid float value\nCannot set gray non-stroke color because /'P136' is an invalid float value\nCannot set gray non-stroke color because /'P138' is an invalid float value\nCannot set gray non-stroke color because /'P140' is an invalid float value\nCannot set gray non-stroke color because /'P142' is an invalid float value\nCannot set gray non-stroke color because /'P144' is an invalid float value\nCannot set gray non-stroke color because /'P146' is an invalid float value\nCannot set gray non-stroke color because /'P148' is an invalid float value\nCannot set gray non-stroke color because /'P150' is an invalid float value\nCannot set gray non-stroke color because /'P152' is an invalid float value\nCannot set gray non-stroke color because /'P154' is an invalid float value\nCannot set gray non-stroke color because /'P156' is an invalid float value\nCannot set gray non-stroke color because /'P158' is an invalid float value\nCannot set gray non-stroke color because /'P160' is an invalid float value\nCannot set gray non-stroke color because /'P162' is an invalid float value\nCannot set gray non-stroke color because /'P164' is an invalid float value\nCannot set gray non-stroke color because /'P166' is an invalid float value\nCannot set gray non-stroke color because /'P168' is an invalid float value\nCannot set gray non-stroke color because /'P170' is an invalid float value\nCannot set gray non-stroke color because /'P173' is an invalid float value\nCannot set gray non-stroke color because /'P175' is an invalid float value\nCannot set gray non-stroke color because /'P177' is an invalid float value\nCannot set gray non-stroke color because /'P179' is an invalid float value\nCannot set gray non-stroke color because /'P181' is an invalid float value\nCannot set gray non-stroke color because /'P183' is an invalid float value\nCannot set gray non-stroke color because /'P185' is an invalid float value\nCannot set gray non-stroke color because /'P187' is an invalid float value\nCannot set gray non-stroke color because /'P189' is an invalid float value\nCannot set gray non-stroke color because /'P191' is an invalid float value\nCannot set gray non-stroke color because /'P193' is an invalid float value\nCannot set gray non-stroke color because /'P195' is an invalid float value\nCannot set gray non-stroke color because /'P197' is an invalid float value\nCannot set gray non-stroke color because /'P199' is an invalid float value\nCannot set gray non-stroke color because /'P201' is an invalid float value\nCannot set gray non-stroke color because /'P203' is an invalid float value\nCannot set gray non-stroke color because /'P205' is an invalid float value\nCannot set gray non-stroke color because /'P207' is an invalid float value\nCannot set gray non-stroke color because /'P209' is an invalid float value\nCannot set gray non-stroke color because /'P211' is an invalid float value\nCannot set gray non-stroke color because /'P213' is an invalid float value\nCannot set gray non-stroke color because /'P215' is an invalid float value\nCannot set gray non-stroke color because /'P217' is an invalid float value\nCannot set gray non-stroke color because /'P219' is an invalid float value\nCannot set gray non-stroke color because /'P221' is an invalid float value\nCannot set gray non-stroke color because /'P223' is an invalid float value\nCannot set gray non-stroke color because /'P225' is an invalid float value\nCannot set gray non-stroke color because /'P227' is an invalid float value\nCannot set gray non-stroke color because /'P229' is an invalid float value\nCannot set gray non-stroke color because /'P231' is an invalid float value\nCannot set gray non-stroke color because /'P233' is an invalid float value\nCannot set gray non-stroke color because /'P235' is an invalid float value\nCannot set gray non-stroke color because /'P237' is an invalid float value\nCannot set gray non-stroke color because /'P239' is an invalid float value\nCannot set gray non-stroke color because /'P241' is an invalid float value\nCannot set gray non-stroke color because /'P243' is an invalid float value\nCannot set gray non-stroke color because /'P245' is an invalid float value\nCannot set gray non-stroke color because /'P247' is an invalid float value\nCannot set gray non-stroke color because /'P249' is an invalid float value\nCannot set gray non-stroke color because /'P251' is an invalid float value\nCannot set gray non-stroke color because /'P253' is an invalid float value\nCannot set gray non-stroke color because /'P255' is an invalid float value\nCannot set gray non-stroke color because /'P257' is an invalid float value\nCannot set gray non-stroke color because /'P259' is an invalid float value\nCannot set gray non-stroke color because /'P261' is an invalid float value\nCannot set gray non-stroke color because /'P263' is an invalid float value\nCannot set gray non-stroke color because /'P265' is an invalid float value\nCannot set gray non-stroke color because /'P267' is an invalid float value\nCannot set gray non-stroke color because /'P269' is an invalid float value\nCannot set gray non-stroke color because /'P271' is an invalid float value\nCannot set gray non-stroke color because /'P273' is an invalid float value\nCannot set gray non-stroke color because /'P275' is an invalid float value\nCannot set gray non-stroke color because /'P277' is an invalid float value\nCannot set gray non-stroke color because /'P279' is an invalid float value\nCannot set gray non-stroke color because /'P281' is an invalid float value\nCannot set gray non-stroke color because /'P283' is an invalid float value\nCannot set gray non-stroke color because /'P285' is an invalid float value\nCannot set gray non-stroke color because /'P287' is an invalid float value\nCannot set gray non-stroke color because /'P289' is an invalid float value\nCannot set gray non-stroke color because /'P291' is an invalid float value\nCannot set gray non-stroke color because /'P293' is an invalid float value\nCannot set gray non-stroke color because /'P295' is an invalid float value\nCannot set gray non-stroke color because /'P341' is an invalid float value\nCannot set gray non-stroke color because /'P343' is an invalid float value\nCannot set gray non-stroke color because /'P345' is an invalid float value\nCannot set gray non-stroke color because /'P347' is an invalid float value\nCannot set gray non-stroke color because /'P349' is an invalid float value\nCannot set gray non-stroke color because /'P351' is an invalid float value\nCannot set gray non-stroke color because /'P353' is an invalid float value\nCannot set gray non-stroke color because /'P355' is an invalid float value\nCannot set gray non-stroke color because /'P357' is an invalid float value\nCannot set gray non-stroke color because /'P359' is an invalid float value\nCannot set gray non-stroke color because /'P361' is an invalid float value\nCannot set gray non-stroke color because /'P363' is an invalid float value\nCannot set gray non-stroke color because /'P365' is an invalid float value\nCannot set gray non-stroke color because /'P367' is an invalid float value\nCannot set gray non-stroke color because /'P369' is an invalid float value\nCannot set gray non-stroke color because /'P371' is an invalid float value\nCannot set gray non-stroke color because /'P373' is an invalid float value\nCannot set gray non-stroke color because /'P375' is an invalid float value\nCannot set gray non-stroke color because /'P377' is an invalid float value\nCannot set gray non-stroke color because /'P379' is an invalid float value\nCannot set gray non-stroke color because /'P381' is an invalid float value\nCannot set gray non-stroke color because /'P383' is an invalid float value\nCannot set gray non-stroke color because /'P385' is an invalid float value\nCannot set gray non-stroke color because /'P387' is an invalid float value\nCannot set gray non-stroke color because /'P389' is an invalid float value\nCannot set gray non-stroke color because /'P391' is an invalid float value\nCannot set gray non-stroke color because /'P393' is an invalid float value\nCannot set gray non-stroke color because /'P395' is an invalid float value\nCannot set gray non-stroke color because /'P397' is an invalid float value\nCannot set gray non-stroke color because /'P399' is an invalid float value\nCannot set gray non-stroke color because /'P401' is an invalid float value\nCannot set gray non-stroke color because /'P403' is an invalid float value\nCannot set gray non-stroke color because /'P405' is an invalid float value\nCannot set gray non-stroke color because /'P407' is an invalid float value\nCannot set gray non-stroke color because /'P409' is an invalid float value\nCannot set gray non-stroke color because /'P411' is an invalid float value\nCannot set gray non-stroke color because /'P413' is an invalid float value\nCannot set gray non-stroke color because /'P415' is an invalid float value\nCannot set gray non-stroke color because /'P417' is an invalid float value\nCannot set gray non-stroke color because /'P419' is an invalid float value\nCannot set gray non-stroke color because /'P421' is an invalid float value\nCannot set gray non-stroke color because /'P423' is an invalid float value\nCannot set gray non-stroke color because /'P425' is an invalid float value\nCannot set gray non-stroke color because /'P427' is an invalid float value\nCannot set gray non-stroke color because /'P429' is an invalid float value\nCannot set gray non-stroke color because /'P431' is an invalid float value\nCannot set gray non-stroke color because /'P433' is an invalid float value\nCannot set gray non-stroke color because /'P435' is an invalid float value\nCannot set gray non-stroke color because /'P437' is an invalid float value\nCannot set gray non-stroke color because /'P439' is an invalid float value\nCannot set gray non-stroke color because /'P441' is an invalid float value\nCannot set gray non-stroke color because /'P443' is an invalid float value\nCannot set gray non-stroke color because /'P445' is an invalid float value\nCannot set gray non-stroke color because /'P447' is an invalid float value\nCannot set gray non-stroke color because /'P449' is an invalid float value\nCannot set gray non-stroke color because /'P451' is an invalid float value\nCannot set gray non-stroke color because /'P453' is an invalid float value\nCannot set gray non-stroke color because /'P455' is an invalid float value\nCannot set gray non-stroke color because /'P457' is an invalid float value\nCannot set gray non-stroke color because /'P459' is an invalid float value\nCannot set gray non-stroke color because /'P461' is an invalid float value\nCannot set gray non-stroke color because /'P463' is an invalid float value\nCannot set gray non-stroke color because /'P466' is an invalid float value\nCannot set gray non-stroke color because /'P468' is an invalid float value\nCannot set gray non-stroke color because /'P470' is an invalid float value\nCannot set gray non-stroke color because /'P472' is an invalid float value\nCannot set gray non-stroke color because /'P474' is an invalid float value\nCannot set gray non-stroke color because /'P476' is an invalid float value\nCannot set gray non-stroke color because /'P478' is an invalid float value\nCannot set gray non-stroke color because /'P480' is an invalid float value\nCannot set gray non-stroke color because /'P482' is an invalid float value\nCannot set gray non-stroke color because /'P484' is an invalid float value\nCannot set gray non-stroke color because /'P486' is an invalid float value\nCannot set gray non-stroke color because /'P488' is an invalid float value\nCannot set gray non-stroke color because /'P490' is an invalid float value\nCannot set gray non-stroke color because /'P492' is an invalid float value\nCannot set gray non-stroke color because /'P494' is an invalid float value\nCannot set gray non-stroke color because /'P496' is an invalid float value\nCannot set gray non-stroke color because /'P498' is an invalid float value\nCannot set gray non-stroke color because /'P500' is an invalid float value\nCannot set gray non-stroke color because /'P502' is an invalid float value\nCannot set gray non-stroke color because /'P504' is an invalid float value\nCannot set gray non-stroke color because /'P506' is an invalid float value\nCannot set gray non-stroke color because /'P508' is an invalid float value\nCannot set gray non-stroke color because /'P510' is an invalid float value\nCannot set gray non-stroke color because /'P512' is an invalid float value\nCannot set gray non-stroke color because /'P514' is an invalid float value\nCannot set gray non-stroke color because /'P516' is an invalid float value\nCannot set gray non-stroke color because /'P518' is an invalid float value\nCannot set gray non-stroke color because /'P520' is an invalid float value\nCannot set gray non-stroke color because /'P522' is an invalid float value\nCannot set gray non-stroke color because /'P524' is an invalid float value\nCannot set gray non-stroke color because /'P526' is an invalid float value\nCannot set gray non-stroke color because /'P528' is an invalid float value\nCannot set gray non-stroke color because /'P530' is an invalid float value\nCannot set gray non-stroke color because /'P532' is an invalid float value\nCannot set gray non-stroke color because /'P534' is an invalid float value\nCannot set gray non-stroke color because /'P536' is an invalid float value\nCannot set gray non-stroke color because /'P538' is an invalid float value\nCannot set gray non-stroke color because /'P540' is an invalid float value\nCannot set gray non-stroke color because /'P542' is an invalid float value\nCannot set gray non-stroke color because /'P544' is an invalid float value\nCannot set gray non-stroke color because /'P546' is an invalid float value\nCannot set gray non-stroke color because /'P548' is an invalid float value\nCannot set gray non-stroke color because /'P550' is an invalid float value\nCannot set gray non-stroke color because /'P552' is an invalid float value\nCannot set gray non-stroke color because /'P554' is an invalid float value\nCannot set gray non-stroke color because /'P556' is an invalid float value\nCannot set gray non-stroke color because /'P558' is an invalid float value\nCannot set gray non-stroke color because /'P560' is an invalid float value\nCannot set gray non-stroke color because /'P562' is an invalid float value\nCannot set gray non-stroke color because /'P564' is an invalid float value\nCannot set gray non-stroke color because /'P566' is an invalid float value\nCannot set gray non-stroke color because /'P568' is an invalid float value\nCannot set gray non-stroke color because /'P570' is an invalid float value\nCannot set gray non-stroke color because /'P572' is an invalid float value\nCannot set gray non-stroke color because /'P574' is an invalid float value\nCannot set gray non-stroke color because /'P576' is an invalid float value\nCannot set gray non-stroke color because /'P578' is an invalid float value\nCannot set gray non-stroke color because /'P580' is an invalid float value\nCannot set gray non-stroke color because /'P582' is an invalid float value\nCannot set gray non-stroke color because /'P584' is an invalid float value\nCannot set gray non-stroke color because /'P586' is an invalid float value\nCannot set gray non-stroke color because /'P588' is an invalid float value\nCannot set gray non-stroke color because /'P608' is an invalid float value\nCannot set gray non-stroke color because /'P610' is an invalid float value\nCannot set gray non-stroke color because /'P612' is an invalid float value\nCannot set gray non-stroke color because /'P614' is an invalid float value\nCannot set gray non-stroke color because /'P616' is an invalid float value\nCannot set gray non-stroke color because /'P618' is an invalid float value\nCannot set gray non-stroke color because /'P620' is an invalid float value\nCannot set gray non-stroke color because /'P622' is an invalid float value\nCannot set gray non-stroke color because /'P624' is an invalid float value\nCannot set gray non-stroke color because /'P626' is an invalid float value\nCannot set gray non-stroke color because /'P628' is an invalid float value\nCannot set gray non-stroke color because /'P630' is an invalid float value\nCannot set gray non-stroke color because /'P632' is an invalid float value\nCannot set gray non-stroke color because /'P634' is an invalid float value\nCannot set gray non-stroke color because /'P636' is an invalid float value\nCannot set gray non-stroke color because /'P638' is an invalid float value\nCannot set gray non-stroke color because /'P640' is an invalid float value\nCannot set gray non-stroke color because /'P642' is an invalid float value\nCannot set gray non-stroke color because /'P644' is an invalid float value\nCannot set gray non-stroke color because /'P646' is an invalid float value\nCannot set gray non-stroke color because /'P648' is an invalid float value\nCannot set gray non-stroke color because /'P650' is an invalid float value\nCannot set gray non-stroke color because /'P652' is an invalid float value\nCannot set gray non-stroke color because /'P654' is an invalid float value\nCannot set gray non-stroke color because /'P656' is an invalid float value\nCannot set gray non-stroke color because /'P658' is an invalid float value\nCannot set gray non-stroke color because /'P660' is an invalid float value\nCannot set gray non-stroke color because /'P662' is an invalid float value\nCannot set gray non-stroke color because /'P664' is an invalid float value\nCannot set gray non-stroke color because /'P666' is an invalid float value\nCannot set gray non-stroke color because /'P668' is an invalid float value\nCannot set gray non-stroke color because /'P670' is an invalid float value\nCannot set gray non-stroke color because /'P672' is an invalid float value\nCannot set gray non-stroke color because /'P674' is an invalid float value\nCannot set gray non-stroke color because /'P676' is an invalid float value\nCannot set gray non-stroke color because /'P678' is an invalid float value\nCannot set gray non-stroke color because /'P680' is an invalid float value\nCannot set gray non-stroke color because /'P682' is an invalid float value\nCannot set gray non-stroke color because /'P684' is an invalid float value\nCannot set gray non-stroke color because /'P686' is an invalid float value\nCannot set gray non-stroke color because /'P688' is an invalid float value\nCannot set gray non-stroke color because /'P690' is an invalid float value\nCannot set gray non-stroke color because /'P692' is an invalid float value\nCannot set gray non-stroke color because /'P694' is an invalid float value\nCannot set gray non-stroke color because /'P696' is an invalid float value\nCannot set gray non-stroke color because /'P698' is an invalid float value\nCannot set gray non-stroke color because /'P700' is an invalid float value\nCannot set gray non-stroke color because /'P702' is an invalid float value\nCannot set gray non-stroke color because /'P704' is an invalid float value\nCannot set gray non-stroke color because /'P706' is an invalid float value\nCannot set gray non-stroke color because /'P708' is an invalid float value\nCannot set gray non-stroke color because /'P721' is an invalid float value\nCannot set gray non-stroke color because /'P723' is an invalid float value\nCannot set gray non-stroke color because /'P725' is an invalid float value\nCannot set gray non-stroke color because /'P727' is an invalid float value\nCannot set gray non-stroke color because /'P729' is an invalid float value\nCannot set gray non-stroke color because /'P731' is an invalid float value\nCannot set gray non-stroke color because /'P733' is an invalid float value\nCannot set gray non-stroke color because /'P735' is an invalid float value\nCannot set gray non-stroke color because /'P737' is an invalid float value\nCannot set gray non-stroke color because /'P739' is an invalid float value\nCannot set gray non-stroke color because /'P741' is an invalid float value\nCannot set gray non-stroke color because /'P743' is an invalid float value\nCannot set gray non-stroke color because /'P745' is an invalid float value\nCannot set gray non-stroke color because /'P747' is an invalid float value\nCannot set gray non-stroke color because /'P749' is an invalid float value\nCannot set gray non-stroke color because /'P751' is an invalid float value\nCannot set gray non-stroke color because /'P753' is an invalid float value\nCannot set gray non-stroke color because /'P755' is an invalid float value\nCannot set gray non-stroke color because /'P757' is an invalid float value\nCannot set gray non-stroke color because /'P759' is an invalid float value\nCannot set gray non-stroke color because /'P761' is an invalid float value\nCannot set gray non-stroke color because /'P763' is an invalid float value\nCannot set gray non-stroke color because /'P765' is an invalid float value\nCannot set gray non-stroke color because /'P767' is an invalid float value\nCannot set gray non-stroke color because /'P769' is an invalid float value\nCannot set gray non-stroke color because /'P771' is an invalid float value\nCannot set gray non-stroke color because /'P773' is an invalid float value\nCannot set gray non-stroke color because /'P775' is an invalid float value\nCannot set gray non-stroke color because /'P777' is an invalid float value\nCannot set gray non-stroke color because /'P779' is an invalid float value\nCannot set gray non-stroke color because /'P781' is an invalid float value\nCannot set gray non-stroke color because /'P783' is an invalid float value\nCannot set gray non-stroke color because /'P785' is an invalid float value\nCannot set gray non-stroke color because /'P787' is an invalid float value\nCannot set gray non-stroke color because /'P789' is an invalid float value\nCannot set gray non-stroke color because /'P791' is an invalid float value\nCannot set gray non-stroke color because /'P793' is an invalid float value\nCannot set gray non-stroke color because /'P795' is an invalid float value\nCannot set gray non-stroke color because /'P797' is an invalid float value\nCannot set gray non-stroke color because /'P799' is an invalid float value\nCannot set gray non-stroke color because /'P801' is an invalid float value\nCannot set gray non-stroke color because /'P803' is an invalid float value\nCannot set gray non-stroke color because /'P805' is an invalid float value\nCannot set gray non-stroke color because /'P807' is an invalid float value\nCannot set gray non-stroke color because /'P809' is an invalid float value\nCannot set gray non-stroke color because /'P819' is an invalid float value\nCannot set gray non-stroke color because /'P821' is an invalid float value\nCannot set gray non-stroke color because /'P823' is an invalid float value\nCannot set gray non-stroke color because /'P825' is an invalid float value\nCannot set gray non-stroke color because /'P827' is an invalid float value\nCannot set gray non-stroke color because /'P829' is an invalid float value\nCannot set gray non-stroke color because /'P831' is an invalid float value\nCannot set gray non-stroke color because /'P833' is an invalid float value\nCannot set gray non-stroke color because /'P835' is an invalid float value\nCannot set gray non-stroke color because /'P837' is an invalid float value\nCannot set gray non-stroke color because /'P839' is an invalid float value\nCannot set gray non-stroke color because /'P841' is an invalid float value\nCannot set gray non-stroke color because /'P843' is an invalid float value\nCannot set gray non-stroke color because /'P845' is an invalid float value\nCannot set gray non-stroke color because /'P847' is an invalid float value\nCannot set gray non-stroke color because /'P849' is an invalid float value\nCannot set gray non-stroke color because /'P851' is an invalid float value\nCannot set gray non-stroke color because /'P853' is an invalid float value\nCannot set gray non-stroke color because /'P855' is an invalid float value\nCannot set gray non-stroke color because /'P857' is an invalid float value\nCannot set gray non-stroke color because /'P859' is an invalid float value\nCannot set gray non-stroke color because /'P861' is an invalid float value\nCannot set gray non-stroke color because /'P863' is an invalid float value\nCannot set gray non-stroke color because /'P865' is an invalid float value\nCannot set gray non-stroke color because /'P867' is an invalid float value\nCannot set gray non-stroke color because /'P869' is an invalid float value\nCannot set gray non-stroke color because /'P871' is an invalid float value\nCannot set gray non-stroke color because /'P873' is an invalid float value\nCannot set gray non-stroke color because /'P875' is an invalid float value\nCannot set gray non-stroke color because /'P877' is an invalid float value\nCannot set gray non-stroke color because /'P879' is an invalid float value\nCannot set gray non-stroke color because /'P881' is an invalid float value\nCannot set gray non-stroke color because /'P883' is an invalid float value\nCannot set gray non-stroke color because /'P885' is an invalid float value\nCannot set gray non-stroke color because /'P887' is an invalid float value\nCannot set gray non-stroke color because /'P889' is an invalid float value\nCannot set gray non-stroke color because /'P891' is an invalid float value\nCannot set gray non-stroke color because /'P893' is an invalid float value\nCannot set gray non-stroke color because /'P895' is an invalid float value\nCannot set gray non-stroke color because /'P897' is an invalid float value\nCannot set gray non-stroke color because /'P899' is an invalid float value\nCannot set gray non-stroke color because /'P901' is an invalid float value\nCannot set gray non-stroke color because /'P903' is an invalid float value\nCannot set gray non-stroke color because /'P905' is an invalid float value\nCannot set gray non-stroke color because /'P907' is an invalid float value\nCannot set gray non-stroke color because /'P909' is an invalid float value\nCannot set gray non-stroke color because /'P911' is an invalid float value\nCannot set gray non-stroke color because /'P913' is an invalid float value\nCannot set gray non-stroke color because /'P915' is an invalid float value\nCannot set gray non-stroke color because /'P917' is an invalid float value\nCannot set gray non-stroke color because /'P919' is an invalid float value\nCannot set gray non-stroke color because /'P921' is an invalid float value\nCannot set gray non-stroke color because /'P923' is an invalid float value\nCannot set gray non-stroke color because /'P925' is an invalid float value\nCannot set gray non-stroke color because /'P927' is an invalid float value\n"
+      },
+      {
+        "time": "2026-01-14 16:39:08",
+        "level": "INFO",
+        "message": "嘗試重新生成結算預報後再執行檢討..."
+      },
+      {
+        "time": "2026-01-14 16:39:08",
+        "level": "INFO",
+        "message": "分析日期: 20260112,20260113"
+      },
+      {
+        "time": "2026-01-14 16:39:09",
+        "level": "SUCCESS",
+        "message": "結算報告更新成功"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "SUCCESS",
+        "message": "結算檢討完成（重試後）"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "INFO",
+        "message": "更新結算報告..."
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "INFO",
+        "message": "分析日期: 20260112,20260113"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "SUCCESS",
+        "message": "結算報告更新成功"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "INFO",
+        "message": "----------------------------------------"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "INFO",
+        "message": "步驟 4: 同步到 docs"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "SUCCESS",
+        "message": "同步完成"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "INFO",
+        "message": "----------------------------------------"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "INFO",
+        "message": "步驟 5: 更新首頁"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "SUCCESS",
+        "message": "首頁更新完成"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "INFO",
+        "message": "跳過 Git 推送"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "SUCCESS",
+        "message": "============================================================"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "SUCCESS",
+        "message": "每日工作流執行完成！"
+      },
+      {
+        "time": "2026-01-14 16:39:15",
+        "level": "SUCCESS",
+        "message": "============================================================"
+      }
+    ],
+    "status": "completed",
+    "end_time": "2026-01-14T16:39:15.611848"
   }
 ]

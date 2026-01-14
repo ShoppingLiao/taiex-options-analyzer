@@ -34,31 +34,31 @@
   },
   "settlement_price_prediction": {
     "predicted_price": 30707,
-    "upper_bound": 31168,
-    "lower_bound": 30246,
+    "upper_bound": 30800,
+    "lower_bound": 30600,
     "base_price": 30707,
     "expected_change": 0,
     "nearest_100": 30700,
-    "confidence_range": "±1.5%"
+    "confidence_range": "±100點"
   },
   "scenarios": [
     {
       "name": "✅ 符合預期情境",
-      "description": "結算價落在預測區間 30,246 - 31,168",
+      "description": "結算價落在預測區間 30,600 - 30,800",
       "probability": 60,
       "strategy": "按照原定策略執行",
       "action": "持有部位至結算"
     },
     {
       "name": "📈 超預期上漲",
-      "description": "結算價突破 31,168",
+      "description": "結算價突破 30,800",
       "probability": 20,
       "strategy": "Call 部位獲利，Put 可能止損",
       "action": "考慮提前調整 Put 部位"
     },
     {
       "name": "📉 超預期下跌",
-      "description": "結算價跌破 30,246",
+      "description": "結算價跌破 30,600",
       "probability": 20,
       "strategy": "Put 部位獲利，Call 可能止損",
       "action": "考慮提前調整 Call 部位"
@@ -86,6 +86,6 @@
       "time_decay": "週三結算影響較小"
     }
   },
-  "outlook": "🔮 **週三結算日展望**\n\n經過這兩天的盤勢觀察，我看到市場呈現盤整的態勢，價格上漲 50 點。\n\n今天的收盤價是 30,707，PC Ratio 為 0.77。市場過度樂觀，結算前可能會有修正。\n\n基於這些觀察，我預測週三的結算價會在 **30,707** 附近，合理區間應該是 30,246 到 31,168。\n\n週三結算只影響當週契約，對整體市場衝擊較小。\n\n我會密切關注開盤後的走勢，適時調整部位。",
+  "outlook": "🔮 **週三結算日展望**\n\n經過這兩天的盤勢觀察，我看到市場呈現盤整的態勢，價格上漲 50 點。\n\n今天的收盤價是 30,707，PC Ratio 為 0.77。市場過度樂觀，結算前可能會有修正。\n\n基於這些觀察，我預測週三的結算價會在 **30,707** 附近，合理區間應該是 30,600 到 30,800。\n\n週三結算只影響當週契約，對整體市場衝擊較小。\n\n我會密切關注開盤後的走勢，適時調整部位。",
   "confidence_level": 75
 }
