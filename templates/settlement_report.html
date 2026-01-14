@@ -1994,7 +1994,38 @@
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
-                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">📋 情境分析</h3>
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">📋 情境分析
+                        {% if ai_settlement_review %}
+                        <span style="font-size: 0.8rem; color: #dc2626; margin-left: 10px;">（已結算）</span>
+                        {% endif %}
+                    </h3>
+                    {% if ai_settlement_review %}
+                    {# 已結算 - 顯示實際發生的情境 #}
+                    {% set actual_price = ai_settlement_review.actual_result.settlement_price %}
+                    {% set upper = ai_settlement_prediction.settlement_price_prediction.upper_bound %}
+                    {% set lower = ai_settlement_prediction.settlement_price_prediction.lower_bound %}
+                    {% for scenario in ai_settlement_prediction.scenarios %}
+                    {% set is_actual = (loop.index == 1 and actual_price >= lower and actual_price <= upper) or
+                                       (loop.index == 2 and actual_price > upper) or
+                                       (loop.index == 3 and actual_price < lower) %}
+                    <div style="background: {% if is_actual %}#fef2f2{% else %}white{% endif %}; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid {% if is_actual %}#dc2626{% else %}#f59e0b{% endif %};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 600; color: {% if is_actual %}#dc2626{% else %}#92400e{% endif %}; font-size: 0.95rem;">
+                                {{ scenario.name }}
+                                {% if is_actual %}<span style="background: #dc2626; color: white; padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; margin-left: 8px;">✓ 實際發生</span>{% endif %}
+                            </span>
+                            <span style="background: {% if is_actual %}#fee2e2{% else %}#fef3c7{% endif %}; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: {% if is_actual %}#dc2626{% else %}#78350f{% endif %}; font-size: 0.85rem;">
+                                {{ scenario.probability }}%
+                            </span>
+                        </div>
+                        <p style="color: {% if is_actual %}#dc2626{% else %}#78350f{% endif %}; margin: 0; font-size: 0.85rem; line-height: 1.7;">{{ scenario.description }}</p>
+                        {% if is_actual %}
+                        <p style="color: #dc2626; margin: 8px 0 0 0; font-size: 0.85rem; font-weight: 600;">📍 實際結算價：{{ actual_price | format_number }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    {# 未結算 - 顯示預測情境 #}
                     {% for scenario in ai_settlement_prediction.scenarios %}
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -2006,6 +2037,7 @@
                         <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">{{ scenario.description }}</p>
                     </div>
                     {% endfor %}
+                    {% endif %}
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
