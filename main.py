@@ -21,6 +21,7 @@ from src.fetcher import PDFFetcher
 from src.parser import PDFParser
 from src.analyzer import OptionsAnalyzer
 from src.reporter import ReportGenerator
+from src.wearn_fetcher import WearnFetcher
 
 
 def main():
@@ -55,6 +56,12 @@ def main():
     )
 
     parser.add_argument(
+        '--wearn',
+        action='store_true',
+        help='從聚財網抓取選擇權數據（包含週三、週五、近月三個契約）'
+    )
+
+    parser.add_argument(
         '--output', '-o',
         type=str,
         help='報告輸出目錄'
@@ -86,9 +93,89 @@ def run_analysis(args):
 
     project_root = Path(__file__).parent
     pdf_path = None
+    options_list = []
 
+    # 使用聚財網數據
+    if args.wearn:
+        print("=" * 50)
+        print("台指選擇權分析工具 - 聚財網數據源")
+        print("=" * 50)
+        print("\n正在從聚財網抓取選擇權數據...")
+        
+        wearn_fetcher = WearnFetcher()
+        wearn_data = wearn_fetcher.fetch_all_weekly_contracts()
+        
+        if not wearn_data:
+            print("\n無法從聚財網獲取數據")
+            return
+        
+        # 將聚財網數據轉換為 OptionsData 格式
+        from src.parser import OptionsData
+        from src.twse_fetcher import TWSEDataFetcher
+        
+        # 嘗試獲取台指期貨數據
+        twse_fetcher = TWSEDataFetcher()
+        today_str = datetime.now().strftime('%Y%m%d')
+        tx_data = twse_fetcher.fetch_ohlc(today_str)
+        
+        if tx_data:
+            print(f"成功取得台指期貨數據: 收盤 {tx_data.get('close', 'N/A')}")
+        else:
+            print("警告: 無法取得台指期貨數據，將使用預設值")
+            # 使用一個合理的預設值（約當前加權指數）
+            tx_data = {'close': 30800, 'open': 30800, 'high': 30800, 'low': 30800}
+        
+        for contract_type, data in wearn_data.items():
+            # 提取所有數據到列表
+            strike_prices = []
+            call_oi = []
+            call_oi_change = []
+            put_oi = []
+            put_oi_change = []
+            
+            for item in data['data']:
+                strike_prices.append(item['strike_price'])
+                call_oi.append(item['call_oi'])
+                call_oi_change.append(item['call_oi_change'])
+                put_oi.append(item['put_oi'])
+                put_oi_change.append(item['put_oi_change'])
+            
+            # 確定契約類型顯示名稱
+            if contract_type == 'weekly_fri':
+                page_title = '週五選擇權'
+            elif contract_type == 'weekly_wed':
+                page_title = '週三選擇權'
+            else:
+                page_title = '近月選擇權'
+            
+            options_data = OptionsData(
+                date=datetime.now().strftime('%Y%m%d'),
+                contract_month=data['contract_code'][:6],  # YYYYMM
+                strike_prices=strike_prices,
+                call_volume=[0] * len(strike_prices),  # 聚財網沒有成交量數據
+                call_oi=call_oi,
+                call_oi_change=call_oi_change,
+                put_volume=[0] * len(strike_prices),
+                put_oi=put_oi,
+                put_oi_change=put_oi_change,
+                contract_type=contract_type,
+                contract_code=data['contract_code'],
+                page_title=page_title,
+                settlement_date='',  # 聚財網沒有提供到期日
+                # 使用台指期貨數據
+                tx_close=tx_data.get('close') if tx_data else None,
+                tx_open=tx_data.get('open') if tx_data else None,
+                tx_high=tx_data.get('high') if tx_data else None,
+                tx_low=tx_data.get('low') if tx_data else None,
+            )
+            options_list.append(options_data)
+        
+        print(f"成功抓取 {len(options_list)} 個契約的數據")
+        for opt in options_list:
+            print(f"  - {opt.page_title} ({opt.contract_code}): {len(opt.strike_prices)} 筆數據")
+    
     # 取得 PDF 檔案
-    if args.local:
+    elif args.local:
         # 使用本地檔案
         pdf_path = Path(args.local)
         if not pdf_path.exists():
@@ -123,19 +210,21 @@ def run_analysis(args):
         print(f"\n已下載: {pdf_path}")
         return
 
-    # 解析 PDF
-    print(f"\n正在解析 PDF...")
-    pdf_parser = PDFParser()
-    options_list = pdf_parser.parse(str(pdf_path))
+    # 如果不是使用聚財網數據，需要解析 PDF
+    if not args.wearn:
+        # 解析 PDF
+        print(f"\n正在解析 PDF...")
+        pdf_parser = PDFParser()
+        options_list = pdf_parser.parse(str(pdf_path))
 
-    if not options_list:
-        print("\n無法從 PDF 中解析出選擇權資料")
-        print("可能原因:")
-        print("  1. PDF 格式與預期不符")
-        print("  2. PDF 內容為掃描圖片而非文字")
-        return
+        if not options_list:
+            print("\n無法從 PDF 中解析出選擇權資料")
+            print("可能原因:")
+            print("  1. PDF 格式與預期不符")
+            print("  2. PDF 內容為掃描圖片而非文字")
+            return
 
-    print(f"找到 {len(options_list)} 組資料")
+        print(f"找到 {len(options_list)} 組資料")
 
     # 分析資料
     print("\n正在分析資料...")
