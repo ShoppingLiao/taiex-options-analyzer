@@ -60,6 +60,23 @@ class PDFParser:
     def __init__(self):
         self.current_file = None
 
+    # 固定頁面對應關係 (0-indexed)
+    PAGE_CONFIG = {
+        5: {'type': 'weekly_wed', 'name': '週三選擇權'},  # Page 6
+        6: {'type': 'weekly_fri', 'name': '週五選擇權'},  # Page 7
+        7: {'type': 'monthly', 'name': '近月選擇權'},     # Page 8
+    }
+
+    # X 座標範圍定義（用於座標解析模式）
+    # 根據 PDF 結構：call_oi_change | call_oi | strike | put_oi | put_oi_change
+    X_RANGES = {
+        'call_oi_change': (50, 100),   # 左側第一欄
+        'call_oi': (100, 200),          # 左側第二欄
+        'strike': (230, 300),           # 中間履約價
+        'put_oi': (420, 490),           # 右側第一欄
+        'put_oi_change': (490, 550),    # 右側第二欄
+    }
+
     def parse(self, pdf_path: str) -> List[OptionsData]:
         """
         解析 PDF 檔案，擷取所有月份的選擇權資料
@@ -68,7 +85,7 @@ class PDFParser:
             pdf_path: PDF 檔案路徑
 
         Returns:
-            各月份的選擇權資料清單
+            各月份的選擇權資料清單 (週三、週五、近月)
         """
         self.current_file = Path(pdf_path)
 
@@ -84,28 +101,34 @@ class PDFParser:
         with pdfplumber.open(pdf_path) as pdf:
             # 從證交所 API 獲取加權指數 OHLC 資料
             tx_data = self._fetch_twse_ohlc_data(trade_date)
-            
-            for page_num, page in enumerate(pdf.pages):
+
+            # 固定解析 Page 6, 7, 8 (週三、週五、近月選擇權)
+            for page_idx, config in self.PAGE_CONFIG.items():
+                if page_idx >= len(pdf.pages):
+                    continue
+
+                page = pdf.pages[page_idx]
                 text = page.extract_text() or ""
 
-                # 尋找包含選擇權履約價數據的頁面
-                # 注意：某些 PDF 的「履約價」可能被分隔成 "履 約 價"
-                has_strike_price = ('履約價' in text or 
-                                   ('履' in text and '約' in text and '價' in text))
-                has_oi = 'OI' in text or '未平倉' in text
-                has_options = 'Call' in text or 'Put' in text
-                
-                if has_strike_price and has_oi and has_options:
-                    options_data = self._parse_options_page(text, trade_date)
-                    if options_data:
-                        # 將加權指數資料加入選擇權資料
-                        if tx_data:
-                            options_data.tx_open = tx_data.get('open')
-                            options_data.tx_high = tx_data.get('high')
-                            options_data.tx_low = tx_data.get('low')
-                            options_data.tx_close = tx_data.get('close')
-                            # volume 和 settlement 從 PDF 解析（如果需要）
-                        all_options_data.append(options_data)
+                # 先嘗試文字解析
+                options_data = self._parse_options_page(text, trade_date, config)
+
+                # 如果文字解析失敗或數據不足，嘗試座標解析
+                if not options_data or len(options_data.strike_prices) < 5:
+                    print(f"⚠️  Page {page_idx + 1} ({config['name']}) 文字解析失敗，嘗試座標解析...")
+                    options_data = self._parse_options_page_by_coords(page, trade_date, config)
+
+                if options_data:
+                    print(f"✅ Page {page_idx + 1} ({config['name']}): 找到 {len(options_data.strike_prices)} 筆數據")
+                    # 將加權指數資料加入選擇權資料
+                    if tx_data:
+                        options_data.tx_open = tx_data.get('open')
+                        options_data.tx_high = tx_data.get('high')
+                        options_data.tx_low = tx_data.get('low')
+                        options_data.tx_close = tx_data.get('close')
+                    all_options_data.append(options_data)
+                else:
+                    print(f"❌ Page {page_idx + 1} ({config['name']}): 解析失敗")
 
         return all_options_data
     
@@ -217,7 +240,7 @@ class PDFParser:
             # 計算週數
             week_num = self._get_week_number(settlement_date)
             
-            # 從標題判斷
+            # 優先從標題判斷
             if '週三' in page_title and weekday == 2:
                 return {
                     'type': 'weekly_wed',
@@ -230,8 +253,21 @@ class PDFParser:
                     'code': f'{year_month}F{week_num}',
                     'name': '週五選擇權'
                 }
+            # 如果標題沒有明確指出，根據結算日的星期判斷
+            elif weekday == 2:  # 週三
+                return {
+                    'type': 'weekly_wed',
+                    'code': f'{year_month}W{week_num}',
+                    'name': '週三選擇權'
+                }
+            elif weekday == 4:  # 週五
+                return {
+                    'type': 'weekly_fri',
+                    'code': f'{year_month}F{week_num}',
+                    'name': '週五選擇權'
+                }
             else:
-                # 近月選擇權（月選）
+                # 近月選擇權（月選）- 結算日不是週三或週五
                 return {
                     'type': 'monthly',
                     'code': year_month,
@@ -246,7 +282,125 @@ class PDFParser:
                 'name': '選擇權'
             }
 
-    def _parse_options_page(self, text: str, trade_date: str) -> Optional[OptionsData]:
+    def _parse_options_page_by_coords(self, page, trade_date: str, config: Dict) -> Optional[OptionsData]:
+        """
+        使用座標方式解析選擇權頁面（用於處理特殊格式的 PDF）
+
+        Args:
+            page: pdfplumber 頁面物件
+            trade_date: 交易日期
+            config: 契約類型配置
+        """
+        try:
+            words = page.extract_words()
+            text = page.extract_text() or ""
+
+            # 提取結算日期
+            settlement_date_str = self._extract_settlement_date(text)
+
+            # 設定契約資訊
+            contract_type = config['type']
+            contract_name = config['name']
+            if settlement_date_str:
+                from datetime import datetime
+                try:
+                    settlement_date = datetime.strptime(settlement_date_str, '%Y/%m/%d')
+                    year_month = settlement_date.strftime("%Y%m")
+                    week_num = self._get_week_number(settlement_date)
+                    if contract_type == 'weekly_wed':
+                        contract_code = f'{year_month}W{week_num}'
+                    elif contract_type == 'weekly_fri':
+                        contract_code = f'{year_month}F{week_num}'
+                    else:
+                        contract_code = year_month
+                except:
+                    contract_code = trade_date[:6]
+            else:
+                contract_code = trade_date[:6]
+
+            # 按 Y 座標分組 words（每3像素一組，允許輕微偏差）
+            rows = {}
+            for word in words:
+                y = round(word['top'] / 3) * 3
+                if y not in rows:
+                    rows[y] = []
+                rows[y].append((word['x0'], word['text']))
+
+            strike_prices = []
+            call_oi = []
+            call_oi_change = []
+            put_oi = []
+            put_oi_change = []
+
+            # 解析每一行
+            for y, words_in_row in sorted(rows.items()):
+                # 按 X 座標分組
+                col_data = {
+                    'call_oi_change': [],
+                    'call_oi': [],
+                    'strike': [],
+                    'put_oi': [],
+                    'put_oi_change': [],
+                }
+
+                for x, text in words_in_row:
+                    # 根據 X 座標判斷欄位
+                    for col_name, (x_min, x_max) in self.X_RANGES.items():
+                        if x_min <= x < x_max:
+                            col_data[col_name].append(text)
+                            break
+
+                # 合併每個欄位的數字
+                def merge_numbers(texts):
+                    combined = ''.join(texts).replace(',', '').replace(' ', '')
+                    numbers = re.findall(r'-?\d+', combined)
+                    if numbers:
+                        return int(numbers[0])
+                    return None
+
+                strike = merge_numbers(col_data['strike'])
+
+                # 只處理有效的履約價行（20000-35000）
+                if strike and 20000 <= strike <= 35000:
+                    c_oi_chg = merge_numbers(col_data['call_oi_change']) or 0
+                    c_oi = merge_numbers(col_data['call_oi']) or 0
+                    p_oi = merge_numbers(col_data['put_oi']) or 0
+                    p_oi_chg = merge_numbers(col_data['put_oi_change']) or 0
+
+                    strike_prices.append(strike)
+                    call_oi_change.append(c_oi_chg)
+                    call_oi.append(c_oi)
+                    put_oi.append(p_oi)
+                    put_oi_change.append(p_oi_chg)
+
+            if not strike_prices:
+                return None
+
+            # 按履約價排序
+            sorted_data = sorted(zip(strike_prices, call_oi, call_oi_change, put_oi, put_oi_change))
+            strike_prices, call_oi, call_oi_change, put_oi, put_oi_change = zip(*sorted_data)
+
+            return OptionsData(
+                date=trade_date,
+                contract_month=contract_code,
+                strike_prices=list(strike_prices),
+                call_volume=[0] * len(strike_prices),
+                call_oi=list(call_oi),
+                call_oi_change=list(call_oi_change),
+                put_volume=[0] * len(strike_prices),
+                put_oi=list(put_oi),
+                put_oi_change=list(put_oi_change),
+                contract_type=contract_type,
+                contract_code=contract_code,
+                settlement_date=settlement_date_str,
+                page_title=contract_name
+            )
+
+        except Exception as e:
+            print(f"座標解析錯誤: {e}")
+            return None
+
+    def _parse_options_page(self, text: str, trade_date: str, config: Dict = None) -> Optional[OptionsData]:
         """
         解析選擇權頁面文字
 
@@ -254,19 +408,48 @@ class PDFParser:
         Call                    202601              Put
         OI增減 OI              履約價              OI OI增減
         -22    423             28,500              2,868 -192
+
+        Args:
+            text: 頁面文字
+            trade_date: 交易日期
+            config: 契約類型配置 {'type': 'weekly_wed', 'name': '週三選擇權'}
         """
         try:
             lines = text.split('\n')
 
-            # 提取結算日期和頁面標題
+            # 提取結算日期
             settlement_date_str = self._extract_settlement_date(text)
-            page_title = self._extract_page_title(text)
-            
-            # 判斷契約類型
-            contract_info = self._determine_contract_type(settlement_date_str, page_title, trade_date)
-            
+
+            # 如果有傳入 config，直接使用；否則自動判斷
+            if config:
+                contract_type = config['type']
+                contract_name = config['name']
+                # 根據結算日期生成契約代碼
+                if settlement_date_str:
+                    from datetime import datetime
+                    try:
+                        settlement_date = datetime.strptime(settlement_date_str, '%Y/%m/%d')
+                        year_month = settlement_date.strftime("%Y%m")
+                        week_num = self._get_week_number(settlement_date)
+                        if contract_type == 'weekly_wed':
+                            contract_code = f'{year_month}W{week_num}'
+                        elif contract_type == 'weekly_fri':
+                            contract_code = f'{year_month}F{week_num}'
+                        else:
+                            contract_code = year_month
+                    except:
+                        contract_code = trade_date[:6]
+                else:
+                    contract_code = trade_date[:6]
+            else:
+                page_title = self._extract_page_title(text)
+                contract_info = self._determine_contract_type(settlement_date_str, page_title, trade_date)
+                contract_type = contract_info['type']
+                contract_name = contract_info['name']
+                contract_code = contract_info['code']
+
             # 向下相容：保留舊的 contract_month 欄位
-            contract_month = contract_info['code']
+            contract_month = contract_code
 
             strike_prices = []
             call_oi = []
@@ -285,7 +468,7 @@ class PDFParser:
                     continue
 
                 # 清理行內容
-                line = line.replace('▶', '').replace('◀', '').replace(',', '')
+                line = line.replace('▶', '').replace('◀', '').replace('▽', '').replace('▼', '').replace(',', '')
 
                 # 嘗試匹配數據行: call_oi_change call_oi strike put_oi put_oi_change
                 # 格式可能是: -22 423 28500 2868 -192
@@ -339,10 +522,10 @@ class PDFParser:
                 put_oi=list(put_oi),
                 put_oi_change=list(put_oi_change),
                 # 新增契約類型相關資訊
-                contract_type=contract_info['type'],
-                contract_code=contract_info['code'],
+                contract_type=contract_type,
+                contract_code=contract_code,
                 settlement_date=settlement_date_str,
-                page_title=contract_info['name']
+                page_title=contract_name
             )
 
         except Exception as e:
