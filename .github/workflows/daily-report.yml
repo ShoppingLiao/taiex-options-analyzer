@@ -31,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      has_changes: ${{ steps.commit.outputs.has_changes }}
 
     steps:
       - name: Checkout repository
@@ -121,6 +123,7 @@ jobs:
           echo "原因: ${{ steps.trading.outputs.reason }}"
 
       - name: Commit and push changes
+        id: commit
         if: steps.trading.outputs.is_trading == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -132,6 +135,7 @@ jobs:
           # 檢查是否有變更
           if git diff --staged --quiet; then
             echo "沒有變更需要提交"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             DATE="${{ steps.config.outputs.date }}"
             TASK="${{ steps.config.outputs.task }}"
@@ -156,6 +160,7 @@ jobs:
 
             echo "=== 已推送變更 ==="
             echo "提交訊息: $MSG"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Summary
@@ -166,3 +171,40 @@ jobs:
           echo "- **任務**: ${{ steps.config.outputs.task }}" >> $GITHUB_STEP_SUMMARY
           echo "- **交易日**: ${{ steps.trading.outputs.is_trading }}" >> $GITHUB_STEP_SUMMARY
           echo "- **狀態**: ${{ steps.trading.outputs.reason }}" >> $GITHUB_STEP_SUMMARY
+
+  # 部署 GitHub Pages
+  deploy:
+    needs: generate-report
+    if: needs.generate-report.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main  # 確保取得最新的 main 分支
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./docs"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Deploy Summary
+        run: |
+          echo "## GitHub Pages 部署完成" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 網站已更新: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
