@@ -58,6 +58,11 @@
       "count": 3,
       "successful": 0,
       "observations": []
+    },
+    "extremely_bearish_bearish": {
+      "count": 1,
+      "successful": 0,
+      "observations": []
     }
   },
   "settlement_reviews": [
