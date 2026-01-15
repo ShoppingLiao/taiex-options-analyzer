@@ -235,7 +235,9 @@
             color: var(--warning-color);
         }
 
-        .chart-container {
+        /* 統一區塊容器樣式 */
+        .chart-container,
+        .section {
             background: var(--card-bg);
             border-radius: 2px;
             padding: 24px;
@@ -244,9 +246,10 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 手機版減少 chart-container padding */
+        /* 手機版減少 padding */
         @media (max-width: 767px) {
-            .chart-container {
+            .chart-container,
+            .section {
                 padding: 12px;
             }
         }
@@ -1005,16 +1008,6 @@
                     <div class="card-value negative">30,105</div>
                     <div class="card-subtitle">Closing Price</div>
                 </div>
-                <div class="card">
-                    <div class="card-title">成交量</div>
-                    <div class="card-value">0</div>
-                    <div class="card-subtitle">口 (Contracts)</div>
-                </div>
-                <div class="card">
-                    <div class="card-title">結算價</div>
-                    <div class="card-value">0</div>
-                    <div class="card-subtitle">Settlement Price</div>
-                </div>
             </div>
 
             <div class="chart-container">
@@ -1057,13 +1050,9 @@
                             <div style="font-weight: 600; margin-bottom: 5px;">📊 收盤價 30,105</div>
                             <div style="color: var(--text-muted); font-size: 0.875rem;">當日最後成交價格，作為選擇權結算分析的重要參考</div>
                         </li>
-                        <li style="padding: 15px; border-bottom: 1px solid var(--border-color);">
+                        <li style="padding: 15px;">
                             <div style="font-weight: 600; margin-bottom: 5px;">📈 日內震盪 560 點</div>
                             <div style="color: var(--text-muted); font-size: 0.875rem;">最高價 30,339 - 最低價 29,780</div>
-                        </li>
-                        <li style="padding: 15px;">
-                            <div style="font-weight: 600; margin-bottom: 5px;">📉 成交量 0 口</div>
-                            <div style="color: var(--text-muted); font-size: 0.875rem;">當日台指期貨總成交量，反映市場參與度</div>
                         </li>
                     </ul>
                 </div>
@@ -1309,7 +1298,7 @@
         <div style="margin-bottom: 40px;">
             <div class="chart-container card">
                 <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 2px 8px 0 0; margin: -24px -24px 20px -24px;">
-                    週三選擇權 OI 變化
+                    週三選擇權OI變化
                 </h3>
                 <div style="text-align: center; margin-bottom: 15px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;">
                     契約代號：202601W1 | 結算日：2026/01/07
@@ -2786,7 +2775,7 @@
         <div style="margin-bottom: 40px;">
             <div class="chart-container card">
                 <h3 class="chart-title" style="text-align: center; background: linear-gradient(135deg, #dc2626, #16a34a); color: white; padding: 15px; border-radius: 2px 8px 0 0; margin: -24px -24px 20px -24px;">
-                    近月選擇權 OI 變化
+                    近月選擇權OI變化
                 </h3>
                 <div style="text-align: center; margin-bottom: 15px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;">
                     契約代號：202601 | 結算日：2026/01/21
@@ -5414,7 +5403,7 @@
         
 
         <footer>
-            <p>報告產生時間: 2026-01-13 11:04:45 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-15 17:59:30 | TAIEX Options Analyzer</p>
             <div class="footer-links">
                 <a href="https://github.com/ShoppingLiao/taiex-options-analyzer" target="_blank">GitHub 專案</a>
             </div>
@@ -5430,13 +5419,15 @@
             <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 2px; margin-bottom: 30px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
                     <div>
-                        <h2 style="margin: 0; font-size: 1.8rem;">📈 AI 交易員分析</h2>
-                        <p style="margin: 8px 0 0 0; opacity: 0.9;">經驗等級: 學習中</p>
+                        <h2 style="margin: 0; font-size: 1.8rem;">🎓 AI 交易員分析</h2>
+                        <p style="margin: 8px 0 0 0; opacity: 0.9;">經驗等級: 進階</p>
                     </div>
                     <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 2px; backdrop-filter: blur(10px);">
                         <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">學習進度</div>
-                        <div style="font-size: 1.1rem; font-weight: 600;">📚 已累積 15 筆分析記錄
-📊 已建立 0 種 PC Ratio 模式分析</div>
+                        <div style="font-size: 1.1rem; font-weight: 600;">📚 已累積 31 筆分析記錄
+📊 已建立 0 種 PC Ratio 模式分析
+📖 參考分析: 1 份外部專家分析
+🔍 已學習 6 個關鍵分析因子</div>
                     </div>
                 </div>
             </div>
@@ -5541,7 +5532,7 @@ PC Ratio 在 0.765，相對均衡。這種時候我會更依賴價格行為和�
         <!-- 結束 AI 分析 Tab -->
 
         <footer style="margin-top: 30px;">
-            <p>報告產生時間: 2026-01-13 11:04:45 | TAIEX Options Analyzer</p>
+            <p>報告產生時間: 2026-01-15 17:59:30 | TAIEX Options Analyzer</p>
         </footer>
     </div>
 

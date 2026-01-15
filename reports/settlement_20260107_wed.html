@@ -7,9 +7,9 @@
     <style>
         :root {
             --primary-color: #2563eb;
-            --success-color: #22c55e;
+            --call-color: #ef4444;
+            --put-color: #22c55e;
             --warning-color: #f59e0b;
-            --danger-color: #ef4444;
             --purple-color: #8b5cf6;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
@@ -25,23 +25,21 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px 0;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 12px;
+                padding: 12px;
             }
         }
 
@@ -55,12 +53,12 @@
             position: relative;
         }
 
-        h1 {
+        header h1 {
             font-size: 2rem;
             margin-bottom: 10px;
         }
 
-        .subtitle {
+        header .subtitle {
             font-size: 1.1rem;
             opacity: 0.9;
         }
@@ -92,23 +90,26 @@
             header {
                 text-align: center;
             }
-            
-            h1 {
+
+            header h1 {
                 font-size: 1.5rem;
             }
+
             .settlement-info {
                 flex-direction: column;
                 gap: 15px;
             }
         }
 
-        /* Section */
-        .section {
-            background: white;
+        /* Section - 與每日報告 chart-container 統一 */
+        .section,
+        .chart-container {
+            background: var(--card-bg);
             border-radius: 2px;
-            padding: 30px;
+            padding: 24px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
         }
 
         /* Section Content */
@@ -125,11 +126,11 @@
         }
 
         .section-content.success {
-            border-left-color: var(--success-color);
+            border-left-color: var(--put-color);
         }
 
         .section-content.danger {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--call-color);
             background: #fef2f2;
         }
 
@@ -142,10 +143,11 @@
         }
 
         @media (max-width: 768px) {
-            .section {
-                padding: 20px 16px;
+            .section,
+            .chart-container {
+                padding: 12px;
             }
-            
+
             .section-content {
                 padding: 16px;
                 font-size: 0.85rem;
@@ -195,11 +197,11 @@
         }
 
         .trend-indicator.bullish {
-            background: linear-gradient(135deg, var(--success-color), #16a34a);
+            background: linear-gradient(135deg, var(--put-color), #16a34a);
         }
 
         .trend-indicator.bearish {
-            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            background: linear-gradient(135deg, var(--call-color), #dc2626);
         }
 
         .trend-indicator.neutral {
@@ -291,11 +293,11 @@
         }
 
         .signal-card.bullish {
-            border-left-color: var(--success-color);
+            border-left-color: var(--put-color);
         }
 
         .signal-card.bearish {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--call-color);
         }
 
         .signal-card.neutral {
@@ -493,11 +495,11 @@
         }
 
         .metric-change.positive {
-            color: var(--success-color);
+            color: var(--put-color);
         }
 
         .metric-change.negative {
-            color: var(--danger-color);
+            color: var(--call-color);
         }
 
         /* Risks */
@@ -508,7 +510,7 @@
 
         .risk-item {
             background: #fef2f2;
-            border-left: 4px solid var(--danger-color);
+            border-left: 4px solid var(--call-color);
             border-radius: 2px;
             padding: 15px 20px;
             font-size: 0.95rem;
@@ -575,57 +577,33 @@
             text-decoration: underline;
         }
 
-        /* Tabs */
-        .tabs-container {
-            background: white;
-            border-radius: 2px;
-            padding: 0;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .tabs-header {
+        /* Tab 導航樣式 - 與每日報告統一 */
+        .tabs {
             display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
             border-bottom: 2px solid var(--border-color);
-            background: var(--bg-color);
         }
 
         .tab-button {
-            flex: 1;
-            padding: 18px 24px;
-            background: transparent;
+            padding: 12px 24px;
+            background: none;
             border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
             cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
         }
 
         .tab-button:hover {
-            background: rgba(37, 99, 235, 0.05);
             color: var(--primary-color);
         }
 
         .tab-button.active {
             color: var(--primary-color);
-            background: white;
-        }
-
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-color);
-        }
-
-        .tab-icon {
-            margin-right: 8px;
+            border-bottom-color: var(--primary-color);
         }
 
         .tab-content {
@@ -634,16 +612,6 @@
 
         .tab-content.active {
             display: block;
-        }
-
-        @media (max-width: 768px) {
-            .tabs-header {
-                flex-direction: column;
-            }
-            .tab-button {
-                padding: 14px 20px;
-                font-size: 1rem;
-            }
         }
 
         /* AI Analysis Styles */
@@ -773,11 +741,11 @@
         }
 
         .price-level.resistance {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--call-color);
         }
 
         .price-level.support {
-            border-left-color: var(--success-color);
+            border-left-color: var(--put-color);
         }
 
         .level-label {
@@ -991,46 +959,35 @@
                 font-size: 1rem !important;
             }
 
-            /* Tab 改為 1x4 + 橫向滾動 */
-            .tabs-container {
-                margin-bottom: 8px;
+            /* Tab 橫向滾動 */
+            .tabs {
+                display: flex;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                gap: 4px;
+                margin-bottom: 12px;
             }
 
-            .tabs-header {
-                display: flex !important;
-                flex-direction: row !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                -webkit-overflow-scrolling: touch !important;
-                scrollbar-width: thin !important;
-                gap: 4px !important;
-                padding: 4px !important;
+            .tabs::-webkit-scrollbar {
+                height: 3px;
             }
 
-            .tabs-header::-webkit-scrollbar {
-                height: 3px !important;
+            .tabs::-webkit-scrollbar-track {
+                background: #f1f1f1;
             }
 
-            .tabs-header::-webkit-scrollbar-track {
-                background: #f1f1f1 !important;
-            }
-
-            .tabs-header::-webkit-scrollbar-thumb {
-                background: var(--primary-color) !important;
-                border-radius: 2px !important;
+            .tabs::-webkit-scrollbar-thumb {
+                background: var(--primary-color);
+                border-radius: 2px;
             }
 
             .tab-button {
-                flex: 0 0 auto !important;
-                min-width: 100px !important;
-                padding: 8px 12px !important;
-                font-size: 0.85rem !important;
-                border-radius: 2px 6px 0 0 !important;
-            }
-
-            .tab-icon {
-                margin-right: 4px !important;
-                font-size: 0.9rem !important;
+                flex: 0 0 auto;
+                min-width: 100px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                white-space: nowrap;
             }
 
             /* 趨勢指標 - 緊湊版 */
@@ -1412,28 +1369,32 @@
                     <div class="info-value">01/05、01/06</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">報告生成</div>
-                    <div class="info-value">2026/01/13 09:54</div>
+                    <div class="info-label">預測區間</div>
+                    <div class="info-value">30,300 - 30,500</div>
                 </div>
+                
+                <div class="info-item" style="background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 4px;">
+                    <div class="info-label">實際結算價</div>
+                    <div class="info-value" style="color: #fbbf24;">30,215</div>
+                </div>
+                
             </div>
         </header>
 
         <!-- Tabs -->
-        <div class="tabs-container">
-            <div class="tabs-header">
-                <button class="tab-button active" onclick="switchTab('technical')">
-                    <span class="tab-icon">📊</span>技術分析
-                </button>
-                <button class="tab-button" onclick="switchTab('ai-analysis')">
-                    <span class="tab-icon">🤖</span>AI 操盤分析
-                </button>
-                <button class="tab-button" onclick="switchTab('trader-view')">
-                    <span class="tab-icon">🧑‍💼</span>交易員視角
-                </button>
-                <button class="tab-button" onclick="switchTab('settlement-review')">
-                    <span class="tab-icon">📝</span>盤後檢討
-                </button>
-            </div>
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('technical')">
+                📊 技術分析
+            </button>
+            <button class="tab-button" onclick="switchTab('ai-analysis')">
+                🤖 AI 操盤分析
+            </button>
+            <button class="tab-button" onclick="switchTab('trader-view')">
+                🧑‍💼 交易員視角
+            </button>
+            <button class="tab-button" onclick="switchTab('settlement-review')">
+                📝 盤後檢討
+            </button>
         </div>
 
         <!-- Technical Analysis Tab -->
@@ -1447,23 +1408,23 @@
             </div>
             
             <div class="trend-overview">
-                <div class="trend-indicator neutral">
+                <div class="trend-indicator bullish">
                     <div class="trend-label">整體趨勢</div>
-                    <div class="trend-value">震盪整理 (偏弱)</div>
+                    <div class="trend-value">多頭趨勢 (偏強)</div>
                     <div class="trend-strength">強度評級</div>
-                    <div class="strength-stars">⭐⭐</div>
+                    <div class="strength-stars">⭐⭐⭐⭐</div>
                 </div>
                 
                 <div class="predicted-range">
                     <div class="range-title">預測結算區間</div>
                     <div class="range-display">
-                        <span>29,700</span>
+                        <span>30,300</span>
                         <span class="range-separator">～</span>
-                        <span>30,600</span>
+                        <span>30,500</span>
                     </div>
                     <div class="current-price-badge">
                         <div class="current-price-label">當前價格</div>
-                        <div class="current-price-value">30,120</div>
+                        <div class="current-price-value">30,576</div>
                     </div>
                 </div>
             </div>
@@ -1502,7 +1463,7 @@
                             <span>📈</span>
                             <span>多頭訊號</span>
                         </div>
-                        <div class="signal-strength">3/5</div>
+                        <div class="signal-strength">5/5</div>
                     </div>
                     <div class="signal-indicators">
                         
@@ -1511,7 +1472,7 @@
                         <span class="indicator-tag">趨勢方向</span>
                         
                     </div>
-                    <div class="signal-description">價格上漲 +251 點 (+0.84%)，多方動能強勁</div>
+                    <div class="signal-description">價格上漲 +471 點 (+1.56%)，多方動能強勁</div>
                 </div>
                 
                 <div class="signal-card neutral">
@@ -1520,7 +1481,7 @@
                             <span>➖</span>
                             <span>中性訊號</span>
                         </div>
-                        <div class="signal-strength">3/5</div>
+                        <div class="signal-strength">2/5</div>
                     </div>
                     <div class="signal-indicators">
                         
@@ -1529,7 +1490,7 @@
                         <span class="indicator-tag">磁吸效應</span>
                         
                     </div>
-                    <div class="signal-description">價格貼近 Max Pain (-80 點)，磁吸效應明顯</div>
+                    <div class="signal-description">價格距離 Max Pain +376 點，觀察磁吸效應</div>
                 </div>
                 
             </div>
@@ -1550,22 +1511,22 @@
                             <span class="scenario-icon">🚀</span>
                             <span>強勢上攻</span>
                         </div>
-                        <div class="scenario-probability">33.3%</div>
+                        <div class="scenario-probability">50.0%</div>
                     </div>
                     
                     <div class="scenario-range">
                         <div class="range-label">預測區間</div>
-                        <div class="range-values">30,550 ～ 30,850</div>
+                        <div class="range-values">30,500 ～ 30,700</div>
                     </div>
                     
                     <div class="range-label">關鍵價位</div>
                     <div class="key-levels">
                         
+                        <span class="level-badge">30,500</span>
+                        
                         <span class="level-badge">30,600</span>
                         
                         <span class="level-badge">30,700</span>
-                        
-                        <span class="level-badge">30,800</span>
                         
                     </div>
                     
@@ -1584,51 +1545,51 @@
                     
                     <div class="strategy-box">
                         <div class="strategy-label">💡 操作建議</div>
-                        <div class="strategy-text">順勢做多，停利設在區間上緣 +100，停損在 Max Pain</div>
+                        <div class="strategy-text">順勢做多，停利設在區間上緣，停損在 Max Pain</div>
                     </div>
                 </div>
                 
                 <div class="scenario-card ">
                     <div class="scenario-header">
                         <div class="scenario-name">
-                            <span class="scenario-icon">⚖️</span>
-                            <span>震盪整理</span>
+                            <span class="scenario-icon">🧲</span>
+                            <span>Max Pain 磁吸</span>
                         </div>
-                        <div class="scenario-probability">33.3%</div>
+                        <div class="scenario-probability">45.0%</div>
                     </div>
                     
                     <div class="scenario-range">
                         <div class="range-label">預測區間</div>
-                        <div class="range-values">29,700 ～ 30,600</div>
+                        <div class="range-values">30,100 ～ 30,300</div>
                     </div>
                     
                     <div class="range-label">關鍵價位</div>
                     <div class="key-levels">
                         
+                        <span class="level-badge">30,100</span>
+                        
                         <span class="level-badge">30,200</span>
                         
-                        <span class="level-badge">30,150</span>
-                        
-                        <span class="level-badge">30,150</span>
+                        <span class="level-badge">30,300</span>
                         
                     </div>
                     
                     <div class="conditions-list">
                         <div class="range-label">成立條件</div>
                         
-                        <div class="condition-item">✓ 多空力道均衡</div>
+                        <div class="condition-item">✓ 價格距離 Max Pain 376 點</div>
                         
-                        <div class="condition-item">✓ OI 分佈集中在特定區間</div>
+                        <div class="condition-item">✓ 結算日臨近，磁吸效應增強</div>
                         
-                        <div class="condition-item">✓ 價格在 Max Pain 附近磁吸</div>
+                        <div class="condition-item">✓ 莊家調節部位</div>
                         
-                        <div class="condition-item">✓ 波動度收斂</div>
+                        <div class="condition-item">✓ 雙邊力道趨於平衡</div>
                         
                     </div>
                     
                     <div class="strategy-box">
                         <div class="strategy-label">💡 操作建議</div>
-                        <div class="strategy-text">區間操作為主，高出低進，避免追高殺低</div>
+                        <div class="strategy-text">預期價格向 30,200 靠攏，可布局雙賣策略</div>
                     </div>
                 </div>
                 
@@ -1638,22 +1599,22 @@
                             <span class="scenario-icon">📉</span>
                             <span>回檔修正</span>
                         </div>
-                        <div class="scenario-probability">33.3%</div>
+                        <div class="scenario-probability">30.0%</div>
                     </div>
                     
                     <div class="scenario-range">
                         <div class="range-label">預測區間</div>
-                        <div class="range-values">29,450 ～ 29,750</div>
+                        <div class="range-values">30,100 ～ 30,300</div>
                     </div>
                     
                     <div class="range-label">關鍵價位</div>
                     <div class="key-levels">
                         
-                        <span class="level-badge">29,500</span>
+                        <span class="level-badge">30,300</span>
                         
-                        <span class="level-badge">29,600</span>
+                        <span class="level-badge">30,200</span>
                         
-                        <span class="level-badge">29,700</span>
+                        <span class="level-badge">30,100</span>
                         
                     </div>
                     
@@ -1672,7 +1633,7 @@
                     
                     <div class="strategy-box">
                         <div class="strategy-label">💡 操作建議</div>
-                        <div class="strategy-text">順勢做空，停利設在區間下緣 -100，停損在 Max Pain</div>
+                        <div class="strategy-text">順勢做空，停利設在區間下緣，停損在 Max Pain</div>
                     </div>
                 </div>
                 
@@ -1704,7 +1665,7 @@
                 
                 <div class="metric-card">
                     <div class="metric-label">當前價格</div>
-                    <div class="metric-value">30,120</div>
+                    <div class="metric-value">30,576</div>
                     
                 </div>
                 
@@ -1764,24 +1725,24 @@
 
                     <div class="price-levels">
                         <div class="price-level resistance">
-                            <div class="level-label" style="color: var(--danger-color);">🔴 上檔天花板</div>
-                            <div class="level-range">30,500 ~ 30,900</div>
+                            <div class="level-label" style="color: var(--call-color);">🔴 上檔天花板</div>
+                            <div class="level-range">30,400 ~ 30,800</div>
                             <div class="level-desc">
-                                夜盤高點 30,275 接近壓力區便拉回，這印證了 Call OI 大增的壓制力。<strong>除非早盤有極大利多，否則要結算在此之上的機率較低</strong>，因為莊家會全力守住這道防線以賺取 Call 的權利金。
+                                夜盤高點 30,525 接近壓力區便拉回，這印證了 Call OI 大增的壓制力。<strong>除非早盤有極大利多，否則要結算在此之上的機率較低</strong>，因為莊家會全力守住這道防線以賺取 Call 的權利金。
                             </div>
                         </div>
 
                         <div class="price-level support">
-                            <div class="level-label" style="color: var(--success-color);">🟢 下檔地板</div>
-                            <div class="level-range">29,600 ~ 29,900</div>
+                            <div class="level-label" style="color: var(--put-color);">🟢 下檔地板</div>
+                            <div class="level-range">30,200 ~ 30,500</div>
                             <div class="level-desc">
-                                夜盤低點 30,017 守在此關卡之上，距離 Put OI 重兵區尚有空間。<strong>此位附近有支撐</strong>，若今日回測此位，通常會有買盤或莊家護盤。
+                                夜盤低點 30,267 守在此關卡之上，距離 Put OI 重兵區尚有空間。<strong>此位附近有支撐</strong>，若今日回測此位，通常會有買盤或莊家護盤。
                             </div>
                         </div>
                     </div>
 
                     <div class="conclusion-box">
-                        <strong>我的判斷：</strong>結算價高機率落在 <strong>29,900 ~ 30,500</strong> 這個區間，讓兩邊的權利金最大程度被消耗。這是莊家的最佳利益點。
+                        <strong>我的判斷：</strong>結算價高機率落在 <strong>30,500 ~ 30,400</strong> 這個區間，讓兩邊的權利金最大程度被消耗。這是莊家的最佳利益點。
                     </div>
                 </div>
             </div>
@@ -1822,7 +1783,7 @@
                                 <div class="prediction-title">🔔 開盤位階</div>
                             </div>
                             <div class="prediction-detail">
-                                若開在 <strong>30,150</strong> 附近，代表多空平衡。<br><br>
+                                若開在 <strong>30,400</strong> 附近，代表多空平衡。<br><br>
                                 <strong>偏高開：</strong>注意是否為誘多，觀察 30 分鐘內能否守住。<br>
                                 <strong>偏低開：</strong>留意是否測試支撐後反彈。
                             </div>
@@ -1836,7 +1797,7 @@
                             <div class="prediction-detail">
                                 <strong>13:00 - 13:30</strong><br><br>
                                 台指結算價是採<strong>現貨最後半小時的平均價</strong>。<br><br>
-                                如果價格接近 30,100，莊家可能會試圖將價格壓在此之下或拉上此位，以決定哪些履約價的選擇權會歸零。
+                                如果價格接近 30,400，莊家可能會試圖將價格壓在此之下或拉上此位，以決定哪些履約價的選擇權會歸零。
                             </div>
                         </div>
 
@@ -1846,7 +1807,7 @@
                                 <div class="prediction-prob">高機率</div>
                             </div>
                             <div class="prediction-detail">
-                                落在 <strong>29,900 ~ 30,500</strong><br><br>
+                                落在 <strong>30,500 ~ 30,400</strong><br><br>
                                 這個區間讓莊家兩邊的權利金收益最大化，同時避免單邊出現過大履約壓力。
                             </div>
                         </div>
@@ -1942,14 +1903,16 @@
             <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 2px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
                 <!-- 標題居中 -->
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <h2 style="margin: 0; font-size: 1.8rem;">🌱 AI 交易員視角</h2>
-                    <p style="margin: 8px 0 0 0; opacity: 0.9; font-size: 1rem;">經驗等級: 新手</p>
+                    <h2 style="margin: 0; font-size: 1.8rem;">🎓 AI 交易員視角</h2>
+                    <p style="margin: 8px 0 0 0; opacity: 0.9; font-size: 1rem;">經驗等級: 進階</p>
                 </div>
                 <!-- 學習進度滿版 -->
                 <div style="background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 2px; backdrop-filter: blur(10px); text-align: center;">
                     <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">📚 學習進度</div>
-                    <div style="font-size: 1.1rem; font-weight: 600; white-space: pre-line;">📚 已累積 7 筆分析記錄
-📊 已建立 0 種 PC Ratio 模式分析</div>
+                    <div style="font-size: 1.1rem; font-weight: 600; white-space: pre-line;">📚 已累積 39 筆分析記錄
+📊 已建立 0 種 PC Ratio 模式分析
+📖 參考分析: 1 份外部專家分析
+🔍 已學習 6 個關鍵分析因子</div>
                 </div>
             </div>
 
@@ -1967,15 +1930,15 @@
                     </div>
                     <div style="background: white; padding: 20px; border-radius: 2px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">當前價格</div>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;">30,120</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;">30,576</div>
                     </div>
                     <div style="background: white; padding: 20px; border-radius: 2px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">預測區間</div>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--purple-color);">29,700 - 30,600</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--purple-color);">30,300 - 30,500</div>
                     </div>
                     <div style="background: white; padding: 20px; border-radius: 2px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">趨勢強度</div>
-                        <div style="font-size: 1.5rem; font-weight: 700;">⭐⭐</div>
+                        <div style="font-size: 1.5rem; font-weight: 700;">⭐⭐⭐⭐</div>
                     </div>
                 </div>
             </div>
@@ -1990,9 +1953,9 @@
 
 作為一個專注於結算日組合單的交易員，我只在週三和週五進場。這兩天的選擇權會在 13:30 自動結算歸零，讓我能精準掌握進出時機，不用擔心隔夜留倉的風險。我花了整週時間研究盤勢，就是為了今天的這一刻。
 
-說實話，這次的盤勢讓我有點難以判斷。多空力道拉鋸（趨勢強度 2 顆星），結算價可能在 29,700 到 30,600 這個範圍內震盪。
+從這週的數據來看，多方氣勢明顯，趨勢強度達到 4 顆星。這種情況下，我會使用「多方價差組合（Bull Call Spread）」，買進較低履約價的 Call，同時賣出較高履約價的 Call。我預期結算價會落在 30,300 到 30,500 之間。
 
-方向不明時，我會改用「鐵禿鷹組合（Iron Condor）」—— 同時建立 Call 和 Put 的價差組合，收取雙邊的權利金。只要結算價落在我設定的區間內，就能獲利。這是趨勢不明時，我最喜歡用的策略。
+這個組合的好處是：成本有限（買賣相抵），獲利潛力明確（價差），而且如果判斷錯誤，最大虧損就是淨權利金，不會無限擴大。
 
 我特別注意到最大痛苦點（Max Pain）在 30,200。這是莊家最希望的結算價，因為在這個價位，選擇權買方的總虧損最大。根據我的經驗，實際結算價常常會被拉往這個方向。所以我在設計組合單時，會把這個價位納入考量。
 
@@ -2018,18 +1981,19 @@
 
 作為一個專注於結算日操作的交易員，我只在週三和週五進行選擇權組合單交易。我的目標很明確：利用結算機制，透過組合單賺取價差利潤，當日結算自動平倉。
 
-📊 這次我會使用：鐵禿鷹組合（Iron Condor）
+� 這次我會使用：多方價差組合（Bull Call Spread）
 
-組合單結構（收取權利金策略）：
-• 賣出 Call 30,350 + 買進 Call 30,450
-• 賣出 Put 29,950 + 買進 Put 29,850
-• 最大獲利：當結算價在 29,950 ~ 30,350 區間，收取全部權利金
-• 最大虧損：價格突破任一邊的保護腿（100點 - 淨權利金）
+組合單結構：
+• 買進 Call 30,300（付權利金）
+• 賣出 Call 30,500（收權利金）
+• 最大獲利：當結算價 ≥ 30,500 時，賺取價差 200 點
+• 最大虧損：當結算價 ≤ 30,300 時，損失淨權利金
+• 損益兩平點：30,300 + 淨權利金
 
 為什麼選這個組合？
-• 趨勢不明確，我預期結算價會在區間震盪
-• 收取權利金作為利潤，時間站在我這邊
-• 雙邊保護，就算方向錯誤虧損也有限
+• 趨勢偏多（4 顆星），我看好突破 30,500
+• 賣出高履約價 Call 降低成本，就算沒漲那麼多也能獲利
+• 風險有限，最大虧損就是權利金，不會無限擴大
 
 
 💡 為什麼專做結算日組合單？
@@ -2060,11 +2024,11 @@
                     <span class="section-icon">⚠️</span>
                     <h2 class="section-title">我最擔心的風險</h2>
                 </div>
-                <div class="section-content danger">⚠️ 組合單風險等級：中高
-趨勢不明的結算日，我會選用鐵禿鷹組合。雖然是收取權利金策略，但最擔心的就是價格突然單邊突破，讓保護腿失效。不過好在組合單的風險有限，最大虧損在建倉時就知道了。
+                <div class="section-content danger">⚠️ 組合單風險等級：偏低
+強勢趨勢讓我對方向比較有信心，價差組合在這種情況下勝率較高。只要結算價落在目標區間，就能獲得最大利潤。
 
 🎯 組合單操作我特別注意這些風險：
-• 📊 價格風險：如果結算價偏離預測區間 29,700-30,600，組合單可能無法達到最大獲利，甚至虧損
+• 📊 價格風險：如果結算價偏離預測區間 30,300-30,500，組合單可能無法達到最大獲利，甚至虧損
 • 💧 流動性風險：結算日最後 30 分鐘，如果想提前平倉，可能會遇到買賣價差過大，無法以理想價格平倉的情況
 • ⚡ 執行風險：組合單需要同時成交多個履約價，如果沒有使用「組合單下單」功能，單腿成交會有巨大風險
 • ⏰ 時間風險：雖然時間價值歸零對我有利，但如果太早建倉，中途價格大幅波動也會影響心態
@@ -2075,6 +2039,8 @@
 • 不要在流動性不足的履約價建立組合單，平倉會很痛苦
 • 最後 15 分鐘不要試圖調整組合，容易造成單腿風險
 • 如果盤中部位虧損超過 50%，要果斷認賠，不要期待奇蹟
+
+❗ 我最擔心的情境：目前價格 30,576 離最大痛苦點 30,200 還有 376 點。如果莊家真的在最後時刻拉回 Max Pain，我的組合單可能會從獲利變虧損。這就是為什麼我會在 12:30 前評估是否要提前平倉鎖定利潤。
 
 🛡️ 我的風險控管措施：
 • 建倉前確認使用「組合單下單」，避免單腿風險
@@ -2193,7 +2159,7 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                     
                     <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 20px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-                        <p style="margin: 0; font-style: italic; font-size: 0.85rem; line-height: 1.7; color: #78350f;">💡 趨勢不明的結算日最難操作，觀望往往是最好的選擇</p>
+                        <p style="margin: 0; font-style: italic; font-size: 0.85rem; line-height: 1.7; color: #78350f;">💡 強勢趨勢的結算日，方向通常不會輕易改變</p>
                     </div>
                     
                 </div>
@@ -2208,7 +2174,7 @@
                 <p style="font-style: italic; color: var(--text-muted); font-size: 0.85rem; line-height: 1.7;">
                     🧑‍💼 以上是我作為 AI 交易員對這次結算日的個人看法與計劃<br>
                     結算日往往充滿變數，我會持續觀察市場並靈活調整策略<br>
-                    <strong style="color: var(--danger-color);">記住：保護本金永遠是第一優先！</strong>
+                    <strong style="color: var(--call-color);">記住：保護本金永遠是第一優先！</strong>
                 </p>
             </div>
 
@@ -2232,7 +2198,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #3b82f6; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #1e40af; font-weight: 600;">📊 總預測次數：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #2563eb; margin-left: 8px;">2</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #2563eb; margin-left: 8px;">3</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #60a5fa;">累積經驗</div>
                     </div>
@@ -2240,7 +2206,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #10b981; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #065f46; font-weight: 600;">✅ 平均準確度：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #059669; margin-left: 8px;">100.0%</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #059669; margin-left: 8px;">73.33%</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #34d399;">整體表現</div>
                     </div>
@@ -2248,7 +2214,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #f59e0b; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #92400e; font-weight: 600;">📏 平均誤差：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #d97706; margin-left: 8px;">18.5</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #d97706; margin-left: 8px;">90.3</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #fbbf24;">點數</div>
                     </div>
@@ -2256,7 +2222,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #8b5cf6; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #5b21b6; font-weight: 600;">🎯 區間命中率：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #7c3aed; margin-left: 8px;">100.0%</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #7c3aed; margin-left: 8px;">66.67%</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #a78bfa;">預測精準度</div>
                     </div>
@@ -2294,7 +2260,7 @@
             <div class="section" style="background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%); color: #78350f;">
                 <div class="section-header" style="border-bottom-color: rgba(120, 53, 15, 0.2);">
                     <span class="section-icon">🔮</span>
-                    <h2 class="section-title" style="color: #78350f;">結算日AI預測 🌱</h2>
+                    <h2 class="section-title" style="color: #78350f;">結算日AI預測 🎓</h2>
                 </div>
                 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
@@ -2332,37 +2298,64 @@
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
-                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">📋 情境分析</h3>
+                    <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">📋 情境分析
+                        
+                        <span style="font-size: 0.8rem; color: #dc2626; margin-left: 10px;">（已結算）</span>
+                        
+                    </h3>
                     
-                    <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div style="background: #fef2f2; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #dc2626;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">✅ 符合預期情境</span>
-                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
+                            <span style="font-weight: 600; color: #dc2626; font-size: 0.95rem;">
+                                ✅ 符合預期情境
+                                <span style="background: #dc2626; color: white; padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; margin-left: 8px;">✓ 實際發生</span>
+                            </span>
+                            <span style="background: #fee2e2; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #dc2626; font-size: 0.85rem;">
                                 60%
                             </span>
                         </div>
-                        <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價落在預測區間 29,792 - 30,700</p>
+                        <p style="color: #dc2626; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價落在預測區間 29,792 - 30,700</p>
+                        
+                        <p style="color: #dc2626; margin: 8px 0 0 0; font-size: 0.85rem; font-weight: 600;">📍 實際結算價：30,215</p>
+                        
                     </div>
+                    
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">📈 超預期上漲</span>
+                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">
+                                📈 超預期上漲
+                                
+                            </span>
                             <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
                                 20%
                             </span>
                         </div>
                         <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價突破 30,700</p>
+                        
                     </div>
+                    
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">📉 超預期下跌</span>
+                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">
+                                📉 超預期下跌
+                                
+                            </span>
                             <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
                                 20%
                             </span>
                         </div>
                         <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價跌破 29,792</p>
+                        
                     </div>
+                    
                     
                 </div>
 

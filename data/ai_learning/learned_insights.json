@@ -40,22 +40,22 @@
   "pc_ratio_patterns": {},
   "market_scenarios": {
     "bullish_bullish": {
-      "count": 14,
+      "count": 19,
       "successful": 0,
       "observations": []
     },
     "neutral_bearish": {
-      "count": 10,
+      "count": 12,
       "successful": 0,
       "observations": []
     },
     "neutral_neutral": {
-      "count": 2,
+      "count": 3,
       "successful": 0,
       "observations": []
     },
     "bearish_bearish": {
-      "count": 3,
+      "count": 4,
       "successful": 0,
       "observations": []
     },
