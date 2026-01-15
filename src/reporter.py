@@ -223,6 +223,11 @@ class ReportGenerator:
             'date_with_weekday': format_date_with_weekday(result.date),
             'contract_month': result.contract_month,
             'generated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            
+            # 契約資訊
+            'page_title': options_data.page_title or '',
+            'contract_code': options_data.contract_code or '',
+            'settlement_date': options_data.settlement_date or '',
 
             # 關鍵指標
             'max_pain': result.max_pain,
