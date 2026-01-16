@@ -1,0 +1,66 @@
+{
+  "settlement_date": "20260116",
+  "generated_time": "2026/01/16 20:59",
+  "night_session": {
+    "date": "20260115",
+    "open": 30810.58,
+    "high": 30860.58,
+    "low": 30760.58,
+    "close": 30810.58,
+    "amplitude": 100,
+    "amplitude_pct": 0.32,
+    "change": 0,
+    "change_pct": 0,
+    "source": "估算值（基於日盤收盤）",
+    "is_estimated": true
+  },
+  "night_analysis": {
+    "trend": "neutral",
+    "trend_text": "夜盤持平",
+    "amplitude": 100,
+    "amplitude_level": "normal",
+    "amplitude_text": "正常震幅",
+    "change": 0,
+    "change_pct": 0,
+    "close_position": "收在中間"
+  },
+  "consistency_analysis": {
+    "consistency": "neutral",
+    "consistency_text": "原預測為中性，夜盤走勢影響有限",
+    "original_trend": "neutral",
+    "in_range": true,
+    "range_text": "夜盤收盤在預測區間內",
+    "trader_view_summary": null
+  },
+  "adjusted_prediction": {
+    "original_range": [
+      30500,
+      31000
+    ],
+    "adjusted_range": [
+      30500,
+      31000
+    ],
+    "adjustment": 0,
+    "new_trend": "neutral",
+    "new_trend_text": "維持原判斷",
+    "confidence": "中"
+  },
+  "strategy": {
+    "strategies": [
+      {
+        "action": "區間操作",
+        "entry": "區間下緣 30,500 做多，上緣 31,000 做空",
+        "target": "目標區間中點 30,750",
+        "stop": "突破區間則停損反手"
+      }
+    ],
+    "risk_warnings": [],
+    "key_levels": {
+      "support": 30500,
+      "resistance": 31000,
+      "pivot": 30750
+    }
+  },
+  "analysis_text": "【夜盤概況】\n夜盤收盤 30,811，震幅 100 點（正常震幅），夜盤持平，收在中間。\n\n【與前日預測比較】\n原預測為中性，夜盤走勢影響有限。\n夜盤收盤在預測區間內。\n\n【盤前預測調整】\n**調整後預測區間：30,500 ~ 31,000**\n預測信心度：中\n\n【開盤策略建議】\n• 區間操作：區間下緣 30,500 做多，上緣 31,000 做空\n  目標：目標區間中點 30,750\n  停損：突破區間則停損反手\n"
+}

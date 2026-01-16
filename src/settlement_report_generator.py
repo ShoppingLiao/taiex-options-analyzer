@@ -43,35 +43,37 @@ class SettlementReportGenerator:
     def generate_report(
         self,
         prediction: SettlementPrediction,
-        output_filename: str = None
+        output_filename: str = None,
+        premarket_data: Optional[dict] = None
     ) -> Path:
         """
         生成結算日預測報告
-        
+
         Args:
             prediction: 結算預測結果
             output_filename: 輸出檔名（可選）
-            
+            premarket_data: 盤前預測資料（可選）
+
         Returns:
             Path: 報告檔案路徑
         """
         # 載入模板
         template_path = self.template_dir / 'settlement_report.html'
-        
+
         if not template_path.exists():
             raise FileNotFoundError(f"找不到模板: {template_path}")
-        
+
         with open(template_path, 'r', encoding='utf-8') as f:
             template_content = f.read()
-        
+
         # 創建 Jinja2 環境並添加自定義 filter
         from jinja2 import Environment
         env = Environment()
         env.filters['format_number'] = lambda x: f'{int(x):,}' if x else '0'
         template = env.from_string(template_content)
-        
+
         # 準備模板數據
-        template_data = self._prepare_template_data(prediction)
+        template_data = self._prepare_template_data(prediction, premarket_data)
         
         # 渲染 HTML
         html_content = template.render(**template_data)
@@ -95,9 +97,9 @@ class SettlementReportGenerator:
         
         return docs_path
     
-    def _prepare_template_data(self, prediction: SettlementPrediction) -> dict:
+    def _prepare_template_data(self, prediction: SettlementPrediction, premarket_data: Optional[dict] = None) -> dict:
         """準備模板數據"""
-        
+
         # 基本資訊
         weekday_text = '週三' if prediction.settlement_weekday == 'wednesday' else '週五'
         weekday_short = '三' if prediction.settlement_weekday == 'wednesday' else '五'
@@ -190,10 +192,50 @@ class SettlementReportGenerator:
             
             # AI 績效數據
             'ai_performance': performance_summary,
+
+            # 盤前預測 - 預設為無
+            'has_premarket': False,
         }
-        
+
         # 合併 AI 分析數據
         data.update(ai_data)
+
+        # 處理盤前預測資料
+        if premarket_data:
+            data['has_premarket'] = True
+            night_session = premarket_data.get('night_session', {})
+            adjusted_pred = premarket_data.get('adjusted_prediction', {})
+            strategy = premarket_data.get('strategy', {})
+
+            # 夜盤數據
+            data['premarket_night_open'] = f"{night_session.get('open', 0):,.0f}"
+            data['premarket_night_high'] = f"{night_session.get('high', 0):,.0f}"
+            data['premarket_night_low'] = f"{night_session.get('low', 0):,.0f}"
+            data['premarket_night_close'] = f"{night_session.get('close', 0):,.0f}"
+            data['premarket_night_amplitude'] = f"{night_session.get('amplitude', 0):,.0f}"
+            data['premarket_is_estimated'] = night_session.get('is_estimated', False)
+
+            # 調整後預測
+            original_range = adjusted_pred.get('original_range', [0, 0])
+            adjusted_range = adjusted_pred.get('adjusted_range', [0, 0])
+            data['premarket_original_lower'] = f"{original_range[0]:,}"
+            data['premarket_original_upper'] = f"{original_range[1]:,}"
+            data['premarket_adjusted_lower'] = f"{adjusted_range[0]:,}"
+            data['premarket_adjusted_upper'] = f"{adjusted_range[1]:,}"
+            data['premarket_adjustment'] = adjusted_pred.get('adjustment', 0)
+            data['premarket_confidence'] = adjusted_pred.get('confidence', '中')
+            data['premarket_trend_text'] = adjusted_pred.get('new_trend_text', '維持原判斷')
+
+            # 策略建議
+            data['premarket_strategies'] = strategy.get('strategies', [])
+            data['premarket_warnings'] = strategy.get('risk_warnings', [])
+            key_levels = strategy.get('key_levels', {})
+            data['premarket_support'] = f"{key_levels.get('support', 0):,}"
+            data['premarket_resistance'] = f"{key_levels.get('resistance', 0):,}"
+            data['premarket_pivot'] = f"{key_levels.get('pivot', 0):,}"
+
+            # 生成時間
+            data['premarket_generated_time'] = premarket_data.get('generated_time', '')
 
         return data
 

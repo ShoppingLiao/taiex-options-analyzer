@@ -1,9 +1,10 @@
 name: Daily Options Report
 
 on:
-  # 每個交易日台灣時間 16:00 執行 (UTC 08:00)
+  # 結算日台灣時間 08:00 執行盤前預測 (UTC 00:00)
   schedule:
-    - cron: '0 8 * * 1-5'  # 週一到週五 UTC 08:00
+    - cron: '0 0 * * 3,5'  # 週三、週五 UTC 00:00 = 台灣 08:00 (盤前預測)
+    - cron: '0 8 * * 1-5'  # 週一到週五 UTC 08:00 = 台灣 16:00 (每日報告)
 
   # 手動觸發
   workflow_dispatch:
@@ -18,10 +19,11 @@ on:
         default: 'auto'
         type: choice
         options:
-          - auto        # 自動判斷（根據星期幾）
+          - auto        # 自動判斷（根據星期幾和時間）
           - daily       # 只執行每日報告
           - settlement  # 只執行結算預報
           - review      # 只執行結算檢討
+          - premarket   # 只執行盤前預測
 
 env:
   TZ: Asia/Taipei
@@ -64,14 +66,20 @@ jobs:
           # 決定任務
           TASK="${{ github.event.inputs.task }}"
           if [ "$TASK" = "auto" ] || [ -z "$TASK" ]; then
-            # 自動判斷：根據星期幾
+            # 自動判斷：根據星期幾和時間
             WEEKDAY=$(date +%u)  # 1=週一, 5=週五
+            HOUR=$(date -u +%H)  # UTC 時間
             echo "weekday=$WEEKDAY" >> $GITHUB_OUTPUT
+            echo "hour_utc=$HOUR" >> $GITHUB_OUTPUT
 
-            # 週二(2)或週四(4)：產生結算預報
-            # 週三(3)或週五(5)：執行結算檢討
-            # 其他：只產生日報
-            if [ "$WEEKDAY" = "2" ] || [ "$WEEKDAY" = "4" ]; then
+            # UTC 00:00 (台灣 08:00) 在週三(3)或週五(5)：盤前預測
+            # UTC 08:00 (台灣 16:00) 時：
+            #   週二(2)或週四(4)：產生結算預報
+            #   週三(3)或週五(5)：執行結算檢討
+            #   其他：只產生日報
+            if [ "$HOUR" = "00" ] && ([ "$WEEKDAY" = "3" ] || [ "$WEEKDAY" = "5" ]); then
+              echo "task=premarket" >> $GITHUB_OUTPUT
+            elif [ "$WEEKDAY" = "2" ] || [ "$WEEKDAY" = "4" ]; then
               echo "task=settlement" >> $GITHUB_OUTPUT
             elif [ "$WEEKDAY" = "3" ] || [ "$WEEKDAY" = "5" ]; then
               echo "task=review" >> $GITHUB_OUTPUT
@@ -109,11 +117,19 @@ jobs:
       - name: Run daily workflow
         if: steps.trading.outputs.is_trading == 'true'
         run: |
-          echo "=== 執行每日工作流 ==="
+          echo "=== 執行工作流 ==="
           echo "日期: ${{ steps.config.outputs.date }}"
           echo "任務: ${{ steps.config.outputs.task }}"
 
-          python3 daily_workflow.py --date ${{ steps.config.outputs.date }} --skip-git
+          TASK="${{ steps.config.outputs.task }}"
+
+          if [ "$TASK" = "premarket" ]; then
+            echo "執行盤前預測..."
+            python3 daily_workflow.py --date ${{ steps.config.outputs.date }} --premarket --skip-git
+          else
+            echo "執行每日工作流..."
+            python3 daily_workflow.py --date ${{ steps.config.outputs.date }} --skip-git
+          fi
 
       - name: Skip non-trading day
         if: steps.trading.outputs.is_trading != 'true'
@@ -149,6 +165,9 @@ jobs:
                 ;;
               review)
                 MSG="auto: $DATE 結算檢討"
+                ;;
+              premarket)
+                MSG="auto: $DATE 盤前預測"
                 ;;
               *)
                 MSG="auto: $DATE 每日更新"

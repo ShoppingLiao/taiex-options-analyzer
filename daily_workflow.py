@@ -526,6 +526,141 @@ class DailyWorkflow:
         except Exception as e:
             self.logger.warning(f"重新生成結算報告失敗: {str(e)}")
 
+    def _generate_premarket_prediction(self, weekday: str):
+        """結算日早上生成盤前預測"""
+        try:
+            settlement_date = self.date
+
+            self.logger.info(f"結算日: {settlement_date}")
+            self.logger.info(f"星期: {'週三' if weekday == 'wednesday' else '週五'}")
+
+            result = subprocess.run(
+                [
+                    'python3', 'generate_premarket_prediction.py',
+                    '--settlement-date', settlement_date,
+                    '--weekday', weekday
+                ],
+                capture_output=True,
+                text=True,
+                cwd=self.project_dir,
+                timeout=180
+            )
+
+            if result.returncode == 0:
+                self.logger.success(f"盤前預測生成成功")
+                # 顯示部分輸出
+                if result.stdout:
+                    for line in result.stdout.split('\n')[-10:]:
+                        if line.strip():
+                            self.logger.info(f"  {line}")
+            else:
+                self.logger.warning(f"盤前預測生成可能有問題: {result.stderr}")
+
+        except Exception as e:
+            self.logger.warning(f"生成盤前預測失敗: {str(e)}")
+
+    def run_premarket(self, skip_git: bool = False):
+        """執行盤前預測工作流（結算日早上 08:00）"""
+        self.logger.info("=" * 60)
+        self.logger.info(f"開始執行盤前預測工作流")
+        self.logger.info(f"目標日期: {self.date} (週{self.weekday_names[self.weekday]})")
+        self.logger.info(f"交易日狀態: {self.trading_reason}")
+        self.logger.info("=" * 60)
+
+        try:
+            # 非交易日不執行
+            if not self.is_trading:
+                self.logger.warning(f"今天 ({self.date}) 非交易日: {self.trading_reason}")
+                self.logger.info("跳過盤前預測生成")
+                self.logger.save_run('skipped')
+                return True
+
+            # 只在週三(2)或週五(4)執行
+            if self.weekday == 2:  # 週三
+                weekday = 'wednesday'
+            elif self.weekday == 4:  # 週五
+                weekday = 'friday'
+            else:
+                self.logger.info(f"今天不是結算日，跳過盤前預測")
+                self.logger.save_run('skipped')
+                return True
+
+            # 步驟 1: 生成盤前預測
+            self.logger.info("-" * 40)
+            self.logger.info("步驟 1: 生成盤前預測")
+            self._generate_premarket_prediction(weekday)
+
+            # 步驟 2: 同步到 docs
+            if not self._sync_to_docs():
+                self.logger.warning("同步到 docs 失敗，繼續執行")
+
+            # 步驟 3: 更新首頁
+            if not self._update_index():
+                self.logger.warning("更新首頁失敗，繼續執行")
+
+            # 步驟 4: Git 推送
+            if not skip_git:
+                if not self._git_push_premarket():
+                    self.logger.warning("Git 推送失敗")
+            else:
+                self.logger.info("跳過 Git 推送")
+
+            self.logger.success("=" * 60)
+            self.logger.success("盤前預測工作流執行完成！")
+            self.logger.success("=" * 60)
+            self.logger.save_run('completed')
+            return True
+
+        except Exception as e:
+            self.logger.error(f"盤前預測工作流執行失敗: {str(e)}")
+            self.logger.save_run('failed')
+            return False
+
+    def _git_push_premarket(self) -> bool:
+        """Git 推送（盤前預測專用）"""
+        self.logger.info("-" * 40)
+        self.logger.info("步驟 4: Git 推送")
+
+        try:
+            # Git add
+            subprocess.run(
+                ['git', 'add', 'docs/', 'data/ai_learning/'],
+                cwd=self.project_dir,
+                capture_output=True
+            )
+
+            # Git commit
+            commit_msg = f"auto: {self.date} 盤前預測"
+            result = subprocess.run(
+                ['git', 'commit', '-m', commit_msg],
+                cwd=self.project_dir,
+                capture_output=True,
+                text=True
+            )
+
+            if 'nothing to commit' in result.stdout or 'nothing to commit' in result.stderr:
+                self.logger.info("沒有變更需要提交")
+                return True
+
+            # Git push
+            result = subprocess.run(
+                ['git', 'push'],
+                cwd=self.project_dir,
+                capture_output=True,
+                text=True
+            )
+
+            if result.returncode == 0:
+                self.logger.success("Git 推送成功")
+                return True
+            else:
+                self.logger.error(f"Git 推送失敗: {result.stderr}")
+                return False
+
+        except Exception as e:
+            self.logger.error(f"Git 操作失敗: {str(e)}")
+            return False
+
     def _get_previous_trading_days_before_today(self, count: int) -> list:
         """取得今天之前的 N 個交易日"""
         trading_days = []
@@ -738,6 +873,7 @@ def main():
   python3 daily_workflow.py                    # 執行今日工作流
   python3 daily_workflow.py --date 20260115    # 執行指定日期
   python3 daily_workflow.py --skip-git         # 跳過 Git 推送
+  python3 daily_workflow.py --premarket        # 執行盤前預測（結算日早上）
   python3 daily_workflow.py --logs             # 查看日誌
   python3 daily_workflow.py --history          # 查看執行歷史
   python3 daily_workflow.py --detail           # 查看最近一次執行詳情
@@ -750,6 +886,7 @@ def main():
     parser.add_argument('--force', '-f', action='store_true', help='強制重新下載 PDF')
     parser.add_argument('--max-retries', type=int, default=5, help='最大重試次數 (預設: 5)')
     parser.add_argument('--retry-interval', type=int, default=1800, help='重試間隔秒數 (預設: 1800)')
+    parser.add_argument('--premarket', '-p', action='store_true', help='執行盤前預測（結算日早上 08:00）')
 
     # 日誌相關
     parser.add_argument('--logs', '-l', action='store_true', help='查看最近日誌')
@@ -782,10 +919,14 @@ def main():
         retry_interval=args.retry_interval
     )
 
-    success = workflow.run(
-        skip_git=args.skip_git,
-        force=args.force
-    )
+    # 盤前預測模式
+    if args.premarket:
+        success = workflow.run_premarket(skip_git=args.skip_git)
+    else:
+        success = workflow.run(
+            skip_git=args.skip_git,
+            force=args.force
+        )
 
     sys.exit(0 if success else 1)
 

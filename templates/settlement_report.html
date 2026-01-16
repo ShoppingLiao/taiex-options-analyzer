@@ -1397,6 +1397,11 @@
             <button class="tab-button" onclick="switchTab('trader-view')">
                 🧑‍💼 交易員視角
             </button>
+            {% if has_premarket %}
+            <button class="tab-button" onclick="switchTab('pre-market')">
+                🌅 盤前預測
+            </button>
+            {% endif %}
             <button class="tab-button" onclick="switchTab('settlement-review')">
                 📝 盤後檢討
             </button>
@@ -1878,6 +1883,145 @@
         </div>
         <!-- End Trader View Tab -->
 
+        <!-- Pre-Market Prediction Tab -->
+        {% if has_premarket %}
+        <div id="pre-market-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌅</span>
+                    <h2 class="section-title">盤前預測分析</h2>
+                </div>
+
+                <!-- 夜盤數據摘要 -->
+                <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; padding: 25px; border-radius: 2px; margin-bottom: 25px;">
+                    <h3 style="margin: 0 0 20px 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
+                        <span>🌙</span> 前夜盤數據
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px;">
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">開盤</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">{{ premarket_night_open }}</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">最高</div>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #f87171;">{{ premarket_night_high }}</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">最低</div>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #4ade80;">{{ premarket_night_low }}</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">收盤</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">{{ premarket_night_close }}</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">震幅</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">{{ premarket_night_amplitude }} 點</div>
+                        </div>
+                    </div>
+                    {% if premarket_is_estimated %}
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(251, 191, 36, 0.2); border-radius: 2px; font-size: 0.9rem;">
+                        ⚠️ 此為估算值，實際夜盤數據請以期交所公告為準
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- 調整後預測區間 -->
+                <div style="background: white; padding: 25px; border-radius: 2px; margin-bottom: 25px; border-left: 4px solid var(--primary-color);">
+                    <h3 style="margin: 0 0 20px 0; font-size: 1.2rem; color: var(--primary-color);">
+                        🎯 調整後預測區間
+                    </h3>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">調整前</div>
+                            <div style="font-size: 1.1rem; text-decoration: line-through; color: var(--text-muted);">
+                                {{ premarket_original_lower }} ~ {{ premarket_original_upper }}
+                            </div>
+                        </div>
+                        <div style="font-size: 1.5rem;">→</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: var(--primary-color); font-weight: 600;">調整後</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color);">
+                                {{ premarket_adjusted_lower }} ~ {{ premarket_adjusted_upper }}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                        <div style="padding: 10px 20px; background: var(--bg-color); border-radius: 2px;">
+                            <span style="color: var(--text-muted);">調整幅度：</span>
+                            <span style="font-weight: 600; color: {{ 'var(--put-color)' if premarket_adjustment > 0 else 'var(--call-color)' if premarket_adjustment < 0 else 'var(--text-color)' }};">
+                                {{ premarket_adjustment|abs }} 點 {{ '↑' if premarket_adjustment > 0 else '↓' if premarket_adjustment < 0 else '→' }}
+                            </span>
+                        </div>
+                        <div style="padding: 10px 20px; background: var(--bg-color); border-radius: 2px;">
+                            <span style="color: var(--text-muted);">預測信心：</span>
+                            <span style="font-weight: 600;">{{ premarket_confidence }}</span>
+                        </div>
+                        <div style="padding: 10px 20px; background: var(--bg-color); border-radius: 2px;">
+                            <span style="color: var(--text-muted);">趨勢判斷：</span>
+                            <span style="font-weight: 600;">{{ premarket_trend_text }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 開盤策略建議 -->
+                <div style="background: white; padding: 25px; border-radius: 2px; margin-bottom: 25px; border-left: 4px solid var(--warning-color);">
+                    <h3 style="margin: 0 0 20px 0; font-size: 1.2rem; color: var(--warning-color);">
+                        📋 開盤策略建議
+                    </h3>
+                    {% for strategy in premarket_strategies %}
+                    <div style="padding: 15px; background: var(--bg-color); border-radius: 2px; margin-bottom: 15px;">
+                        <div style="font-weight: 600; font-size: 1.1rem; margin-bottom: 10px; color: var(--primary-color);">
+                            {{ strategy.action }}
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <span style="color: var(--text-muted);">進場：</span>{{ strategy.entry }}
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <span style="color: var(--text-muted);">目標：</span>{{ strategy.target }}
+                        </div>
+                        <div>
+                            <span style="color: var(--text-muted);">停損：</span>{{ strategy.stop }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- 關鍵價位 -->
+                    <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: var(--call-color);">壓力</div>
+                            <div style="font-size: 1.3rem; font-weight: 600; color: var(--call-color);">{{ premarket_resistance }}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">樞紐</div>
+                            <div style="font-size: 1.3rem; font-weight: 600;">{{ premarket_pivot }}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.85rem; color: var(--put-color);">支撐</div>
+                            <div style="font-size: 1.3rem; font-weight: 600; color: var(--put-color);">{{ premarket_support }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 風險提示 -->
+                {% if premarket_warnings %}
+                <div style="background: #fef2f2; padding: 20px; border-radius: 2px; border-left: 4px solid var(--call-color);">
+                    <h4 style="margin: 0 0 15px 0; color: var(--call-color);">⚠️ 風險提示</h4>
+                    {% for warning in premarket_warnings %}
+                    <div style="padding: 8px 0; color: #991b1b;">{{ warning }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- 生成時間 -->
+                <div style="text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85rem;">
+                    盤前預測生成時間：{{ premarket_generated_time }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <!-- End Pre-Market Tab -->
+
         <!-- Settlement Review Tab -->
         <div id="settlement-review-tab" class="tab-content">
             
@@ -2192,26 +2336,24 @@
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
-            
+
             // Remove active class from all buttons
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
-            // Show selected tab content
-            if (tabName === 'technical') {
-                document.getElementById('technical-tab').classList.add('active');
-                document.querySelectorAll('.tab-button')[0].classList.add('active');
-            } else if (tabName === 'ai-analysis') {
-                document.getElementById('ai-analysis-tab').classList.add('active');
-                document.querySelectorAll('.tab-button')[1].classList.add('active');
-            } else if (tabName === 'trader-view') {
-                document.getElementById('trader-view-tab').classList.add('active');
-                document.querySelectorAll('.tab-button')[2].classList.add('active');
-            } else if (tabName === 'settlement-review') {
-                document.getElementById('settlement-review-tab').classList.add('active');
-                document.querySelectorAll('.tab-button')[3].classList.add('active');
+
+            // Show selected tab content and activate corresponding button
+            const tabElement = document.getElementById(tabName + '-tab');
+            if (tabElement) {
+                tabElement.classList.add('active');
             }
+
+            // Find and activate the button that calls switchTab with this tabName
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                if (btn.getAttribute('onclick') === `switchTab('${tabName}')`) {
+                    btn.classList.add('active');
+                }
+            });
         }
     </script>
 </body>
