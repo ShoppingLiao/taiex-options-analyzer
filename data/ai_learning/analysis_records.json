@@ -642,5 +642,19 @@
     "next_day_price": null,
     "prediction_accuracy": null,
     "lessons_learned": null
+  },
+  {
+    "date": "20260119",
+    "close_price": 31639.29,
+    "pc_ratio": 0.9733,
+    "sentiment": "neutral",
+    "trend_signal": "bearish",
+    "market_observation": "今天收盤價在 31,639.29 點，我仔細觀察了選擇權市場的布局。\n\nPC Ratio 在 0.973，相對均衡。這種時候我會更依賴價格行為和成交量的變化來判斷方向。\n\n我注意到最大的 Call OI 在 32,000 點，而 Put OI 則集中在 31,000 點。",
+    "position_strategy": "我認為下檔風險較高，會採取防守姿態。\n\n反彈到 31,797 附近時，我可能會買進 Put 來對沖，或者賣出 Call 賺取權利金。\n\n\n市場相對理性，我可以維持正常的部位大小，但仍會保留 30% 現金靈活調整。",
+    "risk_assessment": "⚠️ 風險等級：低至中\n目前風險相對可控，但市場隨時可能改變性格。\n\n我特別關注以下風險：\n• 今天成交量偏低，流動性不佳可能導致價格跳動",
+    "trading_plan": "📋 我的明日交易計劃：\n\n空方布局：\n• 進場點：31,702 附近（反彈進場）\n• 目標價：31,322（獲利 1%）\n• 停損點：31,892（風險控制 0.8%）\n\n倉位管理：\n• 維持 70-80% 倉位\n• 保留 20-30% 靈活資金\n\n應變方案：\n• 如果盤中出現異常大量，立即檢視部位\n• 重大消息公布前，減少暴險部位\n• 每天收盤後檢討，持續優化策略",
+    "next_day_price": null,
+    "prediction_accuracy": null,
+    "lessons_learned": null
   }
 ]
