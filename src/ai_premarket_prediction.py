@@ -218,49 +218,41 @@ class AIPremarketPrediction:
         night_analysis: Dict,
         consistency_analysis: Dict
     ) -> Dict:
-        """根據夜盤資料調整預測區間"""
+        """根據夜盤資料調整預測區間（以夜盤收盤為中心，區間 100 點）"""
 
         original_range = settlement_prediction.get('predicted_range', [0, 0])
-        original_lower = original_range[0]
-        original_upper = original_range[1]
+        night_close = night_data.get('close', (original_range[0] + original_range[1]) / 2)
 
-        night_close = night_data.get('close', (original_lower + original_upper) / 2)
-        night_amplitude = night_data.get('amplitude', 100)
+        # 基準區間：以夜盤收盤價為中心，上下各 50 點（共 100 點）
+        base_half_range = 50
 
-        # 調整邏輯
-        # 1. 如果夜盤收盤已超出原預測區間，以夜盤收盤為新中心
-        # 2. 根據夜盤震幅調整區間大小
-        # 3. 根據趨勢一致性調整偏移
+        # 根據趨勢微調中心點
+        trend_adjustment = 0
+        if night_analysis['trend'] == 'bullish':
+            # 偏多時，中心點略上移
+            trend_adjustment = 10
+        elif night_analysis['trend'] == 'bearish':
+            # 偏空時，中心點略下移
+            trend_adjustment = -10
 
-        adjustment = 0
-        if not consistency_analysis.get('in_range', True):
-            # 夜盤已超出區間，需要較大調整
-            if night_close < original_lower:
-                adjustment = night_close - original_lower - 50  # 向下調整
-            else:
-                adjustment = night_close - original_upper + 50  # 向上調整
-        else:
-            # 夜盤在區間內，根據趨勢微調
-            if night_analysis['trend'] == 'bullish':
-                adjustment = min(night_data.get('change', 0) * 0.5, 50)
-            elif night_analysis['trend'] == 'bearish':
-                adjustment = max(night_data.get('change', 0) * 0.5, -50)
-
-        # 應用調整
-        new_lower = original_lower + adjustment
-        new_upper = original_upper + adjustment
-
-        # 根據夜盤震幅調整區間寬度
+        # 根據夜盤震幅微調區間寬度（但保持接近 100 點）
+        range_adjustment = 0
         if night_analysis['amplitude_level'] == 'high':
-            # 高震幅日，擴大預測區間
-            range_expansion = 30
-            new_lower -= range_expansion
-            new_upper += range_expansion
+            # 高震幅日，區間略擴大（+10 點）
+            range_adjustment = 5
         elif night_analysis['amplitude_level'] == 'low':
-            # 低震幅日，收窄預測區間
-            range_contraction = 20
-            new_lower += range_contraction
-            new_upper -= range_contraction
+            # 低震幅日，區間略收窄（-10 點）
+            range_adjustment = -5
+
+        # 計算最終區間
+        center = night_close + trend_adjustment
+        half_range = base_half_range + range_adjustment
+        new_lower = center - half_range
+        new_upper = center + half_range
+
+        # 計算相對於原區間中心的調整量
+        original_center = (original_range[0] + original_range[1]) / 2
+        adjustment = center - original_center
 
         # 更新趨勢判斷
         if adjustment > 30:
