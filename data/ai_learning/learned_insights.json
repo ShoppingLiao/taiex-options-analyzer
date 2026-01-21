@@ -68,6 +68,11 @@
       "count": 1,
       "successful": 0,
       "observations": []
+    },
+    "bearish_neutral": {
+      "count": 1,
+      "successful": 0,
+      "observations": []
     }
   },
   "settlement_reviews": [
@@ -217,6 +222,20 @@
         "週五結算的波動幅度超出預期 1.9%，下次應該設定更寬的預測區間。",
         "結算前的盤整趨勢並未延續到結算日，說明結算日有其特殊性，不能單純延續前期走勢。",
         "週五結算的複雜度高於一般交易日，需要考慮更多因素，如大戶動向、期現套利等。"
+      ]
+    },
+    {
+      "date": "20260121",
+      "type": "settlement",
+      "weekday": "wednesday",
+      "prediction_accuracy": 10,
+      "in_range": false,
+      "direction_correct": false,
+      "price_error": 514,
+      "lessons": [
+        "週三結算的波動幅度超出預期 1.6%，下次應該設定更寬的預測區間。",
+        "結算前的盤整趨勢並未延續到結算日，說明結算日有其特殊性，不能單純延續前期走勢。",
+        "週三結算的複雜度高於一般交易日，需要考慮更多因素，如大戶動向、期現套利等。"
       ]
     }
   ]
