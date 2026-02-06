@@ -1373,9 +1373,9 @@
                     <div class="info-value">31,800 - 32,000</div>
                 </div>
                 
-                <div class="info-item">
-                    <div class="info-label">結算狀態</div>
-                    <div class="info-value">⏳ 待結算</div>
+                <div class="info-item" style="background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 4px;">
+                    <div class="info-label">實際結算價</div>
+                    <div class="info-value" style="color: #fbbf24;">31,782</div>
                 </div>
                 
             </div>
@@ -1391,10 +1391,6 @@
             </button>
             <button class="tab-button" onclick="switchTab('trader-view')">
                 🧑‍💼 交易員視角
-            </button>
-            
-            <button class="tab-button" onclick="switchTab('pre-market')">
-                🌅 盤前預測
             </button>
             
             <button class="tab-button" onclick="switchTab('settlement-review')">
@@ -1914,7 +1910,7 @@
                 <!-- 學習進度滿版 -->
                 <div style="background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 2px; backdrop-filter: blur(10px); text-align: center;">
                     <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">📚 學習進度</div>
-                    <div style="font-size: 1.1rem; font-weight: 600; white-space: pre-line;">📚 已累積 54 筆分析記錄
+                    <div style="font-size: 1.1rem; font-weight: 600; white-space: pre-line;">📚 已累積 55 筆分析記錄
 📊 已建立 0 種 PC Ratio 模式分析
 📖 參考分析: 1 份外部專家分析
 🔍 已學習 6 個關鍵分析因子</div>
@@ -2189,141 +2185,6 @@
 
         <!-- Pre-Market Prediction Tab -->
         
-        <div id="pre-market-tab" class="tab-content">
-            <div class="section">
-                <div class="section-header">
-                    <span class="section-icon">🌅</span>
-                    <h2 class="section-title">盤前預測分析</h2>
-                </div>
-
-                <!-- 夜盤數據摘要 -->
-                <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; padding: 25px; border-radius: 2px; margin-bottom: 25px;">
-                    <h3 style="margin: 0 0 20px 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
-                        <span>🌙</span> 前夜盤數據
-                    </h3>
-                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px;">
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
-                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">開盤</div>
-                            <div style="font-size: 1.5rem; font-weight: 700;">31,801</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
-                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">最高</div>
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #f87171;">31,851</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
-                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">最低</div>
-                            <div style="font-size: 1.5rem; font-weight: 700; color: #4ade80;">31,751</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
-                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">收盤</div>
-                            <div style="font-size: 1.5rem; font-weight: 700;">31,801</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 2px;">
-                            <div style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">震幅</div>
-                            <div style="font-size: 1.5rem; font-weight: 700;">100 點</div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 15px; padding: 10px; background: rgba(251, 191, 36, 0.2); border-radius: 2px; font-size: 0.9rem;">
-                        ⚠️ 此為估算值，實際夜盤數據請以期交所公告為準
-                    </div>
-                    
-                </div>
-
-                <!-- 調整後預測區間 -->
-                <div style="background: white; padding: 25px; border-radius: 2px; margin-bottom: 25px; border-left: 4px solid var(--primary-color);">
-                    <h3 style="margin: 0 0 20px 0; font-size: 1.2rem; color: var(--primary-color);">
-                        🎯 調整後預測區間
-                    </h3>
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.85rem; color: var(--text-muted);">調整前</div>
-                            <div style="font-size: 1.1rem; text-decoration: line-through; color: var(--text-muted);">
-                                30,500 ~ 31,000
-                            </div>
-                        </div>
-                        <div style="font-size: 1.5rem;">→</div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.85rem; color: var(--primary-color); font-weight: 600;">調整後</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color);">
-                                31,751 ~ 31,851
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-                        <div style="padding: 10px 20px; background: var(--bg-color); border-radius: 2px;">
-                            <span style="color: var(--text-muted);">調整幅度：</span>
-                            <span style="font-weight: 600; color: var(--put-color);">
-                                1051 點 ↑
-                            </span>
-                        </div>
-                        <div style="padding: 10px 20px; background: var(--bg-color); border-radius: 2px;">
-                            <span style="color: var(--text-muted);">預測信心：</span>
-                            <span style="font-weight: 600;">中</span>
-                        </div>
-                        <div style="padding: 10px 20px; background: var(--bg-color); border-radius: 2px;">
-                            <span style="color: var(--text-muted);">趨勢判斷：</span>
-                            <span style="font-weight: 600;">偏多調整</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 開盤策略建議 -->
-                <div style="background: white; padding: 25px; border-radius: 2px; margin-bottom: 25px; border-left: 4px solid var(--warning-color);">
-                    <h3 style="margin: 0 0 20px 0; font-size: 1.2rem; color: var(--warning-color);">
-                        📋 開盤策略建議
-                    </h3>
-                    
-                    <div style="padding: 15px; background: var(--bg-color); border-radius: 2px; margin-bottom: 15px;">
-                        <div style="font-weight: 600; font-size: 1.1rem; margin-bottom: 10px; color: var(--primary-color);">
-                            偏多操作
-                        </div>
-                        <div style="margin-bottom: 8px;">
-                            <span style="color: var(--text-muted);">進場：</span>開盤若回測 31,751 附近可考慮做多
-                        </div>
-                        <div style="margin-bottom: 8px;">
-                            <span style="color: var(--text-muted);">目標：</span>目標 31,801 ~ 31,851
-                        </div>
-                        <div>
-                            <span style="color: var(--text-muted);">停損：</span>停損設在 31,701
-                        </div>
-                    </div>
-                    
-
-                    <!-- 關鍵價位 -->
-                    <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px; flex-wrap: wrap;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.85rem; color: var(--call-color);">壓力</div>
-                            <div style="font-size: 1.3rem; font-weight: 600; color: var(--call-color);">31,851</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.85rem; color: var(--text-muted);">樞紐</div>
-                            <div style="font-size: 1.3rem; font-weight: 600;">31,801</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.85rem; color: var(--put-color);">支撐</div>
-                            <div style="font-size: 1.3rem; font-weight: 600; color: var(--put-color);">31,751</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 風險提示 -->
-                
-                <div style="background: #fef2f2; padding: 20px; border-radius: 2px; border-left: 4px solid var(--call-color);">
-                    <h4 style="margin: 0 0 15px 0; color: var(--call-color);">⚠️ 風險提示</h4>
-                    
-                    <div style="padding: 8px 0; color: #991b1b;">⚠️ 夜盤已突破原預測區間，需密切關注</div>
-                    
-                </div>
-                
-
-                <!-- 生成時間 -->
-                <div style="text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85rem;">
-                    盤前預測生成時間：2026/02/06 08:19
-                </div>
-            </div>
-        </div>
-        
         <!-- End Pre-Market Tab -->
 
         <!-- Settlement Review Tab -->
@@ -2342,7 +2203,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #3b82f6; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #1e40af; font-weight: 600;">📊 總預測次數：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #2563eb; margin-left: 8px;">6</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #2563eb; margin-left: 8px;">7</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #60a5fa;">累積經驗</div>
                     </div>
@@ -2350,7 +2211,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #10b981; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #065f46; font-weight: 600;">✅ 平均準確度：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #059669; margin-left: 8px;">44.17%</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #059669; margin-left: 8px;">52.14%</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #34d399;">整體表現</div>
                     </div>
@@ -2358,7 +2219,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #f59e0b; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #92400e; font-weight: 600;">📏 平均誤差：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #d97706; margin-left: 8px;">246.0</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #d97706; margin-left: 8px;">213.6</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #fbbf24;">點數</div>
                     </div>
@@ -2366,7 +2227,7 @@
                     <div style="background: rgba(255, 255, 255, 0.95); padding: 12px 15px; border-radius: 2px; border-left: 4px solid #8b5cf6; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span style="font-size: 0.85rem; color: #5b21b6; font-weight: 600;">🎯 區間命中率：</span>
-                            <span style="font-size: 1.2rem; font-weight: 700; color: #7c3aed; margin-left: 8px;">33.33%</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #7c3aed; margin-left: 8px;">42.86%</span>
                         </div>
                         <div style="font-size: 0.75rem; color: #a78bfa;">預測精準度</div>
                     </div>
@@ -2444,38 +2305,60 @@
                 <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
                     <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.3rem;">📋 情境分析
                         
+                        <span style="font-size: 0.8rem; color: #dc2626; margin-left: 10px;">（已結算）</span>
+                        
                     </h3>
                     
                     
                     
-                    <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
+                    
+                    
+                    
+                    
+                    <div style="background: #fef2f2; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #dc2626;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">✅ 符合預期情境</span>
-                            <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
+                            <span style="font-weight: 600; color: #dc2626; font-size: 0.95rem;">
+                                ✅ 符合預期情境
+                                <span style="background: #dc2626; color: white; padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; margin-left: 8px;">✓ 實際發生</span>
+                            </span>
+                            <span style="background: #fee2e2; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #dc2626; font-size: 0.85rem;">
                                 60%
                             </span>
                         </div>
-                        <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價落在預測區間 31,700 - 31,900</p>
+                        <p style="color: #dc2626; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價落在預測區間 31,700 - 31,900</p>
+                        
+                        <p style="color: #dc2626; margin: 8px 0 0 0; font-size: 0.85rem; font-weight: 600;">📍 實際結算價：31,782</p>
+                        
                     </div>
+                    
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">📈 超預期上漲</span>
+                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">
+                                📈 超預期上漲
+                                
+                            </span>
                             <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
                                 20%
                             </span>
                         </div>
                         <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價突破 31,900</p>
+                        
                     </div>
+                    
                     
                     <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">📉 超預期下跌</span>
+                            <span style="font-weight: 600; color: #92400e; font-size: 0.95rem;">
+                                📉 超預期下跌
+                                
+                            </span>
                             <span style="background: #fef3c7; padding: 4px 12px; border-radius: 2px; font-weight: 600; color: #78350f; font-size: 0.85rem;">
                                 20%
                             </span>
                         </div>
                         <p style="color: #78350f; margin: 0; font-size: 0.85rem; line-height: 1.7;">結算價跌破 31,700</p>
+                        
                     </div>
                     
                     
@@ -2561,11 +2444,72 @@
 
             <!-- AI Settlement Review -->
             
-            <!-- No Review Yet -->
-            <div class="section">
-                <div style="background: white; padding: 40px; border-radius: 2px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-                    <p style="font-size: 1.5rem; color: var(--text-muted); margin-bottom: 10px;">⏳</p>
-                    <p style="font-size: 1.2rem; color: var(--text-muted);">結算日尚未結束，檢討報告將在結算後生成</p>
+            <div class="section" style="background: linear-gradient(135deg, #ede9fe 0%, #8b5cf6 100%); color: #3b0764;">
+                <div class="section-header" style="border-bottom-color: rgba(59, 7, 100, 0.2);">
+                    <span class="section-icon">📝</span>
+                    <h2 class="section-title" style="color: #3b0764;">結算檢討 🏆 優秀 (A+)</h2>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #5b21b6; margin-bottom: 15px; font-size: 1.3rem;">📊 準確度分析</h3>
+                    <div style="display: grid; gap: 10px;">
+                        <div style="background: white; padding: 12px 15px; border-radius: 2px; border-left: 4px solid #8b5cf6; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; color: #6b21a8; font-weight: 600;">📈 預測準確度：</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #5b21b6;">100%</span>
+                        </div>
+                        <div style="background: white; padding: 12px 15px; border-radius: 2px; border-left: 4px solid #8b5cf6; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; color: #6b21a8; font-weight: 600;">📏 價格誤差：</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #5b21b6;">19 (0.06%)</span>
+                        </div>
+                        <div style="background: white; padding: 12px 15px; border-radius: 2px; border-left: 4px solid #8b5cf6; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; color: #6b21a8; font-weight: 600;">🎯 區間預測：</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #5b21b6;">
+                                ✅ 正確
+                            </span>
+                        </div>
+                        <div style="background: white; padding: 12px 15px; border-radius: 2px; border-left: 4px solid #8b5cf6; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; color: #6b21a8; font-weight: 600;">🧭 方向判斷：</span>
+                            <span style="font-size: 1.2rem; font-weight: 700; color: #5b21b6;">
+                                ✅ 正確
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #5b21b6; margin-bottom: 15px; font-size: 1.3rem;">💭 自我反思</h3>
+                    <div style="background: white; padding: 20px; border-radius: 2px; border: 2px solid #8b5cf6; white-space: pre-line; color: #3b0764; line-height: 1.8; font-size: 0.85rem;">📝 **週五結算檢討**
+
+這次結算預測相當準確，我很滿意！（準確度：100%）
+
+**預測結算價**：31,801 點
+**實際結算價**：31,782 點
+**價格誤差**：19 點 (0.06%)
+
+✅ **區間預測正確**：結算價 31,782 確實落在我預測的區間 31,700 - 31,900 內。這證明我對市場波動幅度的判斷是準確的。
+
+✅ **方向判斷正確**：結算走勢與我的預期一致。
+
+**策略執行回顧**：
+按照我的週五結算策略執行，應該能夠獲得不錯的收益。</div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #5b21b6; margin-bottom: 15px; font-size: 1.3rem;">📚 學到的教訓</h3>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 10px; border-left: 4px solid #8b5cf6;">
+                        <p style="color: #3b0764; margin: 0; font-size: 0.85rem; line-height: 1.7;">這次週五結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。</p>
+                    </div>
+                    
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.9); border-radius: 2px; padding: 25px;">
+                    <h3 style="color: #5b21b6; margin-bottom: 15px; font-size: 1.3rem;">🎯 改進方向</h3>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 2px; margin-bottom: 10px; border-left: 4px solid #8b5cf6;">
+                        <p style="color: #3b0764; margin: 0; font-size: 0.85rem; line-height: 1.7;">✨ 繼續保持這個水準，累積更多結算日預測經驗</p>
+                    </div>
+                    
                 </div>
             </div>
             
