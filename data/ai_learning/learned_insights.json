@@ -40,7 +40,7 @@
   "pc_ratio_patterns": {},
   "market_scenarios": {
     "bullish_bullish": {
-      "count": 22,
+      "count": 23,
       "successful": 0,
       "observations": []
     },
@@ -262,6 +262,20 @@
       "price_error": 19,
       "lessons": [
         "這次週五結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。"
+      ]
+    },
+    {
+      "date": "20260211",
+      "type": "settlement",
+      "weekday": "wednesday",
+      "prediction_accuracy": 10,
+      "in_range": false,
+      "direction_correct": false,
+      "price_error": 532,
+      "lessons": [
+        "週三結算的波動幅度超出預期 1.6%，下次應該設定更寬的預測區間。",
+        "結算前的盤整趨勢並未延續到結算日，說明結算日有其特殊性，不能單純延續前期走勢。",
+        "週三結算的複雜度高於一般交易日，需要考慮更多因素，如大戶動向、期現套利等。"
       ]
     }
   ]
