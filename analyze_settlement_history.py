@@ -77,11 +77,15 @@ def analyze_by_weekday(reviews: list[dict]) -> dict:
         range_hits = [r for r in records if r["in_range"]]
         accuracies = [r["overall_accuracy"] for r in records]
 
-        # 建議區間半徑：使用 P75 誤差（讓 75% 的案例都能命中）
+        # 建議區間半徑：使用 P75 誤差，但限制在合理的交易範圍內
+        # 上限 150 點：台股單日振幅通常在 100-300 點，±150 已是合理上限
+        # 下限 100 點：避免區間過窄導致命中率太低
         p75 = float(np.percentile(errors, 75))
         p90 = float(np.percentile(errors, 90))
-        # 取整到 50 點，至少 150 點
-        recommended_half_range = max(150, int(np.ceil(p75 / 50) * 50))
+        MAX_HALF_RANGE = 150
+        MIN_HALF_RANGE = 100
+        raw_range = int(np.ceil(p75 / 50) * 50)
+        recommended_half_range = max(MIN_HALF_RANGE, min(MAX_HALF_RANGE, raw_range))
 
         result[wday] = {
             "count": len(records),

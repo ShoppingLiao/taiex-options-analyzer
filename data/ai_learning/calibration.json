@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-26T15:21:22.689121",
+  "generated_at": "2026-03-26T15:55:58.354886",
   "source_count": 15,
   "weekday": {
     "wednesday": {
@@ -15,7 +15,7 @@
       "direction_accuracy": 10.0,
       "interval_hit_rate": 10.0,
       "avg_accuracy": 17.5,
-      "recommended_half_range": 1000
+      "recommended_half_range": 150
     },
     "friday": {
       "count": 5,
