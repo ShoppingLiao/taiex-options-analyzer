@@ -4,6 +4,28 @@
 
 專案遵循 [語義化版本](https://semver.org/lang/zh-TW/)。
 
+## [1.1.0] - 2026-03-26
+
+### 新增 (Added)
+
+- 歷史結算資料分析腳本 `analyze_settlement_history.py`，從累積的 settlement_reviews 自動計算校準參數
+- `data/ai_learning/calibration.json` 校準參數檔案，儲存週三/週五建議區間寬度與情境機率
+- `AILearningSystem` 新增 `_load_settlement_reviews()`、`get_settlement_performance_summary()` 方法，接通學習閉環
+
+### 改進 (Changed)
+
+- 預測區間從固定 ±100 點改為資料驅動：週三 ±1000 點、週五 ±150 點（基於 P75 誤差）
+- 情境機率從固定 60/20/20 改為校準值：週三 40/30/30、週五 60/20/20
+- PC Ratio 解讀修正：高 PC Ratio (>1.8) 在台指週選具逆向性（歷史上 57% 機率上漲），降低看空信心
+- GitHub Actions 每次執行前自動重新校準，確保參數持續更新
+- AI 結算交易員歷史背景改為讀取真實 settlement_reviews，顯示正確的方向準確率統計
+
+### 修復 (Fixed)
+
+- 學習閉環斷裂問題：`learned_insights.json` 的 market_scenarios 全為 successful:0，現改為從 settlement_reviews 直接統計真實績效
+
+---
+
 ## [1.0.0] - 2026-01-13
 
 ### 🎉 第一版正式發布
@@ -150,6 +172,10 @@
 ---
 
 ## 版本歷史
+
+### [1.1.0] - 2026-03-26
+
+校準系統上線：資料驅動預測區間、PC Ratio 逆向修正、學習閉環接通
 
 ### [1.0.0] - 2026-01-13
 

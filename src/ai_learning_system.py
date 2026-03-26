@@ -33,7 +33,7 @@ class AnalysisRecord:
 
 class AILearningSystem:
     """AI 學習系統 - 從歷史分析中學習並改進"""
-    
+
     def __init__(self, data_dir: str = 'data/ai_learning'):
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
@@ -41,15 +41,92 @@ class AILearningSystem:
         self.records_file = self.data_dir / 'analysis_records.json'
         self.insights_file = self.data_dir / 'learned_insights.json'
         self.reference_dir = self.data_dir / 'reference_analysis'
+        self.reviews_dir = self.data_dir / 'settlement_reviews'
         self.reference_dir.mkdir(parents=True, exist_ok=True)
 
         self.records: List[AnalysisRecord] = []
         self.insights: Dict = {}
         self.reference_analyses: List[Dict] = []
+        self.settlement_reviews: List[Dict] = []
 
         self._load_data()
         self._load_reference_analyses()
+        self._load_settlement_reviews()
     
+    def _load_settlement_reviews(self):
+        """載入所有結算審核記錄，建立真實績效統計"""
+        self.settlement_reviews = []
+        if not self.reviews_dir.exists():
+            return
+        for f in sorted(self.reviews_dir.glob("settlement_review_*.json")):
+            try:
+                data = json.loads(f.read_text(encoding='utf-8'))
+                self.settlement_reviews.append(data)
+            except Exception:
+                pass
+
+        # 更新 insights 中的結算審核統計
+        self._update_settlement_insights()
+
+    def _update_settlement_insights(self):
+        """將結算審核結果寫入 insights，讓外部可查詢績效"""
+        if not self.settlement_reviews:
+            return
+
+        stats: Dict[str, Dict] = {}
+        for r in self.settlement_reviews:
+            wday = r.get("weekday", "unknown")
+            acc = r.get("accuracy", {})
+            if wday not in stats:
+                stats[wday] = {
+                    "count": 0,
+                    "direction_correct": 0,
+                    "in_range": 0,
+                    "total_accuracy": 0.0,
+                    "lessons": [],
+                }
+            stats[wday]["count"] += 1
+            if acc.get("direction_correct"):
+                stats[wday]["direction_correct"] += 1
+            if acc.get("in_predicted_range"):
+                stats[wday]["in_range"] += 1
+            stats[wday]["total_accuracy"] += acc.get("overall_accuracy", 0)
+            for lesson in r.get("lessons_learned", []):
+                if lesson and lesson not in stats[wday]["lessons"]:
+                    stats[wday]["lessons"].append(lesson)
+
+        # 計算比率
+        for wday, s in stats.items():
+            n = s["count"]
+            s["direction_accuracy_pct"] = round(s["direction_correct"] / n * 100, 1) if n else 0
+            s["interval_hit_rate_pct"] = round(s["in_range"] / n * 100, 1) if n else 0
+            s["avg_accuracy"] = round(s["total_accuracy"] / n, 1) if n else 0
+
+        self.insights["settlement_performance"] = stats
+        self._save_data()
+
+    def get_settlement_performance_summary(self) -> str:
+        """生成結算預測績效摘要（供 AI prompt 使用）"""
+        perf = self.insights.get("settlement_performance", {})
+        if not perf:
+            return "尚無結算審核記錄"
+
+        lines = ["📊 結算預測歷史績效："]
+        for wday, s in perf.items():
+            wday_zh = "週三" if wday == "wednesday" else "週五"
+            lines.append(
+                f"  {wday_zh}：{s['count']}次 | 方向準確={s['direction_accuracy_pct']}%"
+                f" | 區間命中={s['interval_hit_rate_pct']}% | 平均得分={s['avg_accuracy']}%"
+            )
+
+            # 加入最近的教訓（最多 3 條）
+            if s.get("lessons"):
+                lines.append("  近期教訓：")
+                for lesson in s["lessons"][-3:]:
+                    lines.append(f"    • {lesson}")
+
+        return "\n".join(lines)
+
     def _load_data(self):
         """載入歷史資料"""
         # 載入分析記錄

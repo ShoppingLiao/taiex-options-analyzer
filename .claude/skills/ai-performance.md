@@ -90,12 +90,28 @@ print('已匯出至 data/ai_learning/performance_export.json')
 
 績效統計基於以下數據：
 - `data/ai_learning/reviews/` - 每日檢討記錄
-- `data/ai_learning/settlement_reviews/` - 結算日檢討記錄
+- `data/ai_learning/settlement_reviews/` - 結算日檢討記錄（15 筆，週三 10 筆 / 週五 5 筆）
 - `data/ai_learning/analysis_records.json` - 分析記錄
+- `data/ai_learning/calibration.json` - **校準參數**（由 `analyze_settlement_history.py` 產生）
+
+### 校準參數說明（calibration.json）
+
+| 欄位 | 內容 |
+|------|------|
+| `weekday.wednesday.recommended_half_range` | 週三結算建議區間半徑（目前 ±1000 點） |
+| `weekday.friday.recommended_half_range` | 週五結算建議區間半徑（目前 ±150 點） |
+| `scenario_probabilities` | 各情境機率（週三 40/30/30、週五 60/20/20） |
+| `pc_ratio_direction` | PC Ratio 區間對應的歷史上漲率統計 |
+
+手動重新校準（累積更多 settlement_reviews 後執行）：
+```bash
+source venv/bin/activate
+python3 analyze_settlement_history.py
+```
 
 ## 改進建議
 
 根據績效統計，系統會提供改進建議：
 - 方向預測偏差時：調整情緒分析權重
-- 區間過窄時：增加波動率考量
+- 區間過窄時：增加波動率考量（或直接重跑 `analyze_settlement_history.py`）
 - 系統性偏差時：重新校準模型參數

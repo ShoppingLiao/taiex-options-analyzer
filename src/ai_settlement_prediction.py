@@ -8,13 +8,34 @@ from typing import Dict, Any, List, Optional
 import json
 from pathlib import Path
 
+CALIBRATION_FILE = Path("data/ai_learning/calibration.json")
+
+# 預設值（calibration 不存在時使用）
+DEFAULT_HALF_RANGE = {"wednesday": 1000, "friday": 150}
+DEFAULT_SCENARIO_PROBS = {
+    "wednesday": {"in_range": 40.0, "breakout_up": 30.0, "breakout_down": 30.0},
+    "friday": {"in_range": 60.0, "breakout_up": 20.0, "breakout_down": 20.0},
+}
+
+
+def _load_calibration() -> dict:
+    """載入校準參數"""
+    if CALIBRATION_FILE.exists():
+        try:
+            return json.loads(CALIBRATION_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return {}
+
+
 class AISettlementPrediction:
     """AI 結算日預測生成器"""
-    
+
     def __init__(self, learning_system):
         self.learning_system = learning_system
         self.predictions_dir = Path("data/ai_learning/settlement_predictions")
         self.predictions_dir.mkdir(parents=True, exist_ok=True)
+        self._calibration = _load_calibration()
     
     def generate_settlement_prediction(
         self, 
@@ -41,7 +62,7 @@ class AISettlementPrediction:
         experience = self.learning_system.get_experience_level()
         
         # 生成結算價預測
-        settlement_price_prediction = self._predict_settlement_price(historical_data, trend_analysis)
+        settlement_price_prediction = self._predict_settlement_price(historical_data, trend_analysis, weekday)
         
         # 生成情境分析
         scenarios = self._generate_scenarios(historical_data, settlement_price_prediction, weekday)
@@ -115,7 +136,7 @@ class AISettlementPrediction:
             "momentum": "strong" if abs(price_change_pct) > 1.0 else "moderate" if abs(price_change_pct) > 0.5 else "weak"
         }
     
-    def _predict_settlement_price(self, historical_data: List[Dict], trend: Dict) -> Dict[str, Any]:
+    def _predict_settlement_price(self, historical_data: List[Dict], trend: Dict, weekday: str = "friday") -> Dict[str, Any]:
         """預測結算價"""
         if len(historical_data) < 2:
             return {"error": "insufficient_data"}
@@ -138,9 +159,13 @@ class AISettlementPrediction:
         
         predicted_settlement = round(base_price + predicted_change)
 
-        # 計算可能區間（固定 200 點，與交易員視角一致）
-        # 上下各 100 點，取整到 50 點
-        half_range = 100
+        # 從校準參數取得對應週別的建議半徑
+        weekday_stats = self._calibration.get("weekday", {}).get(weekday, {})
+        half_range = weekday_stats.get(
+            "recommended_half_range",
+            DEFAULT_HALF_RANGE.get(weekday, 300)
+        )
+
         lower_bound = (predicted_settlement - half_range) // 50 * 50
         upper_bound = (predicted_settlement + half_range) // 50 * 50
 
@@ -154,47 +179,50 @@ class AISettlementPrediction:
             "base_price": base_price,
             "expected_change": round(predicted_change),
             "nearest_100": round_100,
-            "confidence_range": "±100點"
+            "confidence_range": f"±{half_range}點",
         }
     
     def _generate_scenarios(
-        self, 
-        historical_data: List[Dict], 
+        self,
+        historical_data: List[Dict],
         settlement_pred: Dict,
         weekday: str
     ) -> List[Dict]:
-        """生成結算日情境"""
-        scenarios = []
-        
-        predicted = settlement_pred["predicted_price"]
-        
-        # 情境1：符合預期
-        scenarios.append({
-            "name": "✅ 符合預期情境",
-            "description": f"結算價落在預測區間 {settlement_pred['lower_bound']:,} - {settlement_pred['upper_bound']:,}",
-            "probability": 60,
-            "strategy": "按照原定策略執行",
-            "action": "持有部位至結算"
-        })
-        
-        # 情境2：超預期上漲
-        scenarios.append({
-            "name": "📈 超預期上漲",
-            "description": f"結算價突破 {settlement_pred['upper_bound']:,}",
-            "probability": 20,
-            "strategy": "Call 部位獲利，Put 可能止損",
-            "action": "考慮提前調整 Put 部位"
-        })
-        
-        # 情境3：超預期下跌
-        scenarios.append({
-            "name": "📉 超預期下跌",
-            "description": f"結算價跌破 {settlement_pred['lower_bound']:,}",
-            "probability": 20,
-            "strategy": "Put 部位獲利，Call 可能止損",
-            "action": "考慮提前調整 Call 部位"
-        })
-        
+        """生成結算日情境（機率來自校準資料）"""
+        # 從校準參數取得情境機率
+        cal_probs = (
+            self._calibration.get("scenario_probabilities", {}).get(weekday)
+            or DEFAULT_SCENARIO_PROBS.get(weekday, {"in_range": 50.0, "breakout_up": 25.0, "breakout_down": 25.0})
+        )
+
+        p_in_range = cal_probs["in_range"]
+        p_up = cal_probs["breakout_up"]
+        p_down = cal_probs["breakout_down"]
+
+        scenarios = [
+            {
+                "name": "✅ 符合預期情境",
+                "description": f"結算價落在預測區間 {settlement_pred['lower_bound']:,} - {settlement_pred['upper_bound']:,}",
+                "probability": p_in_range,
+                "strategy": "按照原定策略執行",
+                "action": "持有部位至結算",
+            },
+            {
+                "name": "📈 超預期上漲",
+                "description": f"結算價突破 {settlement_pred['upper_bound']:,}",
+                "probability": p_up,
+                "strategy": "Call 部位獲利，Put 可能止損",
+                "action": "考慮提前調整 Put 部位",
+            },
+            {
+                "name": "📉 超預期下跌",
+                "description": f"結算價跌破 {settlement_pred['lower_bound']:,}",
+                "probability": p_down,
+                "strategy": "Put 部位獲利，Call 可能止損",
+                "action": "考慮提前調整 Call 部位",
+            },
+        ]
+
         return scenarios
     
     def _recommend_settlement_strategy(

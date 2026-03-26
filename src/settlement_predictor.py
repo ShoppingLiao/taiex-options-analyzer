@@ -13,6 +13,18 @@ from pathlib import Path
 import json
 import re
 
+CALIBRATION_FILE = Path("data/ai_learning/calibration.json")
+DEFAULT_HALF_RANGE = {"wednesday": 1000, "friday": 150}
+
+
+def _load_calibration() -> dict:
+    if CALIBRATION_FILE.exists():
+        try:
+            return json.loads(CALIBRATION_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return {}
+
 
 @dataclass
 class TrendSignal:
@@ -63,9 +75,10 @@ class SettlementPrediction:
 
 class SettlementPredictor:
     """結算日預測器"""
-    
+
     def __init__(self):
         self.reports_dir = Path('reports')
+        self._calibration = _load_calibration()
         
     def predict_settlement(
         self, 
@@ -101,9 +114,10 @@ class SettlementPredictor:
         
         # 預測結算區間
         predicted_range = self._predict_settlement_range(
-            reports_data, 
+            reports_data,
             trend_signals,
-            key_metrics
+            key_metrics,
+            settlement_weekday
         )
         
         # 生成劇本
@@ -272,40 +286,58 @@ class SettlementPredictor:
         )
     
     def _analyze_pc_ratio_trend(self, reports: List[Dict]) -> Optional[TrendSignal]:
-        """分析 P/C Ratio 趨勢"""
+        """分析 P/C Ratio 趨勢
+
+        依歷史結算資料校準（data/ai_learning/calibration.json）：
+        - PC < 0.8：市場看多，歷史上漲率 100%（2 筆）
+        - PC 0.8-1.2：中性，歷史上漲率 50%
+        - PC 1.2-1.8：偏空但實際上漲率 100%（2 筆），反向指標
+        - PC > 1.8：極度看空但實際上漲率 57%（7 筆），具逆向性
+        結論：台指週選高 PC Ratio 並非可靠的空頭訊號，需降低其看空強度。
+        """
         pc_ratios = [r['pc_ratio'] for r in reports if 'pc_ratio' in r]
-        
+
         if not pc_ratios:
             return None
-        
+
         avg_pc = np.mean(pc_ratios)
-        
+
         if len(pc_ratios) >= 2:
             trend = pc_ratios[-1] - pc_ratios[0]
         else:
             trend = 0
-        
-        if avg_pc < 0.7:
-            direction = 'bullish'
-            strength = 4
-            desc = f'P/C Ratio 低於 0.7 ({avg_pc:.2f})，市場情緒偏多'
-        elif avg_pc > 1.3:
-            direction = 'bearish'
-            strength = 4
-            desc = f'P/C Ratio 高於 1.3 ({avg_pc:.2f})，市場情緒偏空'
-        elif trend < -0.1:
+
+        # 讀取 calibration 的 PC Ratio 方向分析
+        pc_cal = self._calibration.get("pc_ratio_direction", {})
+
+        if avg_pc < 0.8:
+            # 歷史：100% 上漲（樣本 2 筆）
             direction = 'bullish'
             strength = 3
-            desc = f'P/C Ratio 下降趨勢 ({pc_ratios[0]:.2f} → {pc_ratios[-1]:.2f})，空方減碼'
-        elif trend > 0.1:
-            direction = 'bearish'
+            desc = f'P/C Ratio 低 ({avg_pc:.2f})，市場積極看多'
+        elif avg_pc > 1.8:
+            # 歷史：57% 上漲（樣本 7 筆）→ 高 PC 是逆向指標，降低看空信心
+            direction = 'neutral'
+            strength = 2
+            desc = f'P/C Ratio 極高 ({avg_pc:.2f})，歷史上具逆向性（高 PC 常伴隨反彈），方向不確定'
+        elif avg_pc > 1.2:
+            # 歷史：100% 上漲（樣本 2 筆），反向指標
+            direction = 'neutral'
+            strength = 2
+            desc = f'P/C Ratio 偏高 ({avg_pc:.2f})，歷史上偏空但實際多次上漲，信號可信度低'
+        elif trend < -0.15:
+            direction = 'bullish'
             strength = 3
-            desc = f'P/C Ratio 上升趨勢 ({pc_ratios[0]:.2f} → {pc_ratios[-1]:.2f})，空方加碼'
+            desc = f'P/C Ratio 快速下降 ({pc_ratios[0]:.2f} → {pc_ratios[-1]:.2f})，空方平倉、偏多'
+        elif trend > 0.15:
+            direction = 'neutral'
+            strength = 2
+            desc = f'P/C Ratio 上升 ({pc_ratios[0]:.2f} → {pc_ratios[-1]:.2f})，空方增加但逆向性高'
         else:
             direction = 'neutral'
             strength = 2
-            desc = f'P/C Ratio 維持中性 ({avg_pc:.2f})'
-        
+            desc = f'P/C Ratio 中性區間 ({avg_pc:.2f})'
+
         return TrendSignal(
             direction=direction,
             strength=strength,
@@ -479,7 +511,8 @@ class SettlementPredictor:
         self,
         reports: List[Dict],
         signals: List[TrendSignal],
-        metrics: Dict
+        metrics: Dict,
+        settlement_weekday: str = "friday"
     ) -> Tuple[int, int]:
         """預測結算區間"""
         current_price = metrics.get('current_price', 0)
@@ -517,11 +550,14 @@ class SettlementPredictor:
             # 中性：Max Pain 附近
             center = max_pain
         
-        # 計算波動範圍 - 固定 200 點區間，不因趨勢強度放大
-        # 目標：精準預測，寧可錯誤也不要太寬泛
-        half_range = 100  # 上下各 100 點 = 總共 200 點
+        # 從校準參數取得對應週別的建議半徑
+        weekday_stats = self._calibration.get("weekday", {}).get(settlement_weekday, {})
+        half_range = weekday_stats.get(
+            "recommended_half_range",
+            DEFAULT_HALF_RANGE.get(settlement_weekday, 300)
+        )
 
-        # 計算區間 (取整到 50 點，更精準)
+        # 計算區間 (取整到 50 點)
         lower = (center - half_range) // 50 * 50
         upper = (center + half_range) // 50 * 50
         

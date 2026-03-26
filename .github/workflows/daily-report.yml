@@ -123,6 +123,9 @@ jobs:
 
           TASK="${{ steps.config.outputs.task }}"
 
+          echo "更新結算校準參數..."
+          python3 analyze_settlement_history.py
+
           if [ "$TASK" = "premarket" ]; then
             echo "執行盤前預測..."
             python3 daily_workflow.py --date ${{ steps.config.outputs.date }} --premarket --skip-git

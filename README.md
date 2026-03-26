@@ -68,6 +68,7 @@
 - 🎲 **機率預測**：各劇本發生機率量化分析
 - ⚠️ **風險提示**：市場風險因素智能評估
 - 📈 **結算預測**：週三/週五結算區間預測
+- 📈 **自動校準預測系統**：基於歷史結算審核資料，動態調整預測區間與情境機率
 
 ## 🚀 快速開始
 
@@ -132,6 +133,16 @@ python3 generate_settlement_report.py \
 ```bash
 python3 generate_index_with_weekday.py
 ```
+
+### 重新校準預測參數
+
+從累積的 settlement_reviews 計算最新校準參數，輸出至 `data/ai_learning/calibration.json`：
+
+```bash
+python3 analyze_settlement_history.py
+```
+
+此腳本會統計歷史結算誤差（P75）、方向準確率、PC Ratio 逆向性等，自動更新預測系統使用的建議區間與情境機率。GitHub Actions 每次執行前也會自動呼叫此腳本。
 
 ## 📁 專案結構
 
@@ -376,6 +387,17 @@ tx_data_map = {
 ## 🔄 未來開發計畫
 
 請參見 [VERSION_HISTORY.md](documentation/releases/VERSION_HISTORY.md) 的「未來規劃」章節。
+
+## 📈 v1.1.0 校準系統改進（2026-03-26）
+
+依據 3 個月累積的 15 筆歷史結算資料，對預測系統進行了重要改進：
+
+- **預測區間資料化**：週三 ±1000 點（P75 誤差 960 點）、週五 ±150 點（P75 誤差 147 點），取代原本固定的 ±100 點
+- **情境機率校準**：週三 40/30/30、週五 60/20/20，反映各結算日型態差異
+- **PC Ratio 逆向修正**：PC Ratio > 1.8 時，歷史上 57% 機率上漲，系統已降低看空信心
+- **學習閉環接通**：`AILearningSystem` 直接從 settlement_reviews 統計真實績效，取代舊有的固定值
+
+詳見 [CALIBRATION_SYSTEM.md](documentation/features/CALIBRATION_SYSTEM.md)。
 
 ## �📝 License
 

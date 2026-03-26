@@ -27,13 +27,14 @@ class AISettlementTrader:
         """
         # 獲取歷史背景（針對結算日）
         historical_context = self._get_settlement_context(prediction)
-        
+
         # 生成第一人稱分析
         analysis = {
             # 經驗等級
             'experience_level': self.experience_level,
             'level_icon': self.level_icon,
             'learning_summary': self.learning_system.generate_learning_summary(),
+            'settlement_performance': self.learning_system.get_settlement_performance_summary(),
             
             # 結算日看法（第一人稱）
             'settlement_outlook': self._generate_settlement_outlook(prediction, historical_context),
@@ -55,22 +56,43 @@ class AISettlementTrader:
         return analysis
     
     def _get_settlement_context(self, prediction: SettlementPrediction) -> Dict:
-        """獲取結算日歷史背景"""
+        """獲取結算日歷史背景（從真實 settlement_reviews 取資料）"""
         context = {
             'similar_situations': [],
             'learned_insights': [],
             'risk_warnings': []
         }
-        
-        # 從學習系統中尋找相似的結算日記錄
-        for record in self.learning_system.records[-20:]:  # 最近 20 筆
-            # 這裡可以根據實際情況擴展匹配邏輯
-            if 'settlement' in record.date or '結算' in record.market_observation:
+
+        # 從真實的 settlement_reviews 中尋找相似情況
+        weekday = getattr(prediction, 'settlement_weekday', '')
+        pc_ratio = prediction.key_metrics.get('latest_pc_ratio', 0)
+
+        for review in self.learning_system.settlement_reviews[-15:]:
+            if review.get('weekday', '').lower() != weekday.lower():
+                continue
+            hist = review.get('prediction', {}).get('historical_data', [])
+            rev_pc = hist[-1].get('pc_ratio', 0) if hist else 0
+            acc = review.get('accuracy', {})
+            # 相似 PC Ratio（±0.5 範圍）
+            if pc_ratio > 0 and abs(rev_pc - pc_ratio) < 0.5:
                 context['similar_situations'].append({
-                    'date': record.date,
-                    'outcome': record.prediction_accuracy or '未驗證',
-                    'lesson': record.lessons_learned or '無'
+                    'date': review.get('settlement_date'),
+                    'pc_ratio': rev_pc,
+                    'outcome': f"準確度 {acc.get('overall_accuracy', '?')}%",
+                    'price_error': acc.get('price_error', '?'),
+                    'lesson': review.get('lessons_learned', ['無'])[0] if review.get('lessons_learned') else '無',
                 })
+
+        # 加入績效摘要到 learned_insights
+        perf = self.learning_system.insights.get('settlement_performance', {})
+        if perf.get(weekday):
+            s = perf[weekday]
+            context['learned_insights'].append(
+                f"歷史{weekday}結算：{s['count']}次，方向準確率={s['direction_accuracy_pct']}%，"
+                f"區間命中率={s['interval_hit_rate_pct']}%"
+            )
+            for lesson in s.get('lessons', [])[-3:]:
+                context['learned_insights'].append(lesson)
         
         # 結算日特定洞察
         if prediction.trend_strength >= 4:
