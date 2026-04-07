@@ -1,0 +1,91 @@
+{
+  "prediction_date": "20260407",
+  "settlement_date": "20260408",
+  "settlement_weekday": "wednesday",
+  "experience_level": [
+    "專家",
+    "⭐"
+  ],
+  "historical_data": [
+    {
+      "day": 1,
+      "date": "unknown",
+      "tx_close": 32522,
+      "pc_ratio": 1.7693,
+      "call_oi": 100000,
+      "put_oi": 100000
+    },
+    {
+      "day": 2,
+      "date": "unknown",
+      "tx_close": 32572,
+      "pc_ratio": 1.7193,
+      "call_oi": 100000,
+      "put_oi": 100000
+    }
+  ],
+  "trend_analysis": {
+    "trend_direction": "盤整",
+    "price_change": 50,
+    "price_change_pct": 0.15,
+    "pc_change": -0.05,
+    "sentiment_change": "情緒穩定",
+    "momentum": "weak"
+  },
+  "settlement_price_prediction": {
+    "predicted_price": 32572,
+    "upper_bound": 32700,
+    "lower_bound": 32400,
+    "base_price": 32572,
+    "expected_change": 0,
+    "nearest_100": 32600,
+    "confidence_range": "±150點"
+  },
+  "scenarios": [
+    {
+      "name": "✅ 符合預期情境",
+      "description": "結算價落在預測區間 32,400 - 32,700",
+      "probability": 39.6,
+      "strategy": "按照原定策略執行",
+      "action": "持有部位至結算"
+    },
+    {
+      "name": "📈 超預期上漲",
+      "description": "結算價突破 32,700",
+      "probability": 30.2,
+      "strategy": "Call 部位獲利，Put 可能止損",
+      "action": "考慮提前調整 Put 部位"
+    },
+    {
+      "name": "📉 超預期下跌",
+      "description": "結算價跌破 32,400",
+      "probability": 30.2,
+      "strategy": "Put 部位獲利，Call 可能止損",
+      "action": "考慮提前調整 Call 部位"
+    }
+  ],
+  "strategy_recommendation": {
+    "before_settlement": {
+      "timing": "結算日09:00前",
+      "action": "觀察開盤價格，決定是否提前調整",
+      "caution": "避免追高殺低"
+    },
+    "during_settlement": {
+      "timing": "13:30-13:45 (結算區間)",
+      "action": "密切關注結算價形成過程",
+      "caution": "注意最後五分鐘的劇烈波動"
+    },
+    "position_management": {
+      "if_bullish": "持有 Call 至結算，Put 考慮提前平倉",
+      "if_bearish": "持有 Put 至結算，Call 考慮提前平倉",
+      "if_neutral": "採取 Straddle 或 Strangle，兩邊對沖"
+    },
+    "risk_control": {
+      "stop_loss": "當走勢明顯偏離預測時，立即止損",
+      "position_size": "結算日部位不超過平時的50%",
+      "time_decay": "週三結算影響較小"
+    }
+  },
+  "outlook": "🔮 **週三結算日展望**\n\n經過這兩天的盤勢觀察，我看到市場呈現盤整的態勢，價格上漲 50 點。\n\n今天的收盤價是 32,572，PC Ratio 為 1.72。市場恐慌情緒明顯，我認為這可能是個反轉訊號。\n\n基於這些觀察，我預測週三的結算價會在 **32,572** 附近，合理區間應該是 32,400 到 32,700。\n\n週三結算只影響當週契約，對整體市場衝擊較小。\n\n我會密切關注開盤後的走勢，適時調整部位。",
+  "confidence_level": 75
+}
