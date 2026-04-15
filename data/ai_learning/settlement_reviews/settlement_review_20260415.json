@@ -1,0 +1,125 @@
+{
+  "settlement_date": "20260415",
+  "weekday": "wednesday",
+  "prediction": {
+    "prediction_date": "20260414",
+    "settlement_date": "20260415",
+    "settlement_weekday": "wednesday",
+    "experience_level": [
+      "專家",
+      "⭐"
+    ],
+    "historical_data": [
+      {
+        "day": 1,
+        "date": "unknown",
+        "tx_close": 36246,
+        "pc_ratio": 8.854500000000002,
+        "call_oi": 100000,
+        "put_oi": 100000
+      },
+      {
+        "day": 2,
+        "date": "unknown",
+        "tx_close": 36296,
+        "pc_ratio": 8.8045,
+        "call_oi": 100000,
+        "put_oi": 100000
+      }
+    ],
+    "trend_analysis": {
+      "trend_direction": "盤整",
+      "price_change": 50,
+      "price_change_pct": 0.14,
+      "pc_change": -0.05,
+      "sentiment_change": "情緒穩定",
+      "momentum": "weak"
+    },
+    "settlement_price_prediction": {
+      "predicted_price": 36296,
+      "upper_bound": 36400,
+      "lower_bound": 36100,
+      "base_price": 36296,
+      "expected_change": 0,
+      "nearest_100": 36300,
+      "confidence_range": "±150點"
+    },
+    "scenarios": [
+      {
+        "name": "✅ 符合預期情境",
+        "description": "結算價落在預測區間 36,100 - 36,400",
+        "probability": 39.3,
+        "strategy": "按照原定策略執行",
+        "action": "持有部位至結算"
+      },
+      {
+        "name": "📈 超預期上漲",
+        "description": "結算價突破 36,400",
+        "probability": 30.3,
+        "strategy": "Call 部位獲利，Put 可能止損",
+        "action": "考慮提前調整 Put 部位"
+      },
+      {
+        "name": "📉 超預期下跌",
+        "description": "結算價跌破 36,100",
+        "probability": 30.3,
+        "strategy": "Put 部位獲利，Call 可能止損",
+        "action": "考慮提前調整 Call 部位"
+      }
+    ],
+    "strategy_recommendation": {
+      "before_settlement": {
+        "timing": "結算日09:00前",
+        "action": "觀察開盤價格，決定是否提前調整",
+        "caution": "避免追高殺低"
+      },
+      "during_settlement": {
+        "timing": "13:30-13:45 (結算區間)",
+        "action": "密切關注結算價形成過程",
+        "caution": "注意最後五分鐘的劇烈波動"
+      },
+      "position_management": {
+        "if_bullish": "持有 Call 至結算，Put 考慮提前平倉",
+        "if_bearish": "持有 Put 至結算，Call 考慮提前平倉",
+        "if_neutral": "採取 Straddle 或 Strangle，兩邊對沖"
+      },
+      "risk_control": {
+        "stop_loss": "當走勢明顯偏離預測時，立即止損",
+        "position_size": "結算日部位不超過平時的50%",
+        "time_decay": "週三結算影響較小"
+      }
+    },
+    "outlook": "🔮 **週三結算日展望**\n\n經過這兩天的盤勢觀察，我看到市場呈現盤整的態勢，價格上漲 50 點。\n\n今天的收盤價是 36,296，PC Ratio 為 8.80。市場恐慌情緒明顯，我認為這可能是個反轉訊號。\n\n基於這些觀察，我預測週三的結算價會在 **36,296** 附近，合理區間應該是 36,100 到 36,400。\n\n週三結算只影響當週契約，對整體市場衝擊較小。\n\n我會密切關注開盤後的走勢，適時調整部位。",
+    "confidence_level": 75
+  },
+  "actual_result": {
+    "settlement_price": 36722,
+    "tx_close": 36722,
+    "pc_ratio": 0,
+    "call_oi": 1,
+    "put_oi": 868
+  },
+  "accuracy": {
+    "price_error": 426,
+    "price_error_percent": 1.17,
+    "in_predicted_range": false,
+    "direction_correct": false,
+    "predicted_price": 36296,
+    "actual_price": 36722,
+    "predicted_range": "36,100 - 36,400",
+    "overall_accuracy": 15
+  },
+  "self_reflection": "📝 **週三結算檢討**\n\n這次結算預測失誤較大，我要好好反省。（準確度：15%）\n\n**預測結算價**：36,296 點\n**實際結算價**：36,722 點\n**價格誤差**：426 點 (1.17%)\n\n❌ **超出預測區間**：結算價 36,722 跳出了我的預測區間 36,100 - 36,400。我低估了結算日的波動性。\n\n❌ **方向判斷錯誤**：結算走勢與我的預期相反，需要重新思考趨勢判斷邏輯。\n\n**策略執行回顧**：\n這次的策略判斷有明顯失誤，下次需要更謹慎。",
+  "lessons_learned": [
+    "週三結算的波動幅度超出預期 1.2%，下次應該設定更寬的預測區間。",
+    "結算前的盤整趨勢並未延續到結算日，說明結算日有其特殊性，不能單純延續前期走勢。",
+    "週三結算的複雜度高於一般交易日，需要考慮更多因素，如大戶動向、期現套利等。"
+  ],
+  "improvement_areas": [
+    "📊 改進波動率預測模型，更準確估計結算日波動幅度",
+    "📈 加強趨勢延續性分析，區分結算日與一般交易日",
+    "💡 整體預測能力需要加強，多觀察結算日的特殊規律"
+  ],
+  "score": "⚠️ 需改進 (D)",
+  "review_date": "2026-04-15 16:40:16"
+}
