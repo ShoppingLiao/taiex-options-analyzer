@@ -1,0 +1,68 @@
+{
+  "settlement_date": "20260417",
+  "generated_time": "2026/04/17 08:28",
+  "night_session": {
+    "date": "20260416",
+    "open": 37132.02,
+    "high": 37182.02,
+    "low": 37082.02,
+    "close": 37132.02,
+    "amplitude": 100,
+    "amplitude_pct": 0.27,
+    "change": 0,
+    "change_pct": 0,
+    "source": "估算值（基於日盤收盤）",
+    "is_estimated": true
+  },
+  "night_analysis": {
+    "trend": "neutral",
+    "trend_text": "夜盤持平",
+    "amplitude": 100,
+    "amplitude_level": "normal",
+    "amplitude_text": "正常震幅",
+    "change": 0,
+    "change_pct": 0,
+    "close_position": "收在中間"
+  },
+  "consistency_analysis": {
+    "consistency": "neutral",
+    "consistency_text": "原預測為中性，夜盤走勢影響有限",
+    "original_trend": "neutral",
+    "in_range": false,
+    "range_text": "夜盤收盤已突破預測區間上緣 (31,000)",
+    "trader_view_summary": null
+  },
+  "adjusted_prediction": {
+    "original_range": [
+      30500,
+      31000
+    ],
+    "adjusted_range": [
+      37082,
+      37182
+    ],
+    "adjustment": 6382,
+    "new_trend": "bullish",
+    "new_trend_text": "偏多調整",
+    "confidence": "中"
+  },
+  "strategy": {
+    "strategies": [
+      {
+        "action": "偏多操作",
+        "entry": "開盤若回測 37,082 附近可考慮做多",
+        "target": "目標 37,132 ~ 37,182",
+        "stop": "停損設在 37,032"
+      }
+    ],
+    "risk_warnings": [
+      "⚠️ 夜盤已突破原預測區間，需密切關注"
+    ],
+    "key_levels": {
+      "support": 37082,
+      "resistance": 37182,
+      "pivot": 37132
+    }
+  },
+  "analysis_text": "【夜盤概況】\n夜盤收盤 37,132，震幅 100 點（正常震幅），夜盤持平，收在中間。\n\n【與前日預測比較】\n原預測為中性，夜盤走勢影響有限。\n夜盤收盤已突破預測區間上緣 (31,000)。\n\n【盤前預測調整】\n原預測區間 30,500 ~ 31,000，根據夜盤走勢上調 6382 點。\n**調整後預測區間：37,082 ~ 37,182**\n預測信心度：中\n\n【開盤策略建議】\n• 偏多操作：開盤若回測 37,082 附近可考慮做多\n  目標：目標 37,132 ~ 37,182\n  停損：停損設在 37,032\n\n【風險提示】\n⚠️ 夜盤已突破原預測區間，需密切關注"
+}
