@@ -60,7 +60,7 @@
       "observations": []
     },
     "extremely_bearish_bearish": {
-      "count": 36,
+      "count": 37,
       "successful": 0,
       "observations": []
     },
@@ -457,14 +457,28 @@
         "結算前的盤整趨勢並未延續到結算日，說明結算日有其特殊性，不能單純延續前期走勢。",
         "週五結算的複雜度高於一般交易日，需要考慮更多因素，如大戶動向、期現套利等。"
       ]
+    },
+    {
+      "date": "20260422",
+      "type": "settlement",
+      "weekday": "wednesday",
+      "prediction_accuracy": 20,
+      "in_range": false,
+      "direction_correct": false,
+      "price_error": 273,
+      "lessons": [
+        "週三結算的波動幅度超出預期 0.7%，下次應該設定更寬的預測區間。",
+        "結算前的盤整趨勢並未延續到結算日，說明結算日有其特殊性，不能單純延續前期走勢。",
+        "週三結算的複雜度高於一般交易日，需要考慮更多因素，如大戶動向、期現套利等。"
+      ]
     }
   ],
   "settlement_performance": {
     "wednesday": {
-      "count": 13,
+      "count": 14,
       "direction_correct": 1,
       "in_range": 1,
-      "total_accuracy": 190.0,
+      "total_accuracy": 210.0,
       "lessons": [
         "這次週三結算預測成功的經驗值得記錄，類似的市場條件下可以參考這次的分析方法。",
         "週三結算的波動幅度超出預期 0.8%，下次應該設定更寬的預測區間。",
@@ -479,11 +493,12 @@
         "週三結算的波動幅度超出預期 2.5%，下次應該設定更寬的預測區間。",
         "週三結算的波動幅度超出預期 4.6%，下次應該設定更寬的預測區間。",
         "週三結算的波動幅度超出預期 6.7%，下次應該設定更寬的預測區間。",
-        "週三結算的波動幅度超出預期 1.2%，下次應該設定更寬的預測區間。"
+        "週三結算的波動幅度超出預期 1.2%，下次應該設定更寬的預測區間。",
+        "週三結算的波動幅度超出預期 0.7%，下次應該設定更寬的預測區間。"
       ],
-      "direction_accuracy_pct": 7.7,
-      "interval_hit_rate_pct": 7.7,
-      "avg_accuracy": 14.6
+      "direction_accuracy_pct": 7.1,
+      "interval_hit_rate_pct": 7.1,
+      "avg_accuracy": 15.0
     },
     "friday": {
       "count": 8,
