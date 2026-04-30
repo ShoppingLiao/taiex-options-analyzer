@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-04-29T16:52:12.847868",
-  "source_count": 23,
+  "generated_at": "2026-04-30T16:52:17.390419",
+  "source_count": 24,
   "weekday": {
     "wednesday": {
-      "count": 14,
+      "count": 15,
       "error_stats": {
-        "mean": 794.7,
-        "median": 622.0,
-        "std": 607.3,
-        "p75": 1257.8,
-        "p90": 1482.5,
+        "mean": 756.3,
+        "median": 532.0,
+        "std": 604.0,
+        "p75": 1173.5,
+        "p90": 1478.0,
         "max": 2189.0
       },
-      "direction_accuracy": 7.1,
-      "interval_hit_rate": 7.1,
-      "avg_accuracy": 15.0,
+      "direction_accuracy": 6.7,
+      "interval_hit_rate": 6.7,
+      "avg_accuracy": 15.3,
       "recommended_half_range": 150
     },
     "friday": {
@@ -47,17 +47,18 @@
     },
     "pc_0.8_1.2": {
       "label": "中性 (0.8-1.2)",
-      "count": 6,
-      "up_rate": 66.7,
-      "down_rate": 33.3,
-      "avg_price_change": 79.0,
+      "count": 7,
+      "up_rate": 57.1,
+      "down_rate": 42.9,
+      "avg_price_change": 37.0,
       "dates": [
         "20260107",
         "20260109",
         "20260121",
         "20260206",
         "20260410",
-        "20260422"
+        "20260422",
+        "20260429"
       ]
     },
     "pc_1.2_1.8": {
@@ -96,10 +97,10 @@
   },
   "scenario_probabilities": {
     "wednesday": {
-      "in_range": 38.8,
-      "breakout_up": 30.6,
-      "breakout_down": 30.6,
-      "note": "基於 14 筆歷史記錄（混合先驗）"
+      "in_range": 38.7,
+      "breakout_up": 30.7,
+      "breakout_down": 30.7,
+      "note": "基於 15 筆歷史記錄（混合先驗）"
     },
     "friday": {
       "in_range": 49.3,
