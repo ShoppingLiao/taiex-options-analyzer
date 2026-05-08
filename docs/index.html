@@ -179,10 +179,41 @@
     </style>
 </head>
 <body>
+    <!-- 廢棄公告彈窗 -->
+    <div id="deprecation-modal" style="position:fixed;inset:0;background:rgba(15,23,42,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;">
+        <div style="background:#fff;max-width:560px;width:100%;border-radius:8px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,0.3);border-top:6px solid #dc2626;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                <span style="font-size:1.8rem;">⚠️</span>
+                <h2 style="margin:0;color:#dc2626;font-size:1.4rem;">本專案已廢棄</h2>
+            </div>
+            <p style="color:#334155;line-height:1.7;margin-bottom:12px;">
+                台指選擇權分析工具自 <strong>2026-05-08</strong> 起停止維護，不再產生新報告。
+            </p>
+            <p style="color:#64748b;line-height:1.7;margin-bottom:20px;font-size:0.95rem;">
+                原因：上游 PDF 來源格式不穩定、結算預測準確度過低（週三方向準確率僅 6.7%）、維護成本與市場價值不對等。歷史報告保留供回顧。
+            </p>
+            <div style="background:#f1f5f9;padding:16px;border-radius:6px;margin-bottom:20px;">
+                <div style="color:#475569;font-size:0.9rem;margin-bottom:8px;">後續分析請改用：</div>
+                <a href="https://shoppingliao.github.io/stock-analysis-public/" style="color:#2563eb;font-weight:600;text-decoration:none;word-break:break-all;">https://shoppingliao.github.io/stock-analysis-public/</a>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">
+                <button onclick="document.getElementById('deprecation-modal').style.display='none'" style="background:#e2e8f0;color:#475569;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:0.95rem;">瀏覽歷史報告</button>
+                <a href="https://shoppingliao.github.io/stock-analysis-public/" style="background:#dc2626;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-size:0.95rem;font-weight:600;">前往新站點</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 廢棄公告橫幅（即使關閉彈窗仍持續顯示） -->
+    <div style="background:linear-gradient(90deg,#dc2626,#b91c1c);color:#fff;padding:14px 20px;text-align:center;font-size:0.95rem;line-height:1.5;">
+        ⚠️ <strong>本專案已於 2026-05-08 廢棄停用</strong>，不再產生新報告。後續分析請見 →
+        <a href="https://shoppingliao.github.io/stock-analysis-public/" style="color:#fff;text-decoration:underline;font-weight:700;margin-left:6px;">stock-analysis-public</a>
+    </div>
+
     <div class="container">
         <header>
             <h1>台指選擇權分析報告</h1>
             <p class="subtitle">Taiwan Stock Index Options Analysis</p>
+            <p style="margin-top:14px;font-size:0.95rem;opacity:0.95;">⚠️ 專案已廢棄 · 僅保留歷史報告 · 新站點：<a href="https://shoppingliao.github.io/stock-analysis-public/" style="color:#fff;text-decoration:underline;font-weight:600;">stock-analysis-public</a></p>
         </header>
 
         <!-- 結算日報告區塊 -->

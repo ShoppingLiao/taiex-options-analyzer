@@ -1,12 +1,17 @@
 name: Daily Options Report
 
-on:
-  # 結算日台灣時間 08:00 執行盤前預測 (UTC 00:00)
-  schedule:
-    - cron: '0 0 * * 3,5'  # 週三、週五 UTC 00:00 = 台灣 08:00 (盤前預測)
-    - cron: '0 8 * * 1-5'  # 週一到週五 UTC 08:00 = 台灣 16:00 (每日報告)
+# ⚠️ DEPRECATED: 此專案已於 2026-05-08 廢棄停用，不再自動排程執行
+# 原因：選擇權市場難度提高、PDF 來源不穩定、結算預測準確度過低
+# 後續分析請見：https://shoppingliao.github.io/stock-analysis-public/
+# 如需臨時手動執行可使用 workflow_dispatch（不建議）
 
-  # 手動觸發
+on:
+  # 已停用排程
+  # schedule:
+  #   - cron: '0 0 * * 3,5'  # 週三、週五 UTC 00:00 = 台灣 08:00 (盤前預測)
+  #   - cron: '0 8 * * 1-5'  # 週一到週五 UTC 08:00 = 台灣 16:00 (每日報告)
+
+  # 僅保留手動觸發
   workflow_dispatch:
     inputs:
       date:

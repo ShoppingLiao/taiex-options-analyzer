@@ -1,5 +1,21 @@
 # 台指選擇權分析工具
 
+> # ⚠️ 專案已廢棄（Deprecated）
+>
+> **凍結日期**：2026-05-08
+>
+> 本專案不再維護、不再自動產生新報告。GitHub Actions 自動排程已停用，但既有歷史報告與校準資料保留供回顧。
+>
+> **廢棄原因**：
+> - 選擇權市場難度提高，預測價值不對等於維護成本
+> - 上游 PDF 報告來源格式不穩定，解析鏈脆弱
+> - 結算預測準確度過低（週三方向準確率僅 6.7%、區間命中率 6.7%，趨近隨機）
+>
+> **後續分析請改用**：👉 **<https://shoppingliao.github.io/stock-analysis-public/>**
+>
+> ---
+
+[![Status](https://img.shields.io/badge/status-deprecated-red.svg)](#)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](documentation/releases/VERSION_HISTORY.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-📚_文檔中心-brightgreen.svg)](documentation/README.md)
